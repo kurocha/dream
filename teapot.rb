@@ -20,7 +20,7 @@ define_target "dream" do |target|
 	target.depends "Library/png"
 	target.depends "Library/jpeg"
 	target.depends "Library/freetype"
-	target.depends "Library/ogg"
+	target.depends "Library/vorbis"
 	
 	target.depends "Language/C++11"
 	target.depends "Library/UnitTest"
