@@ -12,7 +12,7 @@ add_library 'Dream' do
 			
 			component.add("Dream")
 			
-			case environment[:platform]
+			case environment[:platform_name]
 			when /darwin-osx/
 				component.add("Dream-NSFileManager")
 				component.add("Dream-CoreVideo")
