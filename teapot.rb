@@ -22,6 +22,11 @@ define_target "dream" do |target|
 	target.depends "Library/freetype"
 	target.depends "Library/vorbis"
 	
+	target.depends "Library/OpenAL"
+	target.depends "Library/OpenGL"
+	
+	target.depends "Aggregate/Display"
+	
 	target.depends "Language/C++11"
 	target.depends "Library/UnitTest"
 	target.depends "Library/Euclid"
