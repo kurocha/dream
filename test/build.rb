@@ -1,10 +1,6 @@
 
-add_executable("dream-test-runner") do
-	configure do
-		linkflags ["-lUnitTest", "-lEuclid", "-lDream"]
-	end
-	
-	def sources(environment)
-		Pathname.glob(root + "**/*.cpp")
+compile_executable("dream-test-runner") do
+	def source_files(environment)
+		FileList[root, "**/*.cpp"]
 	end
 end

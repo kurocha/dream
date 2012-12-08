@@ -7,15 +7,36 @@ required_version "0.5"
 
 define_target "dream" do |target|
 	target.install do |environment|
-		top = Teapot::Build.top(Pathname.new(__FILE__).dirname)
-
-		top.add_directory('source')
-		top.add_directory('test')
-		
-		top.execute(:install, environment)
+		Teapot::Build.install_directory(package.path, 'source', environment)
 	end
 	
 	target.depends :platform
+	target.depends "Language/C++11"
+
+	target.depends "Library/png"
+	target.depends "Library/jpeg"
+	target.depends "Library/freetype"
+	target.depends "Library/vorbis"
+	
+	target.depends "Library/OpenAL"
+	target.depends "Library/OpenGL"
+	target.depends "Aggregate/Display"
+	
+	target.depends "Library/Euclid"
+	
+	target.provides "Library/Dream" do
+		append linkflags "-lDream"
+	end
+end
+
+define_target "dream-tests" do |target|
+	target.install do |environment|
+		Teapot::Build.install_directory(package.path, 'test', environment)
+	end
+	
+	target.depends :platform
+	target.depends "Language/C++11"
+	target.depends "Library/UnitTest"
 	
 	target.depends "Library/png"
 	target.depends "Library/jpeg"
@@ -24,14 +45,9 @@ define_target "dream" do |target|
 	
 	target.depends "Library/OpenAL"
 	target.depends "Library/OpenGL"
-	
 	target.depends "Aggregate/Display"
 	
-	target.depends "Language/C++11"
-	target.depends "Library/UnitTest"
 	target.depends "Library/Euclid"
 	
-	target.provides "Library/Dream" do
-		append linkflags "-lDream"
-	end
+	target.provides "Test/Dream"
 end

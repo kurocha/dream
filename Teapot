@@ -1,4 +1,9 @@
 
+source "../"
+
+package "platform-darwin-osx"
+package "variants"
+
 package "unit-test"
 package "euclid"
 
@@ -9,11 +14,5 @@ package "png"
 package "jpeg"
 
 package "freetype"
-environment[:buildflags] = [->{"-I#{install_prefix}/include/freetype2"}]
 
 package "dream", :local => "./"
-
-platform "darwin-osx"
-platform "darwin-ios"
-platform "darwin-ios-simulator"
-
