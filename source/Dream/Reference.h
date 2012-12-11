@@ -40,8 +40,6 @@ namespace Dream {
 	    raw pointer to this type.
 	*/
 
-	void debug_allocations ();
-
 	class SharedObject {
 	public:
 		typedef uint32_t NumberT;
@@ -85,7 +83,7 @@ namespace Dream {
 		Pointer (ObjectT * object) : _object(object) {
 		}
 
-		template <typename OtherObjectT>
+		template <typename OtherObjectT, typename std::enable_if<std::is_convertible<OtherObjectT, ObjectT>::value>::type = 0>
 		Pointer (OtherObjectT* object) : _object(dynamic_cast<ObjectT*>(object)) {
 		}
 
@@ -158,26 +156,6 @@ namespace Dream {
 
 	template <typename ObjectT>
 	using Ptr = Pointer<ObjectT>;
-
-	void mark_static_allocation (void*);
-
-	template <typename ObjectT>
-	class Static : public Pointer<ObjectT>{
-	public:
-		Static () : Pointer<ObjectT>(new ObjectT) {
-			this->_object->retain();
-			mark_static_allocation(this->_object);
-		}
-
-		Static (ObjectT* object) : Pointer<ObjectT>(object) {
-			this->_object->retain();
-			mark_static_allocation(this->_object);
-		}
-
-		~Static () {
-			this->_object->release();
-		}
-	};
 
 	template <typename ObjectT>
 	class Reference : public Pointer<ObjectT>{

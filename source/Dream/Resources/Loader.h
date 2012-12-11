@@ -68,19 +68,19 @@ namespace Dream {
 
 			/// Primary interface for loading resources
 			template <typename InterfaceT>
-			Ref<InterfaceT> load (const Path &res) const {
+			Ref<InterfaceT> load (const Path & resource_name) const {
 				using namespace Events::Logging;
 
-				Ref<Object> ptr = load_path(path_for_resource(res));
+				Ref<Object> resource = load_path(path_for_resource(resource_name));
 
-				if (!ptr) {
-					logger()->log(LOG_ERROR, LogBuffer() << "Resource failed to load: " << res);
+				if (!resource) {
+					logger()->log(LOG_ERROR, LogBuffer() << "Resource failed to load: " << resource_name);
 				}
 
-				Ref<InterfaceT> result = ptr;
+				Ref<InterfaceT> result = resource.as<InterfaceT>();
 
 				if (!result) {
-					logger()->log(LOG_ERROR, LogBuffer() << "Invalid resource class: " << res);
+					logger()->log(LOG_ERROR, LogBuffer() << "Invalid resource class: " << resource_name);
 				}
 
 				return result;
