@@ -71,7 +71,7 @@ namespace Dream {
 			protected:
 				Ref<IScene> _scene;
 				Ref<Dictionary> _config;
-				Ref<Context> _context;
+				Ref<IContext> _context;
 				Ref<Events::Thread> _thread;
 				Ref<SceneManager> _scene_manager;
 
