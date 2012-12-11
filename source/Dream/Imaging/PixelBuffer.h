@@ -51,10 +51,6 @@ namespace Dream {
 
 		using Dimensions = std::vector<std::size_t>;
 
-		// This type is guaranteed to be big enough to hold even RGBA16.
-		// This is useful when you want a generic representation of a pixel
-		typedef uint64_t PixelT;
-
 		struct PixelLayout {
 			PixelFormat format;
 			DataType data_type;
@@ -66,11 +62,6 @@ namespace Dream {
 
 			std::uint8_t channel_count() const { return Imaging::channel_count(format); }
 			std::uint8_t bytes_per_pixel() const { return channel_count() * byte_size(data_type); }
-
-			/// @returns the maximum value of an individual pixel.
-			PixelT maximum_pixel () const {
-				return ((PixelT)1 << (bytes_per_pixel() * 8)) - 1;
-			}
 		};
 
 		// A pixel buffer is a container for pixel data along with a layout that allows for interpretation of the buffer contents. This typically includes a pixel format which describes the layout of colour channels within an individual pixel element, a data type which describes the storage for each pixel component and a size which describes the organisation of pixel data into rows and columns and potentially other dimensions.

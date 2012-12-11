@@ -11,7 +11,7 @@
 #define _DREAM_SIMULATION_HEIGHTMAP_H
 
 #include "../Framework.h"
-#include "../Imaging/PixelBuffer.h"
+#include "../Imaging/Image.h"
 
 #include <Euclid/Numerics/Vector.h>
 #include <Euclid/Numerics/Interpolate.h>
@@ -35,9 +35,9 @@ namespace Dream {
 
 		class ImageHeightMap : public HeightMap {
 		protected:
-			Ref<IPixelBuffer> _image;
+			Ref<Image> _image;
 		public:
-			ImageHeightMap (Ref<IPixelBuffer> image);
+			ImageHeightMap (Ref<Image> image);
 			virtual ~ImageHeightMap();
 
 			virtual RealT height (const Vec2 &at);

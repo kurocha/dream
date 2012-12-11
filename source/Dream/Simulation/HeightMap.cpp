@@ -9,6 +9,8 @@
 
 #include "HeightMap.h"
 
+#include "../Imaging/Image.h"
+
 namespace Dream {
 	namespace Simulation {
 		HeightMap::HeightMap () {
@@ -58,23 +60,15 @@ namespace Dream {
 		}
 		*/
 
-		ImageHeightMap::ImageHeightMap (Ref<IPixelBuffer> image) : _image(image) {
+		ImageHeightMap::ImageHeightMap (Ref<Image> image) : _image(image) {
 		}
 
 		ImageHeightMap::~ImageHeightMap () {
 		}
 
 		RealT ImageHeightMap::height (const Vec2 &at) {
-			//std::size_t byteOffset = sizeof(pixel_t) - _image->bytesPerPixel();
-			PixelT max = _image->layout().maximum_pixel();
-			PixelT pixel = _image->read_pixel(Vec3u(at[X], at[Y], 0));
-
-			ByteT * pixel_data = (ByteT *)&pixel;
-			pixel_data[3] = 0;
-			ByteT * max_data = (ByteT *)&max;
-			max_data[3] = 0;
-
-			return RealT(pixel) / RealT(max);
+			const ByteT * pixel = reader(*_image)[at];
+			return RealT(*pixel) / RealT(255);
 		}
 
 		BilinearHeightMap::BilinearHeightMap (HeightMap *input) : _input(input) {
