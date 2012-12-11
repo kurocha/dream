@@ -29,7 +29,7 @@ namespace Dream {
 			virtual RealT height (const Vec2 &at) abstract;
 
 			/* Bivalent - 0 = black, 1 = white */
-			//void to_image(REF(IMutablePixelBuffer) image);
+			//void to_image(REF(Image) image);
 			//void to_mesh(Mesh & mesh, Vec2u size, Vec3 scale, RealT offset);
 		};
 

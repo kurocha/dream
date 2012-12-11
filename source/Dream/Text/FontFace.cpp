@@ -20,25 +20,31 @@ namespace Dream
 			using namespace Events::Logging;
 
 // MARK: -
-
 			FontGlyph::~FontGlyph ()
 			{
 				FT_Done_Glyph(glyph);
 			}
 
-			void FontGlyph::composite_to_buffer(Vec2u origin, Ref<IMutablePixelBuffer> img) const
+			void FontGlyph::composite_to_buffer(Vec2u origin, Ref<Image> img) const
 			{
 				DREAM_ASSERT(is_bitmap());
 				FT_BitmapGlyph bm = (FT_BitmapGlyph)glyph;
 
 				if (bm->bitmap.buffer != NULL) {
-					UnbufferedImage char_img(PixelFormat::A, DataType::BYTE);
+					// 1 byte per pixel:
+					auto bitmap_reader = reader(bm->bitmap.buffer, Vec2u(bm->bitmap.width, bm->bitmap.rows), 1);
+					auto size = bitmap_reader.size();
 
-					// Retrieve the bitmap
-					char_img.set_data(bm->bitmap.buffer, Vec3u(bm->bitmap.width, bm->bitmap.rows, 1));
+					auto image_writer = writer(*img);
 
-					// Composite the character bitmap into the destination image
-					img->copy_pixels_from(char_img, origin << 0, CopyFlip);
+					// This blit copies the pixels flipped, e.g. the rows are copied in reverse order. That is because this text library assumes top-to-bottom text means that the origin goes from small to big, which implies that for traditional western text, the origin of the image should be at the bottom, which isn't typical, except in OpenGL.
+					Vec2u offset(size[X], 0);
+					for (std::size_t i = 0; i < size[Y]; i += 1) {
+						Vec2u source_row(0, size[Y] - (i + 1));
+						Vec2u destination_row(origin[X], origin[Y] + i);
+
+						std::copy(bitmap_reader[source_row], bitmap_reader[source_row + offset], image_writer[destination_row]);
+					}
 				}
 			}
 

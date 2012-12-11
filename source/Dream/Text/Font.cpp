@@ -121,8 +121,9 @@ namespace Dream
 		{
 			DREAM_ASSERT(_face != NULL);
 
-			Ref<Image> img = new Image(compute_bounding_box(text) << 1U, _face->pixel_format(), DataType::BYTE);
-			img->zero();
+			Ref<Image> img = new Image(compute_bounding_box(text), _face->pixel_format(), DataType::BYTE);
+
+			img->fill();
 
 			_face->process_text(text, img);
 

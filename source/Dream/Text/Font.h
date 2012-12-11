@@ -17,6 +17,7 @@ namespace Dream
 	namespace Text
 	{
 		using namespace Dream::Imaging;
+		using Euclid::Numerics::Vec2u;
 
 		// Could be worth checking out http://branan.github.com/gltext/
 
@@ -52,7 +53,7 @@ namespace Dream
 			};
 
 			Font (const Path &);
-			Font (const Ptr<IData> data);
+			Font (Ptr<IData> data);
 
 			virtual ~Font ();
 

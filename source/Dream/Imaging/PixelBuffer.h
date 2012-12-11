@@ -11,12 +11,14 @@
 #define _DREAM_IMAGING_PIXELBUFFER_H
 
 #include "../Framework.h"
+#include "../Core/Algorithm.h"
+#include "../Core/Buffer.h"
 
 #include <Euclid/Numerics/Vector.h>
 
 namespace Dream {
 	namespace Imaging {
-		using namespace Euclid::Numerics;
+		using namespace Euclid::Numerics::Constants;
 
 		/// Pixel component data type. All data types are assumed to be unsigned.
 		enum class DataType : unsigned {
@@ -25,7 +27,7 @@ namespace Dream {
 			INTEGER = 0x0304,
 			FLOAT = 0x0404,
 		};
-		
+
 		/// Image pixel formats.
 		enum class PixelFormat : unsigned {
 			// Single channel formats:
@@ -44,122 +46,55 @@ namespace Dream {
 			LA = 0x0902,
 		};
 
-		std::size_t data_type_byte_size(DataType type);
-		unsigned data_type_channel_count(DataType type);
-		unsigned pixel_format_channel_count(PixelFormat type);
+		std::uint8_t byte_size(DataType type);
+		std::uint8_t channel_count(PixelFormat type);
+
+		using Dimensions = std::vector<std::size_t>;
 
 		// This type is guaranteed to be big enough to hold even RGBA16.
 		// This is useful when you want a generic representation of a pixel
 		typedef uint64_t PixelT;
-		typedef std::size_t DimentionT;
-		typedef Vector<3, std::size_t> PixelCoordinateT;
 
-		class IPixelBuffer : implements IObject {
-		public:
-			virtual PixelFormat pixel_format () const abstract;
-			virtual DataType pixel_data_type () const;
+		struct PixelLayout {
+			PixelFormat format;
+			DataType data_type;
 
-			std::size_t pixel_data_length () const { return size().product() * bytes_per_pixel(); }
+			// The size in pixels for each dimension.
+			Dimensions dimensions;
+			
+			std::size_t data_size() const;
 
-			unsigned channel_count () const;
+			std::uint8_t channel_count() const { return Imaging::channel_count(format); }
+			std::uint8_t bytes_per_pixel() const { return channel_count() * byte_size(data_type); }
 
-			std::size_t bytes_per_pixel () const;
-
-			// Helper: Returns the maximum value of an individual pixel
-			PixelT max_pixel_size () const {
+			/// @returns the maximum value of an individual pixel.
+			PixelT maximum_pixel () const {
 				return ((PixelT)1 << (bytes_per_pixel() * 8)) - 1;
 			}
-
-			virtual PixelCoordinateT size () const abstract;
-
-			// Data accessors
-			virtual const ByteT * pixel_data () const abstract;
-
-			// Get the number of bytes to index into pixel_data
-			std::size_t pixel_offset (const PixelCoordinateT & at) const {
-				std::size_t offset = at[X] + (at[Y] * size()[X]) + (at[Z] * size()[X] * size()[Y]);
-				return offset * bytes_per_pixel();
-			}
-
-			// pixbuf->at(vec<unsigned>(43, 12));
-			const ByteT* pixel_data_at (const PixelCoordinateT &at) const {
-				return pixel_data() + pixel_offset(at);
-			}
-
-			// Helper to read pixel data
-			// This may convert between the pixbuf format and the output pixel
-			// void read_pixel (const PixelCoordinateT &at, Vector<4, float> &output) const;
-			template <typename DataT>
-			void read_data_at (const std::size_t &idx, DataT &val) const {
-				const ByteT *data = pixel_data();
-
-				val = *(DataT*)(&data[idx]);
-			}
-
-			// This does not do _any_ sanity checking what-so-ever.
-			template <unsigned D, typename NumericT>
-			void read_pixel (const PixelCoordinateT &at, Vector<D, NumericT> &output) const {
-				std::size_t from = pixel_offset(at);
-				std::size_t bytes_per_component = bytes_per_pixel() / channel_count();
-
-				for (std::size_t i = 0; i < D; i += 1) {
-					read_data_at(from + (i * bytes_per_component), output[i]);
-				}
-			}
-
-			PixelT read_pixel (const PixelCoordinateT &at);
 		};
 
-		enum CopyFlags {
-			CopyNormal = 0,
-			CopyFlip = 1
-		};
-
-		// Some pixel buffers (for example the screen buffer), can never have mutable operations without
-		// high cost, so there is a sub-interface for 'typically' mutable pixbufs.
-		class IMutablePixelBuffer : implements IPixelBuffer {
+		// A pixel buffer is a container for pixel data along with a layout that allows for interpretation of the buffer contents. This typically includes a pixel format which describes the layout of colour channels within an individual pixel element, a data type which describes the storage for each pixel component and a size which describes the organisation of pixel data into rows and columns and potentially other dimensions.
+		class IPixelBuffer : implements IObject {
 		public:
-			virtual ByteT * pixel_data () abstract;
-			using IPixelBuffer::pixel_data;
+			virtual ~IPixelBuffer();
 
-			void zero (PixelT px = 0);
+			virtual const PixelLayout & layout () const = 0;
+			virtual const ByteT * data () const = 0;
+		};
 
-			ByteT* pixel_data_at (const PixelCoordinateT &at) {
-				return pixel_data() + pixel_offset(at);
-			}
+		using Core::Buffer;
 
-			template <typename DataT>
-			void write_data_at (const std::size_t &idx, const DataT &val)
-			{
-				ByteT *data = pixel_data();
+		class PixelBuffer : implements IPixelBuffer {
+		protected:
+			PixelLayout _pixel_layout;
+			Shared<Buffer> _buffer;
 
-				*(DataT*)(&data[idx]) = val;
-			}
+		public:
+			PixelBuffer (const PixelLayout & pixel_layout, Shared<Buffer> buffer);
+			virtual ~PixelBuffer();
 
-			/// Set all bytes to zero.
-			void clear ();
-
-			// void write_pixel (const PixelCoordinateT &at, const Vector<4, float> &input);
-			template <unsigned D, typename NumericT>
-			void write_pixel (const PixelCoordinateT &at, const Vector<D, NumericT> &input) {
-				std::size_t from = pixel_offset(at);
-				std::size_t bytes_per_component = bytes_per_pixel() / channel_count();
-
-				DREAM_ASSERT(sizeof(NumericT) == bytes_per_component);
-
-				for (std::size_t i = 0; i < D; i += 1) {
-					write_data_at(from + (i * bytes_per_component), input[i]);
-				}
-			}
-
-			void write_pixel (const PixelCoordinateT &at, const PixelT &px);
-
-			// Copy from buf to this
-			void copy_pixels_from(const IPixelBuffer& buf, const PixelCoordinateT &from, const PixelCoordinateT &to, const PixelCoordinateT &size, CopyFlags copy_flags = CopyNormal);
-
-			void copy_pixels_from(const IPixelBuffer& buf, const PixelCoordinateT &to, CopyFlags copy_flags = CopyNormal) {
-				copy_pixels_from(buf, ZERO, to, buf.size(), copy_flags);
-			}
+			virtual const PixelLayout & layout () const;
+			virtual const ByteT * data () const;
 		};
 	}
 }

@@ -38,7 +38,7 @@ namespace Dream
 
 				~FontGlyph ();
 
-				void composite_to_buffer(Vec2u origin, Ref<IMutablePixelBuffer> img) const;
+				void composite_to_buffer(Vec2u origin, Ref<Image> img) const;
 
 				Vec2u calculate_character_origin (Vec2u pen) const;
 				void get_cbox(FT_UInt bbox_mode, FT_BBox * acbox) const;

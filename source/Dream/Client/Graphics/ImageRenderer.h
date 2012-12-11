@@ -1,5 +1,5 @@
 //
-//  Client/Graphics/PixelBufferRenderer.h
+//  Client/Graphics/ImageRenderer.h
 //  This file is part of the "Dream" project, and is released under the MIT license.
 //
 //  Created by Samuel Williams on 22/04/09.
@@ -12,6 +12,8 @@
 #include "MeshBuffer.h"
 #include "TextureManager.h"
 
+#include "../../Imaging/Image.h"
+
 namespace Dream {
 	namespace Client {
 		namespace Graphics {
@@ -19,18 +21,20 @@ namespace Dream {
 			using Euclid::Numerics::Vec2;
 			using Euclid::Numerics::Vec2b;
 
-			/// Efficiently render pixel buffers as textured quads. Rendering pixel buffers is a common operation especially for user interfaces, text, certain graphical effects, etc. The PixelBufferRenderer provides an efficient implementation of this operation that avoids uploading pixel buffers to textures if they haven't changed.
-			class PixelBufferRenderer : public Object {
+			/// Efficiently render pixel buffers as textured quads. Rendering pixel buffers is a common operation especially for user interfaces, text, certain graphical effects, etc. The ImageRenderer provides an efficient implementation of this operation that avoids uploading pixel buffers to textures if they haven't changed.
+			class ImageRenderer : public Object {
 			protected:
+				using Image = Imaging::Image;
+
 				Ref<TextureManager> _texture_manager;
 
 				// A cache of pixel-buffer -> texture mappings.
-				// typedef std::map<Ref<IPixelBuffer>, Ref<Texture>> TextureCacheT;
-				typedef std::map<Ptr<IPixelBuffer>, Ref<Texture>> TextureCacheT;
+				// typedef std::map<Ref<Image>, Ref<Texture>> TextureCacheT;
+				typedef std::map<Ptr<Image>, Ref<Texture>> TextureCacheT;
 				TextureCacheT _texture_cache;
 				std::vector<Ref<Texture>> _available_textures;
 
-				Ref<Texture> fetch(Ptr<IPixelBuffer> pixel_buffer, bool invalidate = false);
+				Ref<Texture> fetch(Ptr<Image> image, bool invalidate = false);
 				TextureParameters _texture_parameters;
 
 				struct Vertex {
@@ -53,16 +57,16 @@ namespace Dream {
 					DIFFUSE_TEXTURE = 0
 				};
 
-				PixelBufferRenderer(Ptr<TextureManager> texture_manager);
-				virtual ~PixelBufferRenderer();
+				ImageRenderer(Ptr<TextureManager> texture_manager);
+				virtual ~ImageRenderer();
 
 				TextureParameters & texture_parameters() { return _texture_parameters; }
 				const TextureParameters & texture_parameters() const { return _texture_parameters; }
 
-				void render(const AlignedBox2 & box, Ptr<IPixelBuffer> pixel_buffer);
-				void render(const AlignedBox2 & box, Ptr<IPixelBuffer> pixel_buffer, Vec2b flip, RotationT rotation);
+				void render(const AlignedBox2 & box, Ptr<Image> image);
+				void render(const AlignedBox2 & box, Ptr<Image> image, Vec2b flip, RotationT rotation);
 
-				void invalidate(Ptr<IPixelBuffer> pixel_buffer);
+				void invalidate(Ptr<Image> pixel_buffer);
 			};
 		}
 	}

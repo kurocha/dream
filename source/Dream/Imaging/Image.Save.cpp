@@ -1,5 +1,5 @@
 //
-//  Imaging/PixelBufferSaver-PNG.cpp
+//  Imaging/Image.Save.cpp
 //  This file is part of the "Dream" project, and is released under the MIT license.
 //
 //  Created by Samuel Williams on 15/05/09.
@@ -7,7 +7,6 @@
 //
 //
 
-#include "PixelBufferSaver.h"
 #include "Image.h"
 #include "../Events/Logger.h"
 
@@ -60,20 +59,25 @@ namespace Dream
 			return -1;
 		}
 
-		Ref<Core::IData> save_pixel_buffer_as_png (Ptr<IPixelBuffer> pixel_buffer)
+		Ref<IData> Image::save_to_data (const Ptr<Image> image)
 		{
-			Vec3u size = pixel_buffer->size();
+			// Information about the image:
+			auto image_reader = reader(*image);
+			auto size = image->size();
+			auto layout = image->layout();
 
-			DREAM_ASSERT(size[Z] == 1);
-
-			Shared<DynamicBuffer> result_data(new DynamicBuffer);
-
+			// Structures to process the image:
 			png_structp png_writer = NULL;
 			png_infop png_info = NULL;
+
+			// Data pointers, one per row:
 			std::vector<png_bytep> rows(size[HEIGHT]);
 
+			// The buffer to contain the results:
+			Shared<DynamicBuffer> result_data = new DynamicBuffer;
+
 			for (std::size_t y = 0; y < size[HEIGHT]; y += 1) {
-				rows[y] = (png_bytep)pixel_buffer->pixel_data_at(Vec3u(0, y, 0));
+				rows[y] = (png_bytep)image_reader[Vec2u(0, y)];
 			}
 
 			try {
@@ -85,8 +89,8 @@ namespace Dream
 
 				png_set_write_fn(png_writer, (void *)(result_data.get()), png_write_to_buffer, png_flush_buffer);
 
-				int bit_depth = (pixel_buffer->bytes_per_pixel() * 8) / pixel_buffer->channel_count();
-				int color_type = png_color_type(pixel_buffer->pixel_format());
+				int bit_depth = (layout.bytes_per_pixel() * 8) / layout.channel_count();
+				int color_type = png_color_type(layout.format);
 
 				png_set_IHDR(png_writer, png_info, size[WIDTH], size[HEIGHT], bit_depth, color_type, 0, 0, 0);
 

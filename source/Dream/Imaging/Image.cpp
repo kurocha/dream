@@ -12,25 +12,6 @@
 
 namespace Dream {
 	namespace Imaging {
-		UnbufferedImage::UnbufferedImage(PixelFormat format, DataType data_type) : _data(NULL) {
-			set_format(format, data_type);
-		}
-
-		UnbufferedImage::UnbufferedImage(const ByteT *data, const PixelCoordinateT &size, PixelFormat format, DataType data_type) : _data(NULL) { // black image of size
-			set_format(format, data_type);
-			set_data(data, size);
-		}
-
-		void UnbufferedImage::set_format(PixelFormat format, DataType data_type) {
-			_format = format;
-			_data_type = data_type;
-		}
-
-		void UnbufferedImage::set_data(const ByteT *data, const PixelCoordinateT &size) {
-			_data = data;
-			_size = size;
-		}
-
 		void Image::Loader::register_loader_types (ILoader * loader)
 		{
 			loader->set_loader_for_extension(this, "jpg");
@@ -42,50 +23,45 @@ namespace Dream {
 			return Image::load_from_data(data);
 		}
 
-		Image::Image ()
+		Image::Image(const Vec2u & size, PixelFormat pixel_format, DataType data_type)
+		{
+			resize(size, pixel_format, data_type);
+		}
+
+		Image::~Image ()
 		{
 		}
 
-		Image::Image (const PixelCoordinateT &size, PixelFormat format, DataType data_type)
+		const PixelLayout & Image::layout () const
 		{
-			allocate(size, format, data_type);
+			return _layout;
 		}
 
-		Image::~Image()
+		const ByteT * Image::data () const
 		{
+			return _buffer.begin();
 		}
 
-		void Image::allocate (const Vec3u & size, PixelFormat format, DataType data_type)
+		void Image::allocate ()
 		{
+			_buffer.resize(_size.product() * _layout.bytes_per_pixel());
+		}
+
+		void Image::resize(const Vec2u & size, PixelFormat pixel_format, DataType data_type)
+		{
+			_layout.format = pixel_format;
+			_layout.data_type = data_type;
+			_layout.dimensions = {size[WIDTH], size[HEIGHT]};
+
 			_size = size;
-			_format = format;
-			_data_type = data_type;
 
-			_data.resize(pixel_data_length());
+			if (_size.product() > 0)
+				allocate();
 		}
 
-		const ByteT * Image::pixel_data () const
+		void Image::fill(ByteT value)
 		{
-			return _data.begin();
-		}
-
-		ByteT * Image::pixel_data()
-		{
-			return _data.begin();
-		}
-
-		void Image::set_data (const PixelCoordinateT &size, PixelFormat format, DataType data_type, const ByteT * buffer)
-		{
-			allocate(size, format, data_type);
-
-			if (buffer) {
-				set_data(0, _size.product(), buffer);
-			}
-		}
-
-		void Image::set_data (std::size_t offset, std::size_t length, const ByteT* buffer)
-		{
-			_data.assign(buffer, buffer + length, offset);
+			std::fill(_buffer.begin(), _buffer.end(), value);
 		}
 	}
 }

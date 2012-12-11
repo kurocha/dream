@@ -309,10 +309,15 @@ namespace Dream {
 			}
 
 			void TextureManager::Binding::update(Ptr<IPixelBuffer> pixel_buffer) {
-				GLenum pixel_format = texture_pixel_format(pixel_buffer->pixel_format());
-				GLenum data_type = texture_data_type(pixel_buffer->pixel_data_type());
-				
-				_texture->load_pixel_data(pixel_buffer->size(), pixel_buffer->pixel_data(), pixel_format, data_type);
+				auto & layout = pixel_buffer->layout();
+
+				GLenum pixel_format = texture_pixel_format(layout.format);
+				GLenum data_type = texture_data_type(layout.data_type);
+
+				Vec3u size = 1;
+				std::copy_n(layout.dimensions.begin(), std::min<uint8_t>(layout.dimensions.size(), 3), size.begin());
+
+				_texture->load_pixel_data(size, pixel_buffer->data(), pixel_format, data_type);
 			}
 
 			void TextureManager::Binding::update(const TextureParameters & parameters, Ptr<IPixelBuffer> pixel_buffer) {

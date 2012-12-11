@@ -38,14 +38,17 @@ namespace Dream
 			template <typename StringT>
 			void append_text (const StringT & text)
 			{
-				set_text(_text + convert_string_to_utf16(text));
+				set_text(_text + text);
 			}
 
 			template <typename StringT>
 			void append_line (const StringT & str)
 			{
+				if (_text.size() > 0) {
+					append_text("\n");
+				}
+				
 				append_text(str);
-				append_text("\n");
 			}
 
 			void insert_character_at_offset (unsigned offset, unsigned character);
@@ -54,7 +57,7 @@ namespace Dream
 			void set_static_size (Vec2u size);
 			void set_dynamic_size ();
 
-			Ref<IPixelBuffer> render_text (bool & regenerated);
+			Ref<Image> render_text (bool & regenerated);
 		};
 	}
 }

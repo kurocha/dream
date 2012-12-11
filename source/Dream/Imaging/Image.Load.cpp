@@ -98,10 +98,9 @@ namespace Dream {
 			jpeg_decompress_struct cinfo;
 			jpeg_error_mgr jerr;
 
-			PixelFormat format = PixelFormat(0);
-			DataType data_type = DataType::BYTE;
-
 			Ref<Image> result_image;
+			DataType data_type = DataType::BYTE;
+			
 			Shared<Buffer> buffer = data->buffer();
 
 			unsigned width, height;
@@ -121,17 +120,19 @@ namespace Dream {
 				height = cinfo.image_height;
 
 				unsigned row_width = 0;
+				PixelFormat pixel_format;
+				
 				if (cinfo.jpeg_color_space == JCS_GRAYSCALE) {
 					row_width = width;
-					format = PixelFormat::L;
+					pixel_format = PixelFormat::L;
 				} else {
 					row_width = 3 * width;
-					format = PixelFormat::RGB;
+					pixel_format = PixelFormat::RGB;
 				}
 
-				result_image = new Image(PixelCoordinateT(width, height, 1), format, data_type);
+				result_image = new Image(Vec2u(width, height), pixel_format, data_type);
 
-				ByteT *line = result_image->pixel_data();
+				ByteT *line = result_image->data();
 				jpeg_start_decompress(&cinfo);
 
 				// read jpeg image
@@ -233,8 +234,8 @@ namespace Dream {
 				unsigned row_bytes = png_get_rowbytes(png_reader, png_info);
 
 				// Allocate the image_data buffer.
-				result_image = new Image(PixelCoordinateT(width, height, 1), format, data_type);
-				ByteT *image_bytes = result_image->pixel_data();
+				result_image = new Image(Vec2u(width, height), format, data_type);
+				ByteT *image_bytes = result_image->data();
 				DREAM_ASSERT(image_bytes != NULL);
 
 				//ByteT * image_data = (unsigned char *) malloc(rowbytes * height);

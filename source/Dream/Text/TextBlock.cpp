@@ -32,7 +32,7 @@ namespace Dream
 
 			FT_Error err;
 
-			Ref<IMutablePixelBuffer> img;
+			Ref<Image> img;
 
 			unsigned _count;
 		public:
@@ -60,7 +60,7 @@ namespace Dream
 				_count = other._count;
 			}
 
-			void set_image (Ptr<IMutablePixelBuffer> _img)
+			void set_image (Ptr<Image> _img)
 			{
 				img = _img;
 			}
@@ -193,7 +193,7 @@ namespace Dream
 			return true;
 		}
 
-		void TextLine::composite_to_image (Ptr<IMutablePixelBuffer> img, Vec2u pen, CharacterBoxes * boxes)
+		void TextLine::composite_to_image (Ptr<Image> img, Vec2u pen, CharacterBoxes * boxes)
 		{
 			TextLineRenderer r(_block->_face, _block->kerning_enabled());
 
@@ -377,10 +377,10 @@ namespace Dream
 			return str;
 		}
 
-		void TextBlock::render (Ptr<IMutablePixelBuffer> pbuf, CharacterBoxes * boxes)
+		void TextBlock::render (Ptr<Image> image, CharacterBoxes * boxes)
 		{
 			Vec2u pen(ZERO);
-			Vec2u origin = pbuf->size().reduce() * text_origin();
+			Vec2u origin = image->size() * text_origin();
 
 			//std::cout << "Ascender: " << ascender_offset() << std::endl;
 
@@ -397,10 +397,10 @@ namespace Dream
 			for (auto line : _lines) {
 				if (_line_direction == TB) {
 					//std::cerr << "Line Origin: " << origin - pen << std::endl;
-					line->composite_to_image(pbuf, origin - pen, boxes);
+					line->composite_to_image(image, origin - pen, boxes);
 				} else {
 					//std::cerr << "Line Origin: " << pen << std::endl;
-					line->composite_to_image(pbuf, pen, boxes);
+					line->composite_to_image(image, pen, boxes);
 				}
 
 				// Set pen to next line

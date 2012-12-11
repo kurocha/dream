@@ -1,19 +1,19 @@
 //
-//  Client/Graphics/PixelBufferRenderer.cpp
+//  Client/Graphics/ImageRenderer.cpp
 //  This file is part of the "Dream" project, and is released under the MIT license.
 //
 //  Created by Samuel Williams on 22/04/09.
 //  Copyright (c) 2012 Orion Transfer Ltd. All rights reserved.
 //
 
-#include "PixelBufferRenderer.h"
+#include "ImageRenderer.h"
 
 namespace Dream {
 	namespace Client {
 		namespace Graphics {
 			using namespace Euclid::Numerics::Constants;
 
-			PixelBufferRenderer::PixelBufferRenderer(Ptr<TextureManager> texture_manager) : _texture_manager(texture_manager) {
+			ImageRenderer::ImageRenderer(Ptr<TextureManager> texture_manager) : _texture_manager(texture_manager) {
 				DREAM_ASSERT(texture_manager);
 
 				_texture_parameters.target = GL_TEXTURE_2D;
@@ -29,28 +29,28 @@ namespace Dream {
 				attributes[1] = &Vertex::mapping;
 			}
 
-			PixelBufferRenderer::~PixelBufferRenderer() {
+			ImageRenderer::~ImageRenderer() {
 			}
 
-			Ref<Texture> PixelBufferRenderer::fetch(Ptr<IPixelBuffer> pixel_buffer, bool invalidate) {
-				DREAM_ASSERT(pixel_buffer);
+			Ref<Texture> ImageRenderer::fetch(Ptr<Image> image, bool invalidate) {
+				DREAM_ASSERT(image);
 
 				// We assume that the buffer doesn't need to be changed unless the pointers are different or invalidate is true.
 				// For mutable pixel buffers, this isn't such a good option - perhaps implementing a mutating count, or a running checksum?
 
-				TextureCacheT::iterator cache = _texture_cache.find(pixel_buffer);
+				TextureCacheT::iterator cache = _texture_cache.find(image);
 
 				if (cache != _texture_cache.end()) {
 					if (invalidate) {
 						// Update the texture data:
 						auto & binding = _texture_manager->bind(cache->second);
-						binding.update(pixel_buffer);
+						binding.update(image);
 					}
 
 					// Return the cached texture:
 					return cache->second;
 				} else {
-					//logger()->log(LOG_DEBUG, LogBuffer() << "Fetch " << pixel_buffer << ": allocating new texture");
+					//logger()->log(LOG_DEBUG, LogBuffer() << "Fetch " << image << ": allocating new texture");
 
 					Ref<Texture> texture;
 
@@ -59,23 +59,23 @@ namespace Dream {
 						_available_textures.pop_back();
 						
 						auto & binding = _texture_manager->bind(texture);
-						binding.update(_texture_parameters, pixel_buffer);
+						binding.update(_texture_parameters, image);
 					} else {
 						// Create a new texture with the pixel buffer:
-						texture = _texture_manager->allocate(_texture_parameters, pixel_buffer);
+						texture = _texture_manager->allocate(_texture_parameters, image);
 					}
 
-					_texture_cache[pixel_buffer] = texture;
+					_texture_cache[image] = texture;
 
 					return texture;
 				}
 			}
 
-			void PixelBufferRenderer::render(const AlignedBox2 & box, Ptr<IPixelBuffer> pixel_buffer) {
-				render(box, pixel_buffer, Vec2b(false, true), 0);
+			void ImageRenderer::render(const AlignedBox2 & box, Ptr<Image> image) {
+				render(box, image, Vec2b(false, true), 0);
 			}
 
-			void PixelBufferRenderer::render(const AlignedBox2 & box, Ptr<IPixelBuffer> pixel_buffer, Vec2b flip, RotationT rotation) {
+			void ImageRenderer::render(const AlignedBox2 & box, Ptr<Image> image, Vec2b flip, RotationT rotation) {
 				const Vec2b CORNERS[] = {
 					Vec2b(false, false),
 					Vec2b(true, false),
@@ -85,8 +85,8 @@ namespace Dream {
 
 				std::vector<Vertex> vertices;
 
-				Ref<Texture> texture = fetch(pixel_buffer);
-				AlignedBox2 mapping_box(ZERO, pixel_buffer->size().reduce() / texture->size().reduce());
+				Ref<Texture> texture = fetch(image);
+				AlignedBox2 mapping_box(ZERO, image->size() / texture->size().reduce());
 
 				for (std::size_t i = 0; i < 4; i += 1) {
 					Vertex vertex = {
@@ -120,8 +120,8 @@ namespace Dream {
 				}
 			}
 
-			void PixelBufferRenderer::invalidate(Ptr<IPixelBuffer> pixel_buffer) {
-				auto iterator = _texture_cache.find(pixel_buffer);
+			void ImageRenderer::invalidate(Ptr<Image> image) {
+				auto iterator = _texture_cache.find(image);
 
 				if (iterator != _texture_cache.end()) {
 					_available_textures.push_back(iterator->second);

@@ -43,7 +43,7 @@ namespace Dream {
 		}
 
 		// Bivalent - 0 = black, 1 = white
-		void HeightMap::to_image (REF(IMutablePixelBuffer) image) {
+		void HeightMap::to_image (REF(Image) image) {
 		    //std::size_t byteOffset = sizeof(pixel_t) - image->bytesPerPixel();
 
 		    for (std::size_t y = 0; y < (std::size_t)image->size()[HEIGHT]; y += 1) {
@@ -66,7 +66,7 @@ namespace Dream {
 
 		RealT ImageHeightMap::height (const Vec2 &at) {
 			//std::size_t byteOffset = sizeof(pixel_t) - _image->bytesPerPixel();
-			PixelT max = _image->max_pixel_size();
+			PixelT max = _image->layout().maximum_pixel();
 			PixelT pixel = _image->read_pixel(Vec3u(at[X], at[Y], 0));
 
 			ByteT * pixel_data = (ByteT *)&pixel;

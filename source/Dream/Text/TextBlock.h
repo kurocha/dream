@@ -53,7 +53,7 @@ namespace Dream
 
 			friend class TextLine;
 
-			void composite_characters(Ptr<IMutablePixelBuffer> pbuf, CharacterBoxes * boxes);
+			void composite_characters(Ptr<Image> pbuf, CharacterBoxes * boxes);
 
 		public:
 			TextBlock (Detail::FontFace * font);
@@ -75,7 +75,7 @@ namespace Dream
 			bool is_line_width_fixed () const;
 			unsigned line_width () const;
 
-			void composite_to_image (Ptr<IMutablePixelBuffer> img);
+			void composite_to_image (Ptr<Image> img);
 
 			void clear ();
 			TextLine * last_line ();
@@ -88,7 +88,7 @@ namespace Dream
 
 			Vec2u calculate_size () const;
 
-			void render (Ptr<IMutablePixelBuffer> pbuf, CharacterBoxes * boxes = NULL);
+			void render (Ptr<Image> pbuf, CharacterBoxes * boxes = NULL);
 		};
 
 		class TextLineRenderer;
@@ -111,7 +111,7 @@ namespace Dream
 			bool can_add_character (CodePointT c) const;
 
 			bool add_character (CodePointT c);
-			void composite_to_image (Ptr<IMutablePixelBuffer> img, Vec2u pen, CharacterBoxes * boxes = NULL);
+			void composite_to_image (Ptr<Image> img, Vec2u pen, CharacterBoxes * boxes = NULL);
 		};
 	}
 }

@@ -53,7 +53,7 @@ namespace Dream
 			return _text.size();
 		}
 
-		Ref<IPixelBuffer> TextBuffer::render_text (bool & regenerated)
+		Ref<Image> TextBuffer::render_text (bool & regenerated)
 		{
 			regenerated = false;
 
@@ -69,11 +69,11 @@ namespace Dream
 					Vec2u text_block_size = text_block.calculate_size();
 
 					if (_image)
-						_image->allocate(text_block_size << 1, PixelFormat::L, DataType::BYTE);
+						_image->resize(text_block_size, PixelFormat::L, DataType::BYTE);
 					else
-						_image = new Image(text_block_size << 1, PixelFormat::L, DataType::BYTE);
+						_image = new Image(text_block_size, PixelFormat::L, DataType::BYTE);
 
-					_image->clear();
+					_image->fill();
 
 					text_block.render(_image);
 					regenerated = true;
