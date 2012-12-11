@@ -9,11 +9,13 @@
 #ifndef _DREAM_CORE_ALGORITHM_H
 #define _DREAM_CORE_ALGORITHM_H
 
+#include <vector>
+
 namespace Dream {
 	namespace Core {
 		/// Provides an efficient way to erase elements from an unsorted std::vector
-		template <typename t>
-		bool erase_element_at_index (std::size_t index, std::vector<t> & array)
+		template <typename AnyT>
+		bool erase_element_at_index (std::size_t index, std::vector<AnyT> & array)
 		{
 			if (array.size() == (index+1)) {
 				array.pop_back();
