@@ -128,8 +128,8 @@ namespace Dream {
 			Path resource_path () const { return _current_path; }
 
 			// Normalize a resource request
-			Path path_for_resource(Path) const;
-			Path path_for_resource(StringT name, StringT ext, Path dir) const;
+			virtual Path path_for_resource(Path) const;
+			virtual Path path_for_resource(StringT name, StringT ext, Path dir) const;
 
 			// Load a path directly with no processing
 			virtual Ref<Object> load_path (const Path &res) const;

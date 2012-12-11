@@ -55,7 +55,7 @@ namespace Dream {
 			struct RendererState : public Object {
 				virtual ~RendererState();
 
-				Ref<Resources::Loader> resource_loader;
+				Ref<Resources::ILoader> resource_loader;
 				Ref<TextureManager> texture_manager;
 				Ref<ShaderManager> shader_manager;
 				Ref<Renderer::Viewport> viewport;
