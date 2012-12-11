@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7E0B3B98167627DB003A2227 /* Test.Imaging.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E0B3B96167627DB003A2227 /* Test.Imaging.cpp */; };
+		7E0B3B9F16774572003A2227 /* Test.Text.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E0B3B9E16774572003A2227 /* Test.Text.cpp */; };
+		7E274A841677778200B91471 /* averia in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7E0B3BA01677479A003A2227 /* averia */; };
 		7E64E62716678215006B710D /* Loader-Cocoa.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7EC2BA711667557500F3D545 /* Loader-Cocoa.mm */; };
 		7E64E62816679808006B710D /* Path-NSFileManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7EC2BA771667557500F3D545 /* Path-NSFileManager.mm */; };
 		7EC2BA98166758B000F3D545 /* Assertion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7EC2B9C01667557500F3D545 /* Assertion.cpp */; };
@@ -22,7 +25,7 @@
 		7EC2BAA3166758E900F3D545 /* Graphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7EC2B9DB1667557500F3D545 /* Graphics.cpp */; };
 		7EC2BAA4166758E900F3D545 /* MeshBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7EC2B9DD1667557500F3D545 /* MeshBuffer.cpp */; };
 		7EC2BAA5166758E900F3D545 /* ParticleRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7EC2B9DF1667557500F3D545 /* ParticleRenderer.cpp */; };
-		7EC2BAA6166758E900F3D545 /* PixelBufferRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7EC2B9E11667557500F3D545 /* PixelBufferRenderer.cpp */; };
+		7EC2BAA6166758E900F3D545 /* ImageRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7EC2B9E11667557500F3D545 /* ImageRenderer.cpp */; };
 		7EC2BAA7166758E900F3D545 /* Renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7EC2B9E31667557500F3D545 /* Renderer.cpp */; };
 		7EC2BAA8166758E900F3D545 /* ShaderManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7EC2B9E51667557500F3D545 /* ShaderManager.cpp */; };
 		7EC2BAA9166758E900F3D545 /* TextureManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7EC2B9E71667557500F3D545 /* TextureManager.cpp */; };
@@ -50,9 +53,9 @@
 		7EC2BAC0166758E900F3D545 /* Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7EC2BA211667557500F3D545 /* Source.cpp */; };
 		7EC2BAC1166758E900F3D545 /* Thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7EC2BA231667557500F3D545 /* Thread.cpp */; };
 		7EC2BAC4166758E900F3D545 /* Image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7EC2BA2A1667557500F3D545 /* Image.cpp */; };
-		7EC2BAC5166758E900F3D545 /* ImageLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7EC2BA2C1667557500F3D545 /* ImageLoader.cpp */; };
+		7EC2BAC5166758E900F3D545 /* Image.Load.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7EC2BA2C1667557500F3D545 /* Image.Load.cpp */; };
 		7EC2BAC6166758E900F3D545 /* PixelBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7EC2BA2D1667557500F3D545 /* PixelBuffer.cpp */; };
-		7EC2BAC7166758E900F3D545 /* PixelBufferSaver-PNG.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7EC2BA2F1667557500F3D545 /* PixelBufferSaver-PNG.cpp */; };
+		7EC2BAC7166758E900F3D545 /* Image.Save.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7EC2BA2F1667557500F3D545 /* Image.Save.cpp */; };
 		7EC2BAC8166758E900F3D545 /* Address.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7EC2BA321667557500F3D545 /* Address.cpp */; };
 		7EC2BAC9166758E900F3D545 /* Message.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7EC2BA341667557500F3D545 /* Message.cpp */; };
 		7EC2BACA166758E900F3D545 /* Network.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7EC2BA361667557500F3D545 /* Network.cpp */; };
@@ -68,7 +71,6 @@
 		7EC2BAD4166758E900F3D545 /* Loadable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7EC2BA4C1667557500F3D545 /* Loadable.cpp */; };
 		7EC2BAD5166758E900F3D545 /* Loader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7EC2BA4E1667557500F3D545 /* Loader.cpp */; };
 		7EC2BAD6166758E900F3D545 /* AlignedTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7EC2BA521667557500F3D545 /* AlignedTree.cpp */; };
-		7EC2BAD7166758E900F3D545 /* HeightMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7EC2BA541667557500F3D545 /* HeightMap.cpp */; };
 		7EC2BAD8166758E900F3D545 /* PathFinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7EC2BA561667557500F3D545 /* PathFinder.cpp */; };
 		7EC2BAD9166758E900F3D545 /* Font.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7EC2BA591667557500F3D545 /* Font.cpp */; };
 		7EC2BADA166758E900F3D545 /* FontFace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7EC2BA5B1667557500F3D545 /* FontFace.cpp */; };
@@ -77,7 +79,24 @@
 		7EC2BADD166758E900F3D545 /* Timer-CoreVideo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7EC2BA741667557500F3D545 /* Timer-CoreVideo.cpp */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		7E274A821677777E00B91471 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 6;
+			files = (
+				7E274A841677778200B91471 /* averia in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		7E0B3B96167627DB003A2227 /* Test.Imaging.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Test.Imaging.cpp; sourceTree = "<group>"; };
+		7E0B3B97167627DB003A2227 /* build.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = build.rb; sourceTree = "<group>"; };
+		7E0B3B9E16774572003A2227 /* Test.Text.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Test.Text.cpp; sourceTree = "<group>"; };
+		7E0B3BA01677479A003A2227 /* averia */ = {isa = PBXFileReference; lastKnownFileType = folder; path = averia; sourceTree = "<group>"; };
 		7E3EA859118086DB00F6C40B /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		7EA912770EB41A080080E66D /* Dream */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Dream; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EB05B4F15EE6B3E00511954 /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
@@ -123,8 +142,8 @@
 		7EC2B9DE1667557500F3D545 /* MeshBuffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MeshBuffer.h; sourceTree = "<group>"; };
 		7EC2B9DF1667557500F3D545 /* ParticleRenderer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ParticleRenderer.cpp; sourceTree = "<group>"; };
 		7EC2B9E01667557500F3D545 /* ParticleRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParticleRenderer.h; sourceTree = "<group>"; };
-		7EC2B9E11667557500F3D545 /* PixelBufferRenderer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PixelBufferRenderer.cpp; sourceTree = "<group>"; };
-		7EC2B9E21667557500F3D545 /* PixelBufferRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PixelBufferRenderer.h; sourceTree = "<group>"; };
+		7EC2B9E11667557500F3D545 /* ImageRenderer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ImageRenderer.cpp; sourceTree = "<group>"; };
+		7EC2B9E21667557500F3D545 /* ImageRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageRenderer.h; sourceTree = "<group>"; };
 		7EC2B9E31667557500F3D545 /* Renderer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Renderer.cpp; sourceTree = "<group>"; };
 		7EC2B9E41667557500F3D545 /* Renderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Renderer.h; sourceTree = "<group>"; };
 		7EC2B9E51667557500F3D545 /* ShaderManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ShaderManager.cpp; sourceTree = "<group>"; };
@@ -188,11 +207,10 @@
 		7EC2BA281667557500F3D545 /* Framework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Framework.h; sourceTree = "<group>"; };
 		7EC2BA2A1667557500F3D545 /* Image.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Image.cpp; sourceTree = "<group>"; };
 		7EC2BA2B1667557500F3D545 /* Image.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Image.h; sourceTree = "<group>"; };
-		7EC2BA2C1667557500F3D545 /* ImageLoader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ImageLoader.cpp; sourceTree = "<group>"; };
+		7EC2BA2C1667557500F3D545 /* Image.Load.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Image.Load.cpp; sourceTree = "<group>"; };
 		7EC2BA2D1667557500F3D545 /* PixelBuffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PixelBuffer.cpp; sourceTree = "<group>"; };
 		7EC2BA2E1667557500F3D545 /* PixelBuffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PixelBuffer.h; sourceTree = "<group>"; };
-		7EC2BA2F1667557500F3D545 /* PixelBufferSaver-PNG.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "PixelBufferSaver-PNG.cpp"; sourceTree = "<group>"; };
-		7EC2BA301667557500F3D545 /* PixelBufferSaver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PixelBufferSaver.h; sourceTree = "<group>"; };
+		7EC2BA2F1667557500F3D545 /* Image.Save.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Image.Save.cpp; sourceTree = "<group>"; };
 		7EC2BA321667557500F3D545 /* Address.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Address.cpp; sourceTree = "<group>"; };
 		7EC2BA331667557500F3D545 /* Address.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Address.h; sourceTree = "<group>"; };
 		7EC2BA341667557500F3D545 /* Message.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Message.cpp; sourceTree = "<group>"; };
@@ -275,10 +293,21 @@
 			children = (
 				7E3EA859118086DB00F6C40B /* README.md */,
 				7EC2B9BE1667557500F3D545 /* source */,
+				7E0B3B95167627DB003A2227 /* test */,
 				7EBC1F240FA5178700D2CA1D /* Share */,
 				034768DFFF38A50411DB9C8B /* Products */,
 			);
 			name = Dream;
+			sourceTree = "<group>";
+		};
+		7E0B3B95167627DB003A2227 /* test */ = {
+			isa = PBXGroup;
+			children = (
+				7E0B3B96167627DB003A2227 /* Test.Imaging.cpp */,
+				7E0B3B9E16774572003A2227 /* Test.Text.cpp */,
+				7E0B3B97167627DB003A2227 /* build.rb */,
+			);
+			path = test;
 			sourceTree = "<group>";
 		};
 		7EB05B4E15EE6B3E00511954 /* build */ = {
@@ -295,6 +324,7 @@
 		7EB05B5315EE6B3E00511954 /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				7E0B3BA01677479A003A2227 /* averia */,
 				7EB05B5415EE6B3E00511954 /* Dream Icon (114x114).png */,
 				7EB05B5515EE6B3E00511954 /* Dream Icon (144x144).png */,
 				7EB05B5615EE6B3E00511954 /* Dream Icon (512x512).png */,
@@ -406,8 +436,8 @@
 				7EC2B9DE1667557500F3D545 /* MeshBuffer.h */,
 				7EC2B9DF1667557500F3D545 /* ParticleRenderer.cpp */,
 				7EC2B9E01667557500F3D545 /* ParticleRenderer.h */,
-				7EC2B9E11667557500F3D545 /* PixelBufferRenderer.cpp */,
-				7EC2B9E21667557500F3D545 /* PixelBufferRenderer.h */,
+				7EC2B9E11667557500F3D545 /* ImageRenderer.cpp */,
+				7EC2B9E21667557500F3D545 /* ImageRenderer.h */,
 				7EC2B9E31667557500F3D545 /* Renderer.cpp */,
 				7EC2B9E41667557500F3D545 /* Renderer.h */,
 				7EC2B9E51667557500F3D545 /* ShaderManager.cpp */,
@@ -508,9 +538,8 @@
 				7EC2BA2D1667557500F3D545 /* PixelBuffer.cpp */,
 				7EC2BA2B1667557500F3D545 /* Image.h */,
 				7EC2BA2A1667557500F3D545 /* Image.cpp */,
-				7EC2BA2C1667557500F3D545 /* ImageLoader.cpp */,
-				7EC2BA301667557500F3D545 /* PixelBufferSaver.h */,
-				7EC2BA2F1667557500F3D545 /* PixelBufferSaver-PNG.cpp */,
+				7EC2BA2F1667557500F3D545 /* Image.Save.cpp */,
+				7EC2BA2C1667557500F3D545 /* Image.Load.cpp */,
 			);
 			path = Imaging;
 			sourceTree = "<group>";
@@ -578,14 +607,14 @@
 		7EC2BA581667557500F3D545 /* Text */ = {
 			isa = PBXGroup;
 			children = (
-				7EC2BA591667557500F3D545 /* Font.cpp */,
 				7EC2BA5A1667557500F3D545 /* Font.h */,
-				7EC2BA5B1667557500F3D545 /* FontFace.cpp */,
+				7EC2BA591667557500F3D545 /* Font.cpp */,
 				7EC2BA5C1667557500F3D545 /* FontFace.h */,
-				7EC2BA5D1667557500F3D545 /* TextBlock.cpp */,
+				7EC2BA5B1667557500F3D545 /* FontFace.cpp */,
 				7EC2BA5E1667557500F3D545 /* TextBlock.h */,
-				7EC2BA5F1667557500F3D545 /* TextBuffer.cpp */,
+				7EC2BA5D1667557500F3D545 /* TextBlock.cpp */,
 				7EC2BA601667557500F3D545 /* TextBuffer.h */,
+				7EC2BA5F1667557500F3D545 /* TextBuffer.cpp */,
 			);
 			path = Text;
 			sourceTree = "<group>";
@@ -682,6 +711,7 @@
 			buildPhases = (
 				7EA912740EB41A080080E66D /* Sources */,
 				7EA912750EB41A080080E66D /* Frameworks */,
+				7E274A821677777E00B91471 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -739,7 +769,7 @@
 				7EC2BAA3166758E900F3D545 /* Graphics.cpp in Sources */,
 				7EC2BAA4166758E900F3D545 /* MeshBuffer.cpp in Sources */,
 				7EC2BAA5166758E900F3D545 /* ParticleRenderer.cpp in Sources */,
-				7EC2BAA6166758E900F3D545 /* PixelBufferRenderer.cpp in Sources */,
+				7EC2BAA6166758E900F3D545 /* ImageRenderer.cpp in Sources */,
 				7EC2BAA7166758E900F3D545 /* Renderer.cpp in Sources */,
 				7EC2BAA8166758E900F3D545 /* ShaderManager.cpp in Sources */,
 				7EC2BAA9166758E900F3D545 /* TextureManager.cpp in Sources */,
@@ -767,9 +797,9 @@
 				7EC2BAC0166758E900F3D545 /* Source.cpp in Sources */,
 				7EC2BAC1166758E900F3D545 /* Thread.cpp in Sources */,
 				7EC2BAC4166758E900F3D545 /* Image.cpp in Sources */,
-				7EC2BAC5166758E900F3D545 /* ImageLoader.cpp in Sources */,
+				7EC2BAC5166758E900F3D545 /* Image.Load.cpp in Sources */,
 				7EC2BAC6166758E900F3D545 /* PixelBuffer.cpp in Sources */,
-				7EC2BAC7166758E900F3D545 /* PixelBufferSaver-PNG.cpp in Sources */,
+				7EC2BAC7166758E900F3D545 /* Image.Save.cpp in Sources */,
 				7EC2BAC8166758E900F3D545 /* Address.cpp in Sources */,
 				7EC2BAC9166758E900F3D545 /* Message.cpp in Sources */,
 				7EC2BACA166758E900F3D545 /* Network.cpp in Sources */,
@@ -785,7 +815,6 @@
 				7EC2BAD4166758E900F3D545 /* Loadable.cpp in Sources */,
 				7EC2BAD5166758E900F3D545 /* Loader.cpp in Sources */,
 				7EC2BAD6166758E900F3D545 /* AlignedTree.cpp in Sources */,
-				7EC2BAD7166758E900F3D545 /* HeightMap.cpp in Sources */,
 				7EC2BAD8166758E900F3D545 /* PathFinder.cpp in Sources */,
 				7EC2BAD9166758E900F3D545 /* Font.cpp in Sources */,
 				7EC2BADA166758E900F3D545 /* FontFace.cpp in Sources */,
@@ -794,6 +823,8 @@
 				7EC2BADD166758E900F3D545 /* Timer-CoreVideo.cpp in Sources */,
 				7E64E62716678215006B710D /* Loader-Cocoa.mm in Sources */,
 				7E64E62816679808006B710D /* Path-NSFileManager.mm in Sources */,
+				7E0B3B98167627DB003A2227 /* Test.Imaging.cpp in Sources */,
+				7E0B3B9F16774572003A2227 /* Test.Text.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -807,10 +838,11 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				HEADER_SEARCH_PATHS = (
-					"\"$(SRCROOT)/build/darwin-osx/include\"",
-					"\"$(SRCROOT)/build/darwin-osx/include/freetype2\"",
+					"\"$(SRCROOT)/source\"",
+					"\"$(SRCROOT)/platforms/darwin-osx-debug/include\"",
+					"\"$(SRCROOT)/platforms/darwin-osx-debug/include/freetype2\"",
 				);
-				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/build/darwin-osx/lib\"";
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/platforms/darwin-osx-debug/lib\"";
 			};
 			name = Debug;
 		};
@@ -821,10 +853,11 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				HEADER_SEARCH_PATHS = (
-					"\"$(SRCROOT)/build/darwin-osx/include\"",
-					"\"$(SRCROOT)/build/darwin-osx/include/freetype2\"",
+					"\"$(SRCROOT)/source\"",
+					"\"$(SRCROOT)/platforms/darwin-osx-debug/include\"",
+					"\"$(SRCROOT)/platforms/darwin-osx-debug/include/freetype2\"",
 				);
-				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/build/darwin-osx/lib\"";
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/platforms/darwin-osx-debug/lib\"";
 			};
 			name = Release;
 		};
