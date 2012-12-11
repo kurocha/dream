@@ -15,7 +15,7 @@
 namespace Dream {
 	namespace Client {
 		namespace Graphics {
-			View::Controller::Controller () : _debug(false) {
+			View::Controller::Controller () {
 				_static_focused_view = NULL;
 				_dynamic_focused_view = NULL;
 			}
@@ -23,11 +23,11 @@ namespace Dream {
 			View::Controller::~Controller () {
 			}
 
-			void View::Controller::set_principal_view (View *p) {
+			void View::Controller::set_principal_view (Ptr<View> view) {
 				_static_focused_view = NULL;
 				_dynamic_focused_view = NULL;
 
-				_principal = p;
+				_principal = view;
 			}
 
 			bool View::Controller::resize(const ResizeInput &input) {
@@ -45,10 +45,10 @@ namespace Dream {
 			bool View::Controller::motion(const MotionInput &input) {
 				bool result = false;
 
-				View* current = dynamic_focused_view();
+				Ptr<View> current = dynamic_focused_view();
 				std::vector<View*> views;
 
-				views_to_point(input.current_position().reduce(), views);
+				views_to_point(input.current_position(), views);
 
 				View* next = NULL;
 
@@ -89,22 +89,16 @@ namespace Dream {
 				return result;
 			}
 
-			void View::Controller::set_dynamic_focused_view(View* view) {
+			void View::Controller::set_dynamic_focused_view(Ptr<View> view) {
 				_dynamic_focused_view = view;
 			}
 
-			void View::Controller::set_static_focused_view(View* view) {
+			void View::Controller::set_static_focused_view(Ptr<View> view) {
 				_static_focused_view = view;
 			}
 
 			void View::Controller::views_to_point (const Vec2 &point, std::vector<View*> &views) {
 				_principal->views_to_point(point, views);
-			}
-
-			void View::Controller::render_frame_for_time (IScene * scene, TimeT time) {
-				//scene->renderer()->setupOrthographicDisplay(_principal->bounds().size());
-				_principal->render_frame_for_time(scene, time);
-				//scene->renderer()->finishOrthographicDisplay();
 			}
 
 			void View::Controller::did_become_current (ISceneManager * manager, IScene * scene) {
@@ -124,14 +118,6 @@ namespace Dream {
 			void View::Controller::dump_structure (std::ostream & outp) {
 				outp << "View Controller " << this << std::endl;
 				_principal->dump_structure(outp, 1);
-			}
-
-			void View::Controller::set_debug_mode (bool enabled) {
-				_debug = enabled;
-			}
-
-			bool View::Controller::debug_mode () {
-				return _debug;
 			}
 
 			void View::init () {
@@ -224,41 +210,6 @@ namespace Dream {
 				}
 			}
 
-			void View::render_view (IScene * scene, TimeT time) {
-				WireframeRenderer bounding_box_renderer;
-
-				//if (has_static_focus())
-				//bounding_box_renderer.set_major_color(Vec4(1.0, 0.0, 0.0, 0.2));
-				//else if (has_dynamic_focus())
-				//bounding_box_renderer.set_major_color(Vec4(1.0, 1.0, 0.0, 0.2));
-				//else
-				//bounding_box_renderer.set_major_color(Vec4(0.0, 1.0, 0.0, 0.2));
-
-				if (_controller->debug_mode())
-					bounding_box_renderer.render(_bounds);
-			}
-
-			void View::render_frame_for_time(IScene * scene, TimeT time) {
-				if (_rotation != 0) {
-					//Vec2 t = -_bounds.center();
-
-					//glPushMatrix();
-					//glTranslatef(t[X], t[Y], 0);
-					//glRotatef(_rotation, 0.0, 0.0, 1.0);
-					//glTranslatef(-t[X], -t[Y], 0);
-				}
-
-				render_view(scene, time);
-
-				for (auto subview : _subviews) {
-					subview->render_frame_for_time(scene, time);
-				}
-
-				if (_rotation != 0) {
-					//glPopMatrix();
-				}
-			}
-
 			void View::did_become_current (ISceneManager * manager, IScene * scene) {
 				for (auto subview : _subviews) {
 					subview->did_become_current(manager, scene);
@@ -318,11 +269,11 @@ namespace Dream {
 			}
 
 			bool View::has_dynamic_focus () const {
-				return controller()->dynamic_focused_view() == this;
+				return controller()->dynamic_focused_view().get() == this;
 			}
 
 			bool View::has_static_focus () const {
-				return controller()->static_focused_view() == this;
+				return controller()->static_focused_view().get() == this;
 			}
 
 			bool View::is_enabled () const {

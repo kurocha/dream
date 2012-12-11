@@ -14,7 +14,7 @@
 #include "../../Text/TextBuffer.h"
 
 #include "Renderer.h"
-#include "PixelBufferRenderer.h"
+#include "ImageRenderer.h"
 
 #include <Euclid/Geometry/AlignedBox.h>
 
@@ -26,19 +26,17 @@ namespace Dream {
 
 			/** Implements the basic structure of user interface layout and display.
 			*/
-			class View : public Object, implements INode {
+			class View : public Object, implements INode, implements ILayer {
 			public:
 				/** The top level user interface controller.
 				*/
 				class Controller : public Object, implements ILayer {
 				protected:
-					bool _debug;
-
 					Ref<View> _principal;
-					View *_static_focused_view, *_dynamic_focused_view;
+					Ref<View> _static_focused_view, _dynamic_focused_view;
 
 					void views_to_point (const Vec2 &point, std::vector<View*> &views);
-					void set_principal_view (View *p);
+					void set_principal_view (Ptr<View> view);
 
 					friend class View;
 				public:
@@ -55,32 +53,22 @@ namespace Dream {
 
 					/// Set the current dynamically focused view.
 					/// This is normally determined by the location of the mouse or pointer device.
-					void set_dynamic_focused_view(View* view);
+					void set_dynamic_focused_view(Ptr<View> view);
 
 					/// Get the currently dynamically focused view.
-					View* dynamic_focused_view() const { return _dynamic_focused_view; }
+					Ptr<View> dynamic_focused_view() const { return _dynamic_focused_view; }
 
 					// Set the current statically focused view.
 					/// This is normally determined by a click of the mouse or keyboard.
-					void set_static_focused_view(View* view);
+					void set_static_focused_view(Ptr<View> view);
 
 					/// Get the current statically focused view.
-					View* static_focused_view() const { return _static_focused_view; }
-
-					virtual void render_frame_for_time (IScene * scene, TimeT time);
+					Ptr<View> static_focused_view() const { return _static_focused_view; }
 
 					virtual void did_become_current (ISceneManager * manager, IScene * scene);
 					virtual void will_revoke_current (ISceneManager * manager, IScene * scene);
 
-					virtual void dump_structure (std::ostream & outp);
-
-					/// Enable debugging of user interface layout.
-					/// Borders are drawn around all user interface elements.
-					void set_debug_mode (bool enabled);
-
-					/// Get the current debug mode.
-					/// @returns true if debug mode enabled.
-					bool debug_mode ();
+					virtual void dump_structure (std::ostream & output);
 				};
 
 			private:
@@ -102,9 +90,7 @@ namespace Dream {
 				AlignedBox<2> _bounds;
 				RealT _rotation;
 
-				virtual bool intersects_with (const Vec2 &point);
-
-				virtual void render_view (IScene * scene, TimeT time);
+				virtual bool intersects_with (const Vec2 & point);
 
 			private:
 				void init ();
@@ -157,7 +143,6 @@ namespace Dream {
 				virtual bool button (const ButtonInput &);
 				virtual bool motion (const MotionInput &);
 
-				virtual void render_frame_for_time (IScene * scene, TimeT time);
 				virtual void did_become_current (ISceneManager * manager, IScene * scene);
 				virtual void will_revoke_current (ISceneManager * manager, IScene * scene);
 
