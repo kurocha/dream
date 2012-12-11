@@ -63,9 +63,9 @@ namespace Dream {
 		protected:
 			typedef Vector<N, std::size_t> CoordinateT;
 
-			std::uint8_t _bytes_per_pixel;
-			CoordinateT _size;
 			DataT * _data;
+			CoordinateT _size;
+			std::uint8_t _bytes_per_pixel;
 
 			std::size_t offset (const CoordinateT & coordinate) const
 			{
