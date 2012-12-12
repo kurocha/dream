@@ -58,7 +58,7 @@ namespace Dream {
 				Ref<Resources::ILoader> resource_loader;
 				Ref<TextureManager> texture_manager;
 				Ref<ShaderManager> shader_manager;
-				Ref<Renderer::Viewport> viewport;
+				Ref<Renderer::IViewport> viewport;
 
 				// These are essentially helper methods to load shader programs:
 				GLuint compile_shader_of_type (GLenum type, const Path & path);
