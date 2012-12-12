@@ -25,10 +25,10 @@ namespace Dream
 		OrthographicProjection::OrthographicProjection(const AlignedBox<3> & box) : _box(box) {
 		}
 
-		FixedProjection::FixedProjection(const Mat44 projection_matrix) : _projection_matrix(projection_matrix) {
+		Projection::Projection(const Mat44 projection_matrix) : _projection_matrix(projection_matrix) {
 		}
 
-		Mat44 FixedProjection::projection_matrix_for_viewport(const IViewport & viewport) {
+		Mat44 Projection::projection_matrix_for_viewport(const IViewport & viewport) {
 			return _projection_matrix;
 		}
 

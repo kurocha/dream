@@ -31,12 +31,12 @@ namespace Dream
 			virtual Mat44 projection_matrix_for_viewport(const IViewport & viewport) abstract;
 		};
 
-		class FixedProjection : public Object, implements IProjection {
+		class Projection : public Object, implements IProjection {
 		protected:
 			Mat44 _projection_matrix;
 
 		public:
-			FixedProjection(const Mat44 projection_matrix);
+			Projection(const Mat44 projection_matrix);
 
 			virtual Mat44 projection_matrix_for_viewport(const IViewport & viewport);
 		};
