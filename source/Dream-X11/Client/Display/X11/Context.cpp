@@ -20,6 +20,7 @@ namespace Dream
 			{
 				
 				using namespace Events::Logging;
+				using namespace Euclid::Numerics::Constants;
 								
 // MARK: -
 
@@ -151,7 +152,7 @@ namespace Dream
 				}
 
 				Vec2u WindowContext::size() {
-					return ZERO;
+					return 0;
 				}
 
 				void WindowContext::set_cursor_mode(CursorMode mode) {
