@@ -227,13 +227,13 @@ namespace Dream {
 					// We need to resize the entire box.
 					_bounds.min() = 0;
 
-					LogBuffer buffer;
-					buffer << "Resizing principal from " << _bounds.origin() << "; " << _bounds.size();
+					//LogBuffer buffer;
+					//buffer << "Resizing principal from " << _bounds.origin() << "; " << _bounds.size();
 
 					_bounds.set_size_from_origin(input.new_size());
 
-					buffer << " to " << _bounds.origin() << "; " << _bounds.size() << "(" << input.new_size() << ")";
-					logger()->log(LOG_DEBUG, buffer);
+					//buffer << " to " << _bounds.origin() << "; " << _bounds.size() << "(" << input.new_size() << ")";
+					//logger()->log(LOG_DEBUG, buffer);
 				} else {
 					//std::cout << "Resizing view from " << _bounds.origin() << "; " << _bounds.size();
 					_bounds.set_size_from_origin(_parent->bounds().size() * _scale + _size);
