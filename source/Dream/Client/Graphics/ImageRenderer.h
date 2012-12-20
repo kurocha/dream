@@ -68,6 +68,8 @@ namespace Dream {
 				void render(const AlignedBox2 & box, Ptr<Image> image);
 				void render(const AlignedBox2 & box, Ptr<Image> image, Vec2b flip, RotationT rotation);
 
+				void render(const AlignedBox2 & box, Ptr<Image> image, const AlignedBox2 & inner);
+
 				// Images will be automatically invalidated once no longer available.
 				void invalidate(Ptr<Image> pixel_buffer);
 			};

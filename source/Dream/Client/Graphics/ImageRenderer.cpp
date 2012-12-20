@@ -125,6 +125,86 @@ namespace Dream {
 				}
 			}
 
+			void ImageRenderer::render(const AlignedBox2 & box, Ptr<Image> image, const AlignedBox2 & inner)
+			{
+				// If the inner alignment box is bigger than the box we are rendering, we have no choice but to scale the inner box:
+				if (inner.size().greater_than(box.size())) {
+					render(box, image);
+
+					return;
+				}
+
+				std::vector<Vertex> vertices;
+
+				Ref<Texture> texture = fetch(image);
+
+				// Calculate the box coordinates:
+				const Vec2 box_diagonal[] = {
+					box.min(),
+					box.min() + inner.min(),
+					box.max() - (image->size() - inner.max()),
+					box.max(),
+				};
+
+				// Calculate the image coordinates:
+				const Vec2 image_diagonal[] = {
+					0.0,
+					inner.min() / inner.size(),
+					inner.max() / inner.size(),
+					1.0,
+				};
+
+				for (std::size_t j = 0; j < 3; j += 1) {
+					RealT position_y[] = {box_diagonal[j][Y], box_diagonal[j+1][Y]};
+					RealT mapping_y[] = {image_diagonal[j][Y], image_diagonal[j+1][Y]};
+ 
+					for (std::size_t i = 0; i < 4; i += 1) {
+						RealT position_x = box_diagonal[i][X];
+						RealT mapping_x = image_diagonal[i][X];
+
+						// Lower vertex
+						{
+							Vertex vertex = {
+								.position = Vec2(position_x, position_y[0]),
+								.mapping = Vec2(mapping_x, mapping_y[0]),
+							};
+
+							// Add a 2nd vertex at the start of the row for the degenerate triangle between the end of the previous row and this one.
+							if (j > 0 && i == 0)
+								vertices.push_back(vertex);
+
+							vertices.push_back(vertex);
+						}
+
+						// Upper vertex
+						{
+							Vertex vertex = {
+								.position = Vec2(position_x, position_y[1]),
+								.mapping = Vec2(mapping_x, mapping_y[1]),
+							};
+
+							vertices.push_back(vertex);
+						}
+					}
+
+					// Add a vertex at the end of the row for the degenerate triangle between this and the next row, except at the last row.
+					if (j < 2)
+						vertices.push_back(vertices.back());
+				}
+
+				_texture_manager->bind(0, texture);
+
+				{
+					auto binding = _vertex_array.binding();
+					auto buffer_binding = _vertex_buffer.binding();
+
+					check_graphics_error();
+
+					buffer_binding.set_data(vertices);
+					binding.draw_arrays(GL_TRIANGLE_STRIP, 0, vertices.size());
+				}
+			}
+
 			void ImageRenderer::invalidate(Ptr<Image> image) {
 				auto iterator = _texture_cache.find(image);
 
