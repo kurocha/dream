@@ -51,7 +51,6 @@ namespace Dream {
 					return cache->second;
 				} else {
 					//logger()->log(LOG_DEBUG, LogBuffer() << "Fetch " << image << ": allocating new texture");
-
 					Ref<Texture> texture;
 
 					if (_available_textures.size() > 0) {
@@ -65,10 +64,16 @@ namespace Dream {
 						texture = _texture_manager->allocate(_texture_parameters, image);
 					}
 
+					image->insert_finalizer(this);
 					_texture_cache[image] = texture;
 
 					return texture;
 				}
+			}
+
+			void ImageRenderer::finalize(Object * object)
+			{
+				this->invalidate(ptr(object).as<Image>());
 			}
 
 			void ImageRenderer::render(const AlignedBox2 & box, Ptr<Image> image) {

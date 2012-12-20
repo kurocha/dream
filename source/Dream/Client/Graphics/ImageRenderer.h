@@ -22,7 +22,7 @@ namespace Dream {
 			using Euclid::Numerics::Vec2b;
 
 			/// Efficiently render pixel buffers as textured quads. Rendering pixel buffers is a common operation especially for user interfaces, text, certain graphical effects, etc. The ImageRenderer provides an efficient implementation of this operation that avoids uploading pixel buffers to textures if they haven't changed.
-			class ImageRenderer : public Object {
+			class ImageRenderer : public Object, implements IFinalizer {
 			protected:
 				using Image = Imaging::Image;
 
@@ -45,6 +45,8 @@ namespace Dream {
 				VertexArray _vertex_array;
 				VertexBuffer<Vertex> _vertex_buffer;
 
+				virtual void finalize(Object * object);
+
 			public:
 				typedef int RotationT;
 
@@ -66,6 +68,7 @@ namespace Dream {
 				void render(const AlignedBox2 & box, Ptr<Image> image);
 				void render(const AlignedBox2 & box, Ptr<Image> image, Vec2b flip, RotationT rotation);
 
+				// Images will be automatically invalidated once no longer available.
 				void invalidate(Ptr<Image> pixel_buffer);
 			};
 		}
