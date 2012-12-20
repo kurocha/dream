@@ -17,27 +17,13 @@
 #include <stdint.h>
 #include <iostream>
 
-// A bit of a hack to get this to compile on 10.7 Lion, no longer needed on 10.8
-//#define cxx_atomic cxx_nullptr
 #include <atomic>
 
 namespace Dream {
-	/* Why use these?
+	/*
+		Reference counting can be expensive and mostly pointless. As a form of resource management it can be quite useful for tracking ownership across non-lexical scope. These classes provide memory management for these situations.
 
-	    Reference counting is expensive and mostly needless.
-
-	    The only place you need to increment a reference count is when
-	    you need to save an object outside of the lexical scope. In this
-	    case use Reference<>.
-
-	    When you have a function that can accept either
-	        - A raw pointer
-	        - A Reference<>
-	    use Pointer<>
-
-	    When you use Pointer<>, you won't increment reference count. Another
-	    option is to use const Reference<> &, however you can't convert a
-	    raw pointer to this type.
+	    The only place you need to increment a reference count is when you need to retain (i.e. take ownership of) an object outside of the lexical scope. In this case use Reference<>. In all other cases use raw pointers or Pointer<>.
 	*/
 
 	class SharedObject {
@@ -74,7 +60,7 @@ namespace Dream {
 	template <typename ObjectT>
 	class Pointer {
 	protected:
-		ObjectT* _object;
+		ObjectT * _object;
 
 	public:
 		Pointer () : _object(NULL) {
@@ -84,19 +70,19 @@ namespace Dream {
 		}
 
 		template <typename OtherObjectT, typename std::enable_if<std::is_convertible<OtherObjectT, ObjectT>::value>::type = 0>
-		Pointer (OtherObjectT* object) : _object(dynamic_cast<ObjectT*>(object)) {
+		Pointer (OtherObjectT * object) : _object(dynamic_cast<ObjectT*>(object)) {
 		}
 
 		template <typename OtherObjectT>
 		Pointer (Pointer<OtherObjectT> other) : _object(dynamic_cast<ObjectT*>(other.get())) {
 		}
 
-		ObjectT* operator-> () const {
+		ObjectT * operator-> () const {
 			DREAM_ASSERT(_object != NULL);
 			return _object;
 		}
 
-		ObjectT& operator* () const {
+		ObjectT & operator* () const {
 			DREAM_ASSERT(_object != NULL);
 			return *_object;
 		}
@@ -131,18 +117,23 @@ namespace Dream {
 			return _object >= other._object;
 		}
 
-		ObjectT* get () const
+		ObjectT * get () const
 		{
 			return _object;
 		}
 
-		typedef ObjectT* Pointer::* safe_bool;
+		typedef ObjectT * Pointer::* safe_bool;
 
 		operator safe_bool() const
 		{
 			return _object ? &Pointer::_object : 0;
 		}
 
+		operator ObjectT * () const
+		{
+			return _object;
+		}
+		
 		template <typename OtherObjectT>
 		Pointer<OtherObjectT> as () const {
 			return Pointer<OtherObjectT>(dynamic_cast<OtherObjectT*>(_object));
@@ -160,19 +151,9 @@ namespace Dream {
 	template <typename ObjectT>
 	class Reference : public Pointer<ObjectT>{
 	private:
-		void construct () {
+		void retain () {
 			if (this->_object)
 				this->_object->retain();
-		}
-
-		template <typename OtherObjectT>
-		static ObjectT* extract (OtherObjectT* object) {
-			return object;
-		}
-
-		template <typename OtherObjectT>
-		static ObjectT* extract (Pointer<OtherObjectT>& object) {
-			return object.get();
 		}
 
 	public:
@@ -183,7 +164,7 @@ namespace Dream {
 			}
 		}
 
-		Reference& set (ObjectT* object) {
+		Reference& set (ObjectT * object) {
 			clear();
 
 			if (object) {
@@ -197,35 +178,35 @@ namespace Dream {
 		Reference () {
 		}
 
-		Reference (ObjectT* object) : Pointer<ObjectT>(object) {
-			construct();
+		Reference (ObjectT * object) : Pointer<ObjectT>(object) {
+			retain();
 		}
 
 		Reference (const Reference& other) : Pointer<ObjectT>(other.get()) {
-			construct();
+			retain();
 		}
 
 		template <typename OtherObjectT>
-		Reference (Pointer<OtherObjectT> other) : Pointer<ObjectT>(other.get()) {
-			construct();
+		Reference (const Pointer<OtherObjectT> & other) : Pointer<ObjectT>(other.get()) {
+			retain();
 		}
 
-		Reference& operator= (const Reference& other) {
+		Reference& operator= (const Reference & other) {
 			return set(other.get());
 		}
 
 		template <typename OtherObjectT>
-		Reference& operator= (Pointer<OtherObjectT>& other) {
+		Reference& operator= (const Pointer<OtherObjectT> & other) {
 			return set(other.get());
 		}
 
-		Reference& operator= (ObjectT* object) {
+		Reference& operator= (ObjectT * object) {
 			return set(object);
 		}
 
 		template <typename OtherObjectT>
-		Reference& operator= (OtherObjectT* object) {
-			return set(dynamic_cast<ObjectT*>(object));
+		Reference& operator= (OtherObjectT * object) {
+			return set(dynamic_cast<ObjectT *>(object));
 		}
 
 		~Reference () {

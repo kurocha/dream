@@ -45,12 +45,12 @@ namespace Dream {
 			bool View::Controller::motion(const MotionInput &input) {
 				bool result = false;
 
-				Ptr<View> current = dynamic_focused_view();
+				View * current = dynamic_focused_view();
 				std::vector<View*> views;
 
 				views_to_point(input.current_position(), views);
 
-				View* next = NULL;
+				View * next = NULL;
 
 				if (views.size()) {
 					// The mouse is over some views, grab the last child
