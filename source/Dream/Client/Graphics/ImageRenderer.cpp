@@ -128,7 +128,10 @@ namespace Dream {
 			void ImageRenderer::render(const AlignedBox2 & box, Ptr<Image> image, const AlignedBox2 & inner)
 			{
 				// If the inner alignment box is bigger than the box we are rendering, we have no choice but to scale the inner box:
-				if (inner.size().greater_than(box.size())) {
+				
+				Vec2 border_size = image->size() - inner.size();
+				
+				if (border_size.greater_than(box.size())) {
 					render(box, image);
 
 					return;
@@ -149,8 +152,8 @@ namespace Dream {
 				// Calculate the image coordinates:
 				const Vec2 image_diagonal[] = {
 					0.0,
-					inner.min() / inner.size(),
-					inner.max() / inner.size(),
+					inner.min() / image->size(),
+					inner.max() / image->size(),
 					1.0,
 				};
 
