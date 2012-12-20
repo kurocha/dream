@@ -332,20 +332,20 @@ namespace Dream {
 			ImageView::~ImageView () {
 			}
 
-			void ImageView::set_default_image (Ref<IPixelBuffer> image) {
+			void ImageView::set_default_image (Ref<Image> image) {
 				_default_image = image;
 			}
 
-			void ImageView::set_dynamic_focus_image (Ref<IPixelBuffer> image) {
+			void ImageView::set_dynamic_focus_image (Ref<Image> image) {
 				_dynamic_focus_image = image;
 			}
 
-			void ImageView::set_static_focus_image (Ref<IPixelBuffer> image) {
+			void ImageView::set_static_focus_image (Ref<Image> image) {
 				_static_focus_image = image;
 			}
 
-			Ref<IPixelBuffer> ImageView::current_image () const {
-				Ref<IPixelBuffer> image = _default_image;
+			Ref<Image> ImageView::current_image () const {
+				Ref<Image> image = _default_image;
 
 				if (has_static_focus() && _static_focus_image) {
 					image = _static_focus_image;
@@ -385,9 +385,9 @@ namespace Dream {
 				return _editable;
 			}
 
-			Ref<IPixelBuffer> TextView::current_image() const {
+			Ref<Image> TextView::current_image() const {
 				bool updated = false;
-				Ref<IPixelBuffer> text_image = _text_buffer->render_text(updated);
+				Ref<Image> text_image = _text_buffer->render_text(updated);
 
 				//if (updated) {
 				//	AlignedBox<2> text_bounds = _bounds;

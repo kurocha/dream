@@ -15,6 +15,7 @@
 
 #include "Renderer.h"
 #include "ImageRenderer.h"
+#include "../../Imaging/Image.h"
 
 #include <Euclid/Geometry/AlignedBox.h>
 
@@ -23,6 +24,7 @@ namespace Dream {
 		namespace Graphics {
 			using namespace Euclid::Numerics::Constants;
 			using Euclid::Geometry::AlignedBox;
+			using Imaging::Image;
 
 			/** Implements the basic structure of user interface layout and display.
 			*/
@@ -162,19 +164,19 @@ namespace Dream {
 
 			class ImageView : public View {
 			protected:
-				Ref<IPixelBuffer> _default_image;
-				Ref<IPixelBuffer> _dynamic_focus_image;
-				Ref<IPixelBuffer> _static_focus_image;
+				Ref<Image> _default_image;
+				Ref<Image> _dynamic_focus_image;
+				Ref<Image> _static_focus_image;
 
 			public:
 				ImageView (Ptr<View> parent);
 				virtual ~ImageView ();
 
-				void set_default_image (Ref<IPixelBuffer> image);
-				void set_dynamic_focus_image (Ref<IPixelBuffer> image);
-				void set_static_focus_image (Ref<IPixelBuffer> image);
+				void set_default_image (Ref<Image> image);
+				void set_dynamic_focus_image (Ref<Image> image);
+				void set_static_focus_image (Ref<Image> image);
 
-				Ref<IPixelBuffer> current_image() const;
+				Ref<Image> current_image() const;
 
 				virtual bool motion (const MotionInput &);
 
@@ -198,7 +200,7 @@ namespace Dream {
 
 				Ref<TextBuffer> text_buffer ();
 
-				Ref<IPixelBuffer> current_image() const;
+				Ref<Image> current_image() const;
 
 				void set_editable (bool flag = true);
 				bool editable ();
