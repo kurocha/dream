@@ -77,6 +77,8 @@
 		7EC2BADB166758E900F3D545 /* TextBlock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7EC2BA5D1667557500F3D545 /* TextBlock.cpp */; };
 		7EC2BADC166758E900F3D545 /* TextBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7EC2BA5F1667557500F3D545 /* TextBuffer.cpp */; };
 		7EC2BADD166758E900F3D545 /* Timer-CoreVideo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7EC2BA741667557500F3D545 /* Timer-CoreVideo.cpp */; };
+		7EC490FF169D035C0051860D /* Association.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7EC490FD169D035C0051860D /* Association.cpp */; };
+		7EC49101169D0ACE0051860D /* Test.Association.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7EC49100169D0ACE0051860D /* Test.Association.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -267,6 +269,9 @@
 		7EC2BA711667557500F3D545 /* Loader-Cocoa.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = "Loader-Cocoa.mm"; sourceTree = "<group>"; };
 		7EC2BA741667557500F3D545 /* Timer-CoreVideo.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "Timer-CoreVideo.cpp"; sourceTree = "<group>"; };
 		7EC2BA771667557500F3D545 /* Path-NSFileManager.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = "Path-NSFileManager.mm"; sourceTree = "<group>"; };
+		7EC490FD169D035C0051860D /* Association.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Association.cpp; sourceTree = "<group>"; };
+		7EC490FE169D035C0051860D /* Association.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Association.h; sourceTree = "<group>"; };
+		7EC49100169D0ACE0051860D /* Test.Association.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Test.Association.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -303,6 +308,7 @@
 		7E0B3B95167627DB003A2227 /* test */ = {
 			isa = PBXGroup;
 			children = (
+				7EC49100169D0ACE0051860D /* Test.Association.cpp */,
 				7E0B3B96167627DB003A2227 /* Test.Imaging.cpp */,
 				7E0B3B9E16774572003A2227 /* Test.Text.cpp */,
 				7E0B3B97167627DB003A2227 /* build.rb */,
@@ -367,10 +373,12 @@
 				7EC2BA281667557500F3D545 /* Framework.h */,
 				7EC2B9C11667557500F3D545 /* Assertion.h */,
 				7EC2B9C01667557500F3D545 /* Assertion.cpp */,
-				7EC2B9C31667557500F3D545 /* Class.h */,
-				7EC2B9C21667557500F3D545 /* Class.cpp */,
 				7EC2BA3E1667557500F3D545 /* Reference.h */,
 				7EC2BA3D1667557500F3D545 /* Reference.cpp */,
+				7EC2B9C31667557500F3D545 /* Class.h */,
+				7EC2B9C21667557500F3D545 /* Class.cpp */,
+				7EC490FE169D035C0051860D /* Association.h */,
+				7EC490FD169D035C0051860D /* Association.cpp */,
 				7EC2B9EF1667557500F3D545 /* Core */,
 				7EC2BA131667557500F3D545 /* Events */,
 				7EC2BA4B1667557500F3D545 /* Resources */,
@@ -825,6 +833,8 @@
 				7E64E62816679808006B710D /* Path-NSFileManager.mm in Sources */,
 				7E0B3B98167627DB003A2227 /* Test.Imaging.cpp in Sources */,
 				7E0B3B9F16774572003A2227 /* Test.Text.cpp in Sources */,
+				7EC490FF169D035C0051860D /* Association.cpp in Sources */,
+				7EC49101169D0ACE0051860D /* Test.Association.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
