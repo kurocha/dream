@@ -107,6 +107,19 @@ namespace Dream {
 		protected:
 			typedef Vector<N, std::size_t> CoordinateT;
 
+			template <typename ReaderT>
+			inline void copy(dimension d, CoordinateT & offset, const ReaderT & reader, const CoordinateT & from, const CoordinateT & to, const CoordinateT & size) {
+				
+				if (d == 0) {
+					std::copy_n(reader[from + offset], size[0], (*this)[to + offset]);
+				} else {
+					for (std::size_t n = 0; n < size[d]; n += 1) {
+						offset[d] = n;
+						copy(d-1, offset, reader, from, to, size);
+					}
+				}
+			}
+
 		public:
 			Writer(DataT * data, const CoordinateT & size, std::uint8_t bytes_per_pixel) : Reader<DataT, N>(data, size, bytes_per_pixel)
 			{
@@ -116,18 +129,7 @@ namespace Dream {
 			void copy(const ReaderT & reader, const CoordinateT & from, const CoordinateT & to, const CoordinateT size) {
 				CoordinateT offset = 0;
 
-				std::function<void(dimension)> recurse = [&](dimension d) {
-					if (d == 0) {
-						std::copy_n(reader[from + offset], size[0], (*this)[to + offset]);
-					} else {
-						for (std::size_t n = 0; n < size[d]; n += 1) {
-							offset[d] = n;
-							recurse(d-1);
-						}
-					}
-				};
-
-				recurse(N-1);
+				copy(N-1, offset, reader, from, to, size);
 			}
 		};
 
