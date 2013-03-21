@@ -6,8 +6,8 @@
 required_version "0.6"
 
 define_target "dream" do |target|
-	target.install do |environment|
-		install_directory(package.path, 'source', environment)
+	target.build do |environment|
+		build_directory(package.path, 'source', environment)
 	end
 	
 	target.depends :platform
@@ -30,8 +30,8 @@ define_target "dream" do |target|
 end
 
 define_target "dream-tests" do |target|
-	target.install do |environment|
-		install_directory(package.path, 'test', environment)
+	target.build do |environment|
+		build_directory(package.path, 'test', environment)
 	end
 	
 	target.depends :platform
