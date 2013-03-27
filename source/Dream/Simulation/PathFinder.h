@@ -48,12 +48,12 @@ namespace Dream {
 			typedef std::vector<StepT> PathT;
 
 			struct Node {
-				bool closed;
-
 				const StepT step;
 				const CostT cost_from_start;
 				const CostT cost_to_goal;
 				const Node * parent;
+
+				bool closed;
 
 				Node (const StepT& _step, const CostT& _cost_from_start, const CostT& _cost_to_goal, const Node* _parent = NULL) : step(_step), cost_from_start(_cost_from_start), cost_to_goal(_cost_to_goal), parent(_parent), closed(false) {
 					//std::cout << "Total Cost (" << step << "): " << total() << std::endl;
