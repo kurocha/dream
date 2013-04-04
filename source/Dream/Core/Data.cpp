@@ -12,6 +12,7 @@
 #include <streambuf>
 #include <sstream>
 #include <stdexcept>
+#include <iomanip>
 
 namespace Dream
 {
@@ -84,6 +85,25 @@ namespace Dream
 		std::size_t BufferedData::size () const
 		{
 			return _buffer->size();
+		}
+
+		std::string format_data_size(std::size_t byte_count)
+		{
+			static const char * postfix[] = {"B", "KB", "MB", "GB", "TB"};
+			
+			double total = byte_count;
+			std::size_t i = 0;
+			
+			while (total > 1024 && i < 4) {
+				i += 1;
+				total = total / 1024.0;
+			}
+			
+			std::stringstream output;
+			
+			output << std::setprecision(4) << total << postfix[i];
+			
+			return output.str();
 		}
 
 // MARK: -

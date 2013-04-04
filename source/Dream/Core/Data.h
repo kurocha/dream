@@ -66,6 +66,8 @@ namespace Dream
 
 			virtual std::size_t size () const;
 		};
+		
+		std::string format_data_size(std::size_t byte_count);
 	}
 }
 
