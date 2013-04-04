@@ -48,6 +48,25 @@ define_target "dream-tests" do |target|
 	target.depends "Aggregate/Display"
 	
 	target.depends "Library/Euclid"
+	target.depends "Library/Dream"
 	
 	target.provides "Test/Dream"
+end
+
+define_configuration "dream-local" do |configuration|
+	configuration[:source] = "../"
+	configuration.import! "local"
+	
+	configuration.require "png"
+	configuration.require "jpeg"
+	
+	configuration.require "freetype"
+	
+	configuration.require "ogg"
+	configuration.require "vorbis"
+
+	# Unit testing
+	configuration.require "unit-test"
+	
+	configuration.require "euclid"
 end
