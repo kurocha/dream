@@ -59,9 +59,7 @@ namespace Dream {
 				total_size += cache.second->size();
 			}
 
-			total_size /= (1024 * 1024);
-
-			logger()->log(LOG_INFO, LogBuffer() << "Freeing: " << total_size << "Mbytes.");
+			log_debug("Freed", format_data_size(total_size), "of resource data.");
 		}
 
 		Ref<IData> Loader::fetch_data_for_path (const Path & path) const

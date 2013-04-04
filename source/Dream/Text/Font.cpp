@@ -146,7 +146,6 @@ namespace Dream
 #include FT_ERRORS_H
 			}
 
-
 			std::cerr << __PRETTY_FUNCTION__ << "unknown error code: " << code << std::endl;
 			return "unknown error";
 		}

@@ -102,7 +102,7 @@ namespace Dream
 
 				FT_Done_Face(_face);
 
-				logger()->log(LOG_INFO, LogBuffer() << "Freed " << count << " cached glyphs.");
+				log_debug("Freed", count, "cached glyphs.");
 			}
 
 			bool FontFace::has_kerning ()
