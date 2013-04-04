@@ -38,6 +38,16 @@ namespace Dream
 		class Log;
 
 		class Logger : public Object {
+		private:
+			template <typename HeadT, typename... TailT>
+			static void write(LogBuffer & output, HeadT head, TailT... tail) {
+				output << head << " ";
+
+				write(output, tail...);
+			}
+
+			static void write(LogBuffer & output) {}
+
 		protected:
 			Timer _log_time;
 
@@ -60,6 +70,18 @@ namespace Dream
 			void log(LogLevel level, const std::string & message);
 			void log(LogLevel level, const std::ostream & buffer);
 
+			template <typename... TailT>
+			void print(LogLevel level, TailT... tail)
+			{
+				if (level & _log_level) {
+					LogBuffer buffer;
+					
+					write(buffer, tail...);
+
+					log(level, buffer);
+				}
+			}
+
 			/// Provides perror like functionality
 			void system_error(std::string message);
 
@@ -72,6 +94,30 @@ namespace Dream
 
 		namespace Logging {
 			Logger * logger();
+
+			template <typename... TailT>
+			void log_error(TailT... tail)
+			{
+				logger()->print(LOG_ERROR, tail...);
+			}
+
+			template <typename... TailT>
+			void log_warning(TailT... tail)
+			{
+				logger()->print(LOG_WARN, tail...);
+			}
+
+			template <typename... TailT>
+			void log(TailT... tail)
+			{
+				logger()->print(LOG_INFO, tail...);
+			}
+			
+			template <typename... TailT>
+			void log_debug(TailT... tail)
+			{
+				logger()->print(LOG_DEBUG, tail...);
+			}
 		};
 	}
 }
