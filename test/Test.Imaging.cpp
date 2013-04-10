@@ -43,6 +43,26 @@ namespace Dream
 						examiner.check_equal(std::memcmp(pixels[Vec2(0, i)], white_row, 8), 0);
 				}
 			},
+
+			{"Pixel Writer",
+				[](UnitTest::Examiner & examiner) {
+					Ref<Image> image = new Image({8, 8}, PixelFormat::RGB, DataType::BYTE);
+
+					examiner << "Image data was allocated" << std::endl;
+					examiner.check_equal(image->buffer().size(), 8*8*3);
+
+					image->fill(0xFF);
+
+					Vector<3, ByteT> color {0x11, 0x22, 0x33};
+					writer(*image).set({0, 0}, color);
+
+					Vector<3, ByteT> output;
+					reader(*image).get<3>({0, 0}, output);
+
+					examiner << "Check the colour is correct" << std::endl;
+					examiner.check_equal(output, color);
+				}
+			}
 		};
 	}
 }

@@ -62,6 +62,7 @@ namespace Dream {
 		class Reader {
 		protected:
 			typedef Vector<N, std::size_t> CoordinateT;
+			typedef typename std::remove_const<DataT>::type PixelElementT;
 
 			DataT * _data;
 			CoordinateT _size;
@@ -84,9 +85,14 @@ namespace Dream {
 			{
 			}
 
-			DataT * operator[] (const CoordinateT coordinate) const
+			DataT * operator[] (const CoordinateT & coordinate) const
 			{
 				return _data + offset(coordinate);
+			}
+
+			template <dimension E>
+			void get(const CoordinateT & coordinate, Vector<E, PixelElementT> & pixel) const {
+				std::copy_n((*this)[coordinate], E, pixel.begin());
 			}
 
 			const CoordinateT & size () const { return _size; }
@@ -106,6 +112,7 @@ namespace Dream {
 		struct Writer : public Reader<DataT, N> {
 		protected:
 			typedef Vector<N, std::size_t> CoordinateT;
+			typedef typename std::remove_const<DataT>::type PixelElementT;
 
 			template <typename ReaderT>
 			inline void copy(dimension d, CoordinateT & offset, const ReaderT & reader, const CoordinateT & from, const CoordinateT & to, const CoordinateT & size) {
@@ -130,6 +137,11 @@ namespace Dream {
 				CoordinateT offset = 0;
 
 				copy(N-1, offset, reader, from, to, size);
+			}
+
+			template <dimension E>
+			void set(const CoordinateT & coordinate, const Vector<E, PixelElementT> & pixel) {
+				std::copy_n(pixel.begin(), E, (*this)[coordinate]);
 			}
 		};
 
