@@ -445,7 +445,7 @@ namespace Dream {
 					p->objects().erase(o);
 				}
 
-				if (p->objects().size() == 0) {
+				if (p && p->objects().size() == 0) {
 					p->coalesce();
 				}
 
