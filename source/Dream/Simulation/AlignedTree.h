@@ -17,6 +17,8 @@
 #include <Euclid/Numerics/Vector.h>
 #include <Euclid/Geometry/AlignedBox.h>
 
+#include "../Assertion.h"
+
 namespace Dream {
 	namespace Geometry {
 		using namespace Euclid::Geometry::Constants;
