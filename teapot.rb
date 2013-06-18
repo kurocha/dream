@@ -62,9 +62,9 @@ end
 
 define_generator "dream.scene" do |generator|
 	generator.description = <<-EOF
-		Generates a basic class file in the project.
+		Generates a basic scene file in the project.
 		
-		usage: teapot generate class Namespace::ClassName
+		usage: teapot generate dream.scene Namespace::NamedScene
 	EOF
 	
 	generator.generate do |class_name|
