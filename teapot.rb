@@ -34,6 +34,10 @@ define_target "dream-tests" do |target|
 		build_directory(package.path, 'test', environment)
 	end
 	
+	target.run do |environment|
+		run_executable("bin/dream-test-runner", environment)
+	end
+	
 	target.depends :platform
 	target.depends "Language/C++11"
 	target.depends "Library/UnitTest"
@@ -116,8 +120,5 @@ define_configuration "dream-local" do |configuration|
 	configuration.require "ogg"
 	configuration.require "vorbis"
 
-	# Unit testing
-	configuration.require "unit-test"
-	
 	configuration.require "euclid"
 end
