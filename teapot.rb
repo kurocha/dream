@@ -57,19 +57,19 @@ define_target "dream-tests" do |target|
 	target.provides "Test/Dream"
 end
 
-def scope_for_namespace(namespace)
-	open = namespace.collect{|name| "namespace #{name}\n{\n"}
-	close = namespace.collect{ "}\n" }
-	
-	return open + close
-end
-
 define_generator "dream.scene" do |generator|
 	generator.description = <<-EOF
 		Generates a basic scene file in the project.
 		
 		usage: teapot generate dream.scene Namespace::NamedScene
 	EOF
+	
+	def generator.scope_for_namespace(namespace)
+		open = namespace.collect{|name| "namespace #{name}\n{\n"}
+		close = namespace.collect{ "}\n" }
+	
+		return open + close
+	end
 	
 	generator.generate do |class_name|
 		*path, class_name = class_name.split(/::/)
@@ -82,29 +82,24 @@ define_generator "dream.scene" do |generator|
 		directory.mkpath
 		
 		name = Name.new(class_name)
-		substitutions = Substitutions.new
-		
+		substitutions = Substitutions.for_context(context)
+
 		# e.g. Foo Bar, typically used as a title, directory, etc.
 		substitutions['CLASS_NAME'] = name.identifier
 		substitutions['CLASS_FILE_NAME'] = name.identifier
-		
+
 		# e.g. FooBar, typically used as a namespace
-		substitutions['GUARD_NAME'] = name.macro(path) + '_H'
-		
+		substitutions['GUARD_NAME'] = name.header_guard
+
 		# e.g. foo-bar, typically used for targets, executables
 		substitutions['NAMESPACE'] = scope_for_namespace(path)
-		
-		# The user's current name:
-		substitutions['AUTHOR_NAME'] = `git config --global user.name`.chomp!
-		
-		substitutions['PROJECT_NAME'] = context.project.name
-		substitutions['LICENSE'] = context.project.license
-		
-		current_date = Time.new
-		substitutions['DATE'] = current_date.strftime("%-d/%-m/%Y")
-		substitutions['YEAR'] = current_date.strftime("%Y")
-		
+
+		# Copy the class files:
 		generator.copy('templates/scene', directory, substitutions)
+
+		# Copy some binary resources:
+		resource_directory = Pathname('resources')
+		generator.copy('templates/resources', resource_directory)
 	end
 end
 
