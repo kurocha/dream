@@ -89,7 +89,7 @@ namespace Dream
 			typedef std::function<void (Loop *, FileDescriptorSource *, Event)> CallbackT;
 
 		protected:
-			int _fd;
+			FileDescriptorT _file_descriptor;
 			CallbackT _callback;
 
 		public:
@@ -110,7 +110,7 @@ namespace Dream
 		 */
 		class NotificationPipeSource : public Object, implements IFileDescriptorSource {
 		protected:
-			int _filedes[2];
+			FileDescriptorT _file_descriptors[2];
 
 		public:
 			NotificationPipeSource ();

@@ -146,7 +146,7 @@ namespace Dream
 // MARK: -
 // MARK: class FileDescriptorSource
 
-		FileDescriptorSource::FileDescriptorSource (CallbackT callback, int fd) : _fd(fd), _callback(callback)
+		FileDescriptorSource::FileDescriptorSource (CallbackT callback, FileDescriptorT file_descriptor) : _file_descriptor(file_descriptor), _callback(callback)
 		{
 		}
 
@@ -161,7 +161,7 @@ namespace Dream
 
 		FileDescriptorT FileDescriptorSource::file_descriptor () const
 		{
-			return _fd;
+			return _file_descriptor;
 		}
 
 		Ref<FileDescriptorSource> FileDescriptorSource::for_standard_in (CallbackT callback)
@@ -184,27 +184,27 @@ namespace Dream
 
 		NotificationPipeSource::NotificationPipeSource ()
 		{
-			int result = pipe(_filedes);
+			int result = pipe(_file_descriptors);
 			
 			DREAM_ASSERT(result == 0);
 		}
 
 		NotificationPipeSource::~NotificationPipeSource ()
 		{
-			close(_filedes[0]);
-			close(_filedes[1]);
+			close(_file_descriptors[0]);
+			close(_file_descriptors[1]);
 		}
 
 		FileDescriptorT NotificationPipeSource::file_descriptor () const
 		{
 			// Read end
-			return _filedes[0];
+			return _file_descriptors[0];
 		}
 
 		void NotificationPipeSource::notify_event_loop () const
 		{
 			// Send a byte down the pipe
-			write(_filedes[1], "\0", 1);
+			write(_file_descriptors[1], "\0", 1);
 		}
 
 		void NotificationPipeSource::process_events (Loop * loop, Event event)
@@ -212,7 +212,7 @@ namespace Dream
 			char buf[32];
 
 			// Discard all notification bytes
-			read(_filedes[0], &buf, 32);
+			read(_file_descriptors[0], &buf, 32);
 
 			// Process urgent notifications
 			loop->process_notifications();
