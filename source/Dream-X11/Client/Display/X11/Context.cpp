@@ -93,7 +93,7 @@ namespace Dream
 					glXSwapBuffers(_display, _glx_window);
 				}
 
-				WindowContext::WindowContext(Ptr<Dictionary> config) : _glx_context(nullptr)
+				WindowContext::WindowContext(Ptr<Dictionary> config) : _display(nullptr), _glx_context(nullptr)
 				{
 					Vec2u initial_size {1024, 768};
 
@@ -117,8 +117,6 @@ namespace Dream
 					if (_glx_context) {
 						glXDestroyContext(_display, _glx_context);
 						glXDestroyWindow(_display, _glx_window);
-
-						_glx_context = nullptr;
 					}
 
 					if (_display) {
