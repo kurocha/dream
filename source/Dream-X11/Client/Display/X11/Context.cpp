@@ -21,7 +21,8 @@ namespace Dream
 				
 				using namespace Events::Logging;
 				using namespace Euclid::Numerics::Constants;
-								
+				
+				typedef GLXContext (*GLXCREATECONTEXTATTRIBSARBPROC)(XDisplay*, GLXFBConfig, GLXContext, Bool, const int*);
 // MARK: -
 
 				void WindowContext::setup_graphics_context(Ptr<Dictionary> config, Vec2u size)
@@ -58,7 +59,8 @@ namespace Dream
 						GLX_CONTEXT_FLAGS_ARB, GLX_CONTEXT_CORE_PROFILE_BIT_ARB,
 						None
 					};
-
+					
+					GLXCREATECONTEXTATTRIBSARBPROC glXCreateContextAttribsARB = (GLXCREATECONTEXTATTRIBSARBPROC)glXGetProcAddress((const GLubyte*)"glXCreateContextAttribsARB");
 					_glx_context = glXCreateContextAttribsARB(_display, frame_buffer_configs[0], NULL, true, context_attributes);
 
 					XSetWindowAttributes window_attributes;
