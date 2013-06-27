@@ -197,7 +197,7 @@ namespace Dream
 					}
 
 					void queue(Vertex * destination) {
-						memcpy(destination, _vertices, sizeof(_vertices));
+						std::copy_n(_vertices, 4, destination);
 					}
 				};
 
