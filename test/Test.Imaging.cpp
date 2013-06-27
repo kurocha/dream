@@ -4,6 +4,8 @@
 #include <Dream/Imaging/Image.h>
 #include <Euclid/Numerics/Vector.IO.h>
 
+#include <cstring>
+
 namespace Dream
 {
 	namespace Imaging
