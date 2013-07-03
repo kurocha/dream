@@ -24,18 +24,40 @@ namespace Dream
 				
 				typedef GLXContext (*GLXCREATECONTEXTATTRIBSARBPROC)(XDisplay*, GLXFBConfig, GLXContext, Bool, const int*);
 // MARK: -
-
+				
+				static void check_glx_version(XDisplay * display)
+				{
+					int glx_major, glx_minor;
+					
+					// FBConfigs were added in GLX version 1.3.
+					if (!glXQueryVersion(display, &glx_major, &glx_minor))
+						throw ContextInitializationError("Could not fetch GLX version!");
+					
+					if ((glx_major == 1 && glx_minor < 3) || (glx_major < 1))
+						throw ContextInitializationError("Unsupported GLX version!");
+				}
+				
 				void WindowContext::setup_graphics_context(Ptr<Dictionary> config, Vec2u size)
 				{
 					DREAM_ASSERT(_display != nullptr);
 
+					// Check that we have a supported version of GLX:
+					check_glx_version(_display);
+					
 					int frame_buffer_attributes[] = {
+						GLX_X_RENDERABLE, True,
+						GLX_DRAWABLE_TYPE, GLX_WINDOW_BIT,
 						GLX_RENDER_TYPE, GLX_RGBA_BIT,
+						GLX_X_VISUAL_TYPE, GLX_TRUE_COLOR,
 						GLX_RED_SIZE, 8,
 						GLX_GREEN_SIZE, 8,
 						GLX_BLUE_SIZE, 8,
+						GLX_ALPHA_SIZE, 8,
 						GLX_DEPTH_SIZE, 24,
+						GLX_STENCIL_SIZE, 8,
 						GLX_DOUBLEBUFFER, True,
+						//GLX_SAMPLE_BUFFERS, 1,
+						//GLX_SAMPLES, 4,
 						None
 					};
 
@@ -48,6 +70,8 @@ namespace Dream
 					if (!frame_buffer_configs || count == 0)
 						throw ContextInitializationError("No valid frame buffer configurations found!");
 
+					log_debug("Found", count, "valid frame buffer configurations for requested attributes");
+					
 					XVisualInfo * visual_info = glXGetVisualFromFBConfig(_display, frame_buffer_configs[0]);
 
 					if (!visual_info)
@@ -71,9 +95,15 @@ namespace Dream
 					unsigned long mask = CWBackPixel | CWBorderPixel | CWColormap | CWEventMask;
 
 					_window = XCreateWindow(_display, root_window, 0, 0, size[WIDTH], size[HEIGHT], 0, visual_info->depth, InputOutput, visual_info->visual, mask, &window_attributes);
-
+					
+					if (!_window)
+						throw ContextInitializationError("Couldn't create X11 window!");
+					
 					_glx_window = glXCreateWindow(_display, frame_buffer_configs[0], _window, NULL);
-
+					
+					if (!_glx_window)
+						throw ContextInitializationError("Couldn't create GLX Window!");
+					
 					glXMakeCurrent(_display, _glx_window, _glx_context);
 
 					glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
@@ -87,6 +117,8 @@ namespace Dream
 					logger()->log(LOG_INFO, buffer);
 
 					glXMakeContextCurrent(_display, None, None, nullptr);
+					
+					XMapWindow(_display, _glx_window);
 				}
 
 				void WindowContext::flush_buffers() {
