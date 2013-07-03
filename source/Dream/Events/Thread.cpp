@@ -13,6 +13,8 @@
 
 namespace Dream {
 	namespace Events {
+		using namespace Logging;
+		
 		std::string system_error_description(int error_number)
 		{
 			const std::size_t MAX_LENGTH = 1024;
@@ -24,7 +26,7 @@ namespace Dream {
 				return "Unknown failure";
 		}
 
-		Thread::Thread () : _thread(NULL)
+		Thread::Thread ()
 		{
 			_loop = new Loop;
 			_loop->set_stop_when_idle(false);
@@ -48,14 +50,14 @@ namespace Dream {
 
 		void Thread::run ()
 		{
-			logger()->log(LOG_INFO, "Starting thread event loop...");
+			log_debug("Starting thread-based event-loop...");
 
-			// Lock the loop to ensure it isn't released by another thread.
+			// Lock the loop to ensure it isn't released by another thread:
 			Ref<Loop> loop = _loop;
 
 			loop->run_forever();
 
-			logger()->log(LOG_INFO, "Exiting thread event loop...");
+			log_debug("Exiting thread-based event-loop...");
 		}
 
 		void Thread::stop ()
