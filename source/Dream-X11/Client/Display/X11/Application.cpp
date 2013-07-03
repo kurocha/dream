@@ -34,6 +34,12 @@ namespace Dream {
 				void Application::run()
 				{
 					_application_delegate->application_did_finish_launching(this);
+					_application_delegate->application_did_enter_foreground(this);
+					
+					while (true)
+					{
+						sleep(10);
+					}
 				}
 				
 				Ref<IContext> Application::create_context(Ref<Dictionary> config)
