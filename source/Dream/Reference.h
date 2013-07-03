@@ -122,11 +122,9 @@ namespace Dream {
 			return _object;
 		}
 
-		typedef ObjectT * Pointer::* safe_bool;
-
-		operator safe_bool() const
+		explicit operator bool() const
 		{
-			return _object ? &Pointer::_object : 0;
+			return _object ? true : false;
 		}
 
 		operator ObjectT * () const
