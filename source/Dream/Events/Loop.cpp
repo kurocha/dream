@@ -8,7 +8,6 @@
 //
 
 #include "Loop.h"
-#include "Console.h"
 #include "Logger.h"
 #include "Thread.h"
 
@@ -368,9 +367,6 @@ namespace Dream
 
 			// Setup timers
 			_stopwatch.start();
-
-			// Make sure stdin is a pipe
-			reopen_standard_file_descriptors_as_pipes();
 
 			// Create and open an urgent notification pipe
 			_urgent_notification_pipe = new NotificationPipeSource;
