@@ -9,14 +9,9 @@
 
 #include "Reference.h"
 
-#include <set>
-
-
 namespace Dream {
-	SharedObject::SharedObject () : _count(0) {
-		#ifdef TRACK_ALLOCATIONS
-		s_allocations[this] = ALLOCATED;
-		#endif
+	SharedObject::SharedObject () : _count(0) 
+	{
 	}
 
 	SharedObject::SharedObject (const SharedObject & other) : _count(0) {
