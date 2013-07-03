@@ -13,6 +13,7 @@
 
 #include <thread>
 #include <mutex>
+#include <unordered_map>
 #include <sstream>
 
 namespace Dream
@@ -56,6 +57,9 @@ namespace Dream
 			LogLevel _log_level;
 			FileDescriptorT _output;
 
+			typedef std::unordered_map<std::thread::id, std::string> ThreadNamesT;
+			ThreadNamesT _thread_names;
+
 			static const char * level_name(LogLevel level);
 
 			void header(LogLevel level);
@@ -63,6 +67,7 @@ namespace Dream
 			/// Print out a logging header
 			void start_session();
 
+			std::string thread_name() const;
 		public:
 			Logger();
 			virtual ~Logger();
@@ -89,7 +94,6 @@ namespace Dream
 			void disable(LogLevel level);
 
 			void set_thread_name(std::string name);
-			std::string thread_name() const;
 		};
 
 		namespace Logging {

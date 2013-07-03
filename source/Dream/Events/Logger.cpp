@@ -11,7 +11,7 @@
 
 #include <thread>
 #include <sstream>
-#include <map>
+#include <unordered_map>
 #include <iomanip>
 #include <time.h>
 #include <unistd.h>
@@ -139,19 +139,25 @@ namespace Dream
 			_log_level = LogLevel(_log_level & ~level);
 		}
 
-		typedef std::map<std::thread::id, std::string> ThreadNamesT;
-		ThreadNamesT _thread_names;
-
 		void Logger::set_thread_name(std::string name)
 		{
-			log(LOG_DEBUG, LogBuffer() << "Renaming thread " << thread_name() << " to " << name);
+			LogBuffer buffer;
+			
+			{
+				std::lock_guard<std::mutex> lock(_lock);
 
-			_thread_names[std::this_thread::get_id()] = name;
+				buffer << "Renamed thread " << thread_name() << " to " << name;
+
+				_thread_names[std::this_thread::get_id()] = name;
+			}
+			
+			log(LOG_DEBUG, buffer);
 		}
 
+		// The logger state must be locked before calling this function:
 		std::string Logger::thread_name() const
 		{
-			ThreadNamesT::iterator i = _thread_names.find(std::this_thread::get_id());
+			auto i = _thread_names.find(std::this_thread::get_id());
 
 			if (i != _thread_names.end()) {
 				return i->second;
@@ -176,3 +182,4 @@ namespace Dream
 		}
 	}
 }
+
