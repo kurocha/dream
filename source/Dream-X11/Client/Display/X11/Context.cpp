@@ -8,8 +8,6 @@
 
 #include "Context.h"
 
-#include <mutex>
-
 namespace Dream
 {
 	namespace Client
@@ -21,10 +19,9 @@ namespace Dream
 				
 				using namespace Events::Logging;
 				using namespace Euclid::Numerics::Constants;
-				
-				typedef GLXContext (*GLXCREATECONTEXTATTRIBSARBPROC)(XDisplay*, GLXFBConfig, GLXContext, Bool, const int*);
+
 // MARK: -
-				
+
 				static void check_glx_version(XDisplay * display)
 				{
 					int glx_major, glx_minor;
@@ -36,14 +33,9 @@ namespace Dream
 					if ((glx_major == 1 && glx_minor < 3) || (glx_major < 1))
 						throw ContextInitializationError("Unsupported GLX version!");
 				}
-				
-				void WindowContext::setup_graphics_context(Ptr<Dictionary> config, Vec2u size)
-				{
-					DREAM_ASSERT(_display != nullptr);
 
-					// Check that we have a supported version of GLX:
-					check_glx_version(_display);
-					
+				static void find_best_framebuffer_configuration(XDisplay * display, int screen_number, GLXFBConfig & best_configuration, XVisualInfo *& visual_info)
+				{
 					int frame_buffer_attributes[] = {
 						GLX_X_RENDERABLE, True,
 						GLX_DRAWABLE_TYPE, GLX_WINDOW_BIT,
@@ -60,23 +52,30 @@ namespace Dream
 						//GLX_SAMPLES, 4,
 						None
 					};
-
-					int screen_number = DefaultScreen(_display);
-					XWindow root_window = RootWindow(_display, screen_number);
-
-					int count = 0;
-					GLXFBConfig * frame_buffer_configs = glXChooseFBConfig(_display, screen_number, frame_buffer_attributes, &count);
-
-					if (!frame_buffer_configs || count == 0)
-						throw ContextInitializationError("No valid frame buffer configurations found!");
-
-					log_debug("Found", count, "valid frame buffer configurations for requested attributes");
 					
-					XVisualInfo * visual_info = glXGetVisualFromFBConfig(_display, frame_buffer_configs[0]);
+					int count = 0;
+					GLXFBConfig * configurations = glXChooseFBConfig(display, screen_number, frame_buffer_attributes, &count);
+					
+					if (!configurations) {
+						throw ContextInitializationError("No valid frame buffer configurations found!");
+					}
+					
+					log_debug("Found", count, "valid frame buffer configurations for requested attributes");
 
+					assert(count > 0);
+
+					// Get the first frame buffer configuration:
+					best_configuration = configurations[0];
+					XFree(configurations);
+					
+					visual_info = glXGetVisualFromFBConfig(display, best_configuration);
+					
 					if (!visual_info)
 						throw ContextInitializationError("Couldn't get a visual buffer.");
+				}
 
+				static GLXContext create_glx_context(XDisplay * display, const GLXFBConfig & configuration)
+				{
 					int context_attributes[] = {
 						GLX_CONTEXT_MAJOR_VERSION_ARB, 3,
 						GLX_CONTEXT_MINOR_VERSION_ARB, 2,
@@ -84,8 +83,49 @@ namespace Dream
 						None
 					};
 					
-					GLXCREATECONTEXTATTRIBSARBPROC glXCreateContextAttribsARB = (GLXCREATECONTEXTATTRIBSARBPROC)glXGetProcAddress((const GLubyte*)"glXCreateContextAttribsARB");
-					_glx_context = glXCreateContextAttribsARB(_display, frame_buffer_configs[0], NULL, true, context_attributes);
+					PFNGLXCREATECONTEXTATTRIBSARBPROC glXCreateContextAttribsARB = (PFNGLXCREATECONTEXTATTRIBSARBPROC)glXGetProcAddress((const GLubyte*)"glXCreateContextAttribsARB");
+					return glXCreateContextAttribsARB(display, configuration, NULL, True, context_attributes);
+				}
+
+				// A callback that waits until the window is displayed on the screen:
+				static Bool wait_for_map_notify(XDisplay * display, XEvent * event, XPointer arg) {
+					return (event->type == MapNotify) && (event->xmap.window == (XWindow)arg);
+				}
+
+				static void map_window(XDisplay * display, XWindow window)
+				{
+					// This function is probably non-reentrant.
+					XMapWindow(display, window);
+				
+					XEvent event;
+					XIfEvent(display, &event, wait_for_map_notify, (XPointer)window);
+				}
+
+				static void set_vertical_sync(XDisplay * display, GLXWindow window, bool enabled)
+				{
+					PFNGLXSWAPINTERVALEXTPROC glXSwapIntervalEXT = (PFNGLXSWAPINTERVALEXTPROC)glXGetProcAddress((const GLubyte *)"glXSwapIntervalEXT");
+
+					if (glXSwapIntervalEXT)
+						glXSwapIntervalEXT(display, window, enabled ? 1 : 0);
+				}
+				
+				void WindowContext::setup_graphics_context(Ptr<Dictionary> config, Vec2u size)
+				{
+					DREAM_ASSERT(_display != nullptr);
+
+					// Check that we have a supported version of GLX:
+					check_glx_version(_display);
+
+					int screen_number = DefaultScreen(_display);
+
+					XVisualInfo * visual_info = nullptr;
+					GLXFBConfig best_configuration;
+
+					find_best_framebuffer_configuration(_display, screen_number, best_configuration, visual_info);
+					log_debug("Chosen visual info id =", visual_info->visualid);
+
+					// Now we know where to create the window:
+					XWindow root_window = RootWindow(_display, visual_info->screen);
 
 					XSetWindowAttributes window_attributes;
 					window_attributes.background_pixel = 0;
@@ -94,20 +134,32 @@ namespace Dream
 					window_attributes.event_mask = StructureNotifyMask | ExposureMask | KeyPressMask;
 					unsigned long mask = CWBackPixel | CWBorderPixel | CWColormap | CWEventMask;
 
+					// Create a new X11 window for OpenGL rendering:
 					_window = XCreateWindow(_display, root_window, 0, 0, size[WIDTH], size[HEIGHT], 0, visual_info->depth, InputOutput, visual_info->visual, mask, &window_attributes);
-					
+
 					if (!_window)
 						throw ContextInitializationError("Couldn't create X11 window!");
-					
-					_glx_window = glXCreateWindow(_display, frame_buffer_configs[0], _window, NULL);
-					
+
+					// Create the GLX context:
+					_glx_context = create_glx_context(_display, best_configuration);
+
+					if (!_glx_context)
+						throw ContextInitializationError("Couldn't create GLX context!");
+
+					// Create the GLX window:
+					_glx_window = glXCreateWindow(_display, best_configuration, _window, NULL);
+
 					if (!_glx_window)
-						throw ContextInitializationError("Couldn't create GLX Window!");
-					
-					glXMakeCurrent(_display, _glx_window, _glx_context);
+						throw ContextInitializationError("Couldn't create GLX window!");
+
+					map_window(_display, _window);
+
+					make_current_context();
 
 					glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 					glPixelStorei(GL_PACK_ALIGNMENT, 1);
+
+					set_vertical_sync(_display, _glx_window, true);
 
 					LogBuffer buffer;
 					buffer << "OpenGL Context Initialized..." << std::endl;
@@ -117,10 +169,15 @@ namespace Dream
 					logger()->log(LOG_INFO, buffer);
 
 					glXMakeContextCurrent(_display, None, None, nullptr);
-					
-					XMapWindow(_display, _glx_window);
+
+					XSync(_display, False);
 				}
 
+				void WindowContext::make_current_context()
+				{
+					glXMakeContextCurrent(_display, _glx_window, _glx_window, _glx_context);
+				}
+				
 				void WindowContext::flush_buffers() {
 					glXSwapBuffers(_display, _glx_window);
 				}
@@ -134,6 +191,9 @@ namespace Dream
 
 					if (!_display) {
 						_display = XOpenDisplay(nullptr);
+						
+						if (!_display)
+							throw ContextInitializationError("Could not connect to X11 display!");
 					}
 
 					setup_graphics_context(config, initial_size);
@@ -150,13 +210,25 @@ namespace Dream
 						glXDestroyContext(_display, _glx_context);
 						glXDestroyWindow(_display, _glx_window);
 					}
+					
+					if (_window) {
+						XDestroyWindow(_display, _window);
+					}
 
 					if (_display) {
 						XCloseDisplay(_display);
 					}
 				}
 
-				void WindowContext::render_frame() {
+				void WindowContext::render_frame()
+				{
+					if (!_initialized)
+					{
+						logger()->set_thread_name("Renderer");
+						
+						_initialized = true;
+					}
+					
 					glXMakeContextCurrent(_display, _glx_window, _glx_window, _glx_context);
 
 					_context_delegate->render_frame_for_time(this, system_time());
@@ -174,6 +246,11 @@ namespace Dream
 						_renderer_thread->loop()->schedule_timer(_renderer_timer);
 					}
 
+					Vec2u new_size(1024, 768);
+					ResizeInput resize_input(new_size);
+					process(resize_input);
+
+					_initialized = false;
 					_renderer_thread->start();
 				}
 
@@ -184,7 +261,7 @@ namespace Dream
 				}
 
 				Vec2u WindowContext::size() {
-					return 0;
+					return Vec2u(1024, 768);
 				}
 
 				void WindowContext::set_cursor_mode(CursorMode mode) {

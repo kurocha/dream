@@ -21,8 +21,6 @@ extern "C" {
 	#include <GL/glxext.h>
 }
 
-#include <condition_variable>
-
 namespace Dream
 {
 	namespace Client
@@ -43,13 +41,18 @@ namespace Dream
 					GLXContext _glx_context;
 					GLXWindow _glx_window;
 
+					std::set<std::string> _glx_extensions;
+
 					Ref<Events::Thread> _renderer_thread;
 					Ref<Events::TimerSource> _renderer_timer;
 					void render_frame();
 
 					void setup_graphics_context(Ptr<Dictionary> config, Vec2u size);
+					void make_current_context();
 					void flush_buffers();
 
+					bool _initialized;
+					
 				public:
 					WindowContext(Ptr<Dictionary> config);
 					virtual ~WindowContext();
