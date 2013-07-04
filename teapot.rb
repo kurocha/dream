@@ -13,6 +13,8 @@ define_target "dream" do |target|
 	target.depends :platform
 	target.depends "Language/C++11"
 
+	target.depends "Library/utf8"
+
 	target.depends "Library/png"
 	target.depends "Library/jpeg"
 	target.depends "Library/freetype"
@@ -41,19 +43,9 @@ define_target "dream-tests" do |target|
 	target.depends :platform
 	target.depends "Language/C++11"
 	target.depends "Library/UnitTest"
-	
-	target.depends "Library/png"
-	target.depends "Library/jpeg"
-	target.depends "Library/freetype"
-	target.depends "Library/vorbis"
-	
-	target.depends "Library/OpenAL"
-	target.depends "Library/OpenGL"
-	target.depends "Aggregate/Display"
-	
-	target.depends "Library/Euclid"
+
 	target.depends "Library/Dream"
-	
+
 	target.provides "Test/Dream"
 end
 
@@ -106,6 +98,8 @@ end
 define_configuration "dream-local" do |configuration|
 	configuration[:source] = "../"
 	configuration.import! "local"
+	
+	configuration.require "utf8"
 	
 	configuration.require "png"
 	configuration.require "jpeg"

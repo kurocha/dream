@@ -16,8 +16,7 @@
 #include <iostream>
 #include <sstream>
 
-// Include the unicode support
-#include "Strings/utf8.h"
+#include <utf8/utf8.h>
 
 namespace Dream
 {
