@@ -183,8 +183,6 @@ namespace Dream {
 				void property(GLenum name, GLint * value) {
 					glGetProgramiv(_handle, name, value);
 				}
-
-				Shared<Buffer> info_log();
 			};
 
 			/*

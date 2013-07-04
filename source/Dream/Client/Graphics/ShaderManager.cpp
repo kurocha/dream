@@ -39,26 +39,38 @@ namespace Dream {
 				glAttachShader(_handle, shader);
 			}
 
+			static Shared<Buffer> program_info_log(GLuint program)
+			{
+				GLint length;
+				glGetProgramiv(program, GL_INFO_LOG_LENGTH, &length);
+
+				if (length > 0) {
+					Shared<MutableBuffer> buffer = PackedBuffer::new_buffer(length);
+
+					glGetProgramInfoLog(program, length, NULL, (GLchar *)buffer->begin());
+
+					return buffer;
+				} else {
+					return NULL;
+				}
+			}
+
 			bool Program::link()
 			{
 				glLinkProgram(_handle);
 
-				GLint status;
-				property(GL_LINK_STATUS, &status);
-				glGetProgramiv(_handle, GL_LINK_STATUS, &status);
+				GLint link_status;
+				property(GL_LINK_STATUS, &link_status);
+				glGetProgramiv(_handle, GL_LINK_STATUS, &link_status);
 
-				if (status == 0) {
-					// Something went wrong...
-
-					Shared<Buffer> log = info_log();
-
+				if (!link_status) {
 					LogBuffer buffer;
 					buffer << "Error linking program:" << std::endl;
-					buffer << StringT(log->begin(), log->end()) << std::endl;
+					buffer << program_info_log(_handle)->begin() << std::endl;
 					logger()->log(LOG_ERROR, buffer);
 				}
 
-				return status != 0;
+				return link_status != 0;
 			}
 
 			GLint Program::attribute_location(const char * name)
@@ -79,24 +91,9 @@ namespace Dream {
 
 			void Program::bind_fragment_location(const char * name, GLuint output)
 			{
-#ifdef DREAM_OPENGL32
+//#ifdef DREAM_OPENGL32
 				glBindFragDataLocation(_handle, output, name);
-#endif
-			}
-
-			Shared<Buffer> Program::info_log() {
-				GLint length;
-				property(GL_INFO_LOG_LENGTH, &length);
-
-				if (length > 0) {
-					Shared<MutableBuffer> buffer = PackedBuffer::new_buffer(length);
-
-					glGetProgramInfoLog(_handle, length, NULL, (GLchar *)buffer->begin());
-
-					return buffer;
-				} else {
-					return NULL;
-				}
+//#endif
 			}
 
 			void Program::enable()
@@ -122,6 +119,22 @@ namespace Dream {
 				}
 			}
 
+			static Shared<Buffer> shader_info_log(GLuint shader)
+			{
+				GLint length;
+				glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &length);
+
+				if (length > 0) {
+					Shared<MutableBuffer> buffer = PackedBuffer::new_buffer(length);
+
+					glGetShaderInfoLog(shader, length, NULL, (GLchar *)buffer->begin());
+
+					return buffer;
+				} else {
+					return NULL;
+				}
+			}
+
 			GLenum ShaderManager::compile(GLenum type, const Buffer * buffer)
 			{
 				GLuint shader = glCreateShader(type);
@@ -132,32 +145,20 @@ namespace Dream {
 				check_graphics_error();
 
 				glCompileShader(shader);
-				check_graphics_error();
+				
+				GLint compile_status;
+				glGetShaderiv(shader, GL_COMPILE_STATUS, &compile_status);
 
-				GLint log_length;
-				glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &log_length);
-				if (log_length > 0) {
-					Shared<MutableBuffer> buffer = PackedBuffer::new_buffer(log_length);
-
-					glGetShaderInfoLog(shader, (GLsizei)buffer->size(), (GLsizei*)&log_length, (GLchar*)buffer->begin());
-
+				if (!compile_status) {
 					LogBuffer log_buffer;
 					log_buffer << "Error compiling shader:" << std::endl;
-					log_buffer << buffer->begin() << std::endl;
+					log_buffer << shader_info_log(shader)->begin() << std::endl;
 					logger()->log(LOG_ERROR, log_buffer);
-				}
-
-				GLint status;
-				glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
-				if (status == 0) {
-					logger()->log(LOG_ERROR, "Shader compilation failed!");
-
+					
 					glDeleteShader(shader);
-
+					
 					return 0;
 				}
-
-				check_graphics_error();
 
 				return shader;
 			}
