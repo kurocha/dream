@@ -25,38 +25,6 @@ namespace Dream {
 			return _error_code;
 		}
 
-		// Currently unused and untested
-		static Address address_for_socket (int s, bool remote)
-		{
-			addrinfo ai;
-			sockaddr_storage ss;
-			socklen_t len;
-			int result;
-			SocketType socket_type;
-
-			len = sizeof(socket_type);
-			result = getsockopt(s, SOL_SOCKET, SO_TYPE, &socket_type, &len);
-			if (result == -1) perror(__PRETTY_FUNCTION__);
-
-			len = sizeof(ss);
-			if (!remote)
-				result = getsockname(s, (sockaddr*)&ss, &len);
-			else
-				result = getpeername(s, (sockaddr*)&ss, &len);
-
-			if (result == -1) perror(__PRETTY_FUNCTION__);
-
-			ai.ai_socktype = socket_type;
-			ai.ai_addr = (sockaddr*)&ss;
-			ai.ai_addrlen = len;
-			ai.ai_family = ss.ss_family;
-			ai.ai_protocol = 0;
-			ai.ai_next = 0;
-			ai.ai_canonname = 0;
-
-			return Address(&ai);
-		}
-
 		Address::Address() {
 			_address_data.ss_family = 0;
 
