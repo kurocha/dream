@@ -45,9 +45,6 @@ namespace Dream
 			BirdsEyeCamera ();
 			virtual ~BirdsEyeCamera ();
 
-			virtual bool button(const ButtonInput &);
-			virtual bool motion(const MotionInput &);
-
 			bool reverse() { return _reverse; }
 			void set_reverse(bool reverse) { _reverse = reverse; }
 

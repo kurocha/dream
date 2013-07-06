@@ -15,7 +15,7 @@
 #include "../../Core/Dictionary.h"
 #include "../../Core/Strings.h"
 #include "../../Events/Loop.h"
-#include "../../Events/Input.h"
+#include "Input.h"
 
 #include <vector>
 #include <stdexcept>

@@ -12,7 +12,7 @@
 #import "EAGLView.h"
 
 #include "../Context.h"
-#include "../../../Events/MultiFingerInput.h"
+#include "../MultiFingerInput.h"
 
 @interface DOpenGLView : EAGLView<UITextFieldDelegate>{
 	Dream::Client::Display::MultiFingerInput * _multi_finger_input;

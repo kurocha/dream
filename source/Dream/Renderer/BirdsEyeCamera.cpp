@@ -65,49 +65,6 @@ namespace Dream {
 			return _view_matrix_cache;
 		}
 
-		bool BirdsEyeCamera::button(const ButtonInput &) {
-			return false;
-		}
-
-		bool BirdsEyeCamera::motion(const MotionInput & input) {
-			const Vec3 & d = input.motion();
-
-			if (input.button_pressed_or_dragged(MouseLeftButton)) {
-				RealT k = -1.0, i = number(_incidence.value).modulo(R360);
-
-				if (i < 0) i += R360;
-
-				// Reverse motion if we are upside down:
-				if (_reverse && i > R180 && i < R360)
-					k *= -1.0;
-
-				// Find the relative position of the mouse, if it is in the lower half,
-				// reverse the rotation.
-				Vec2 relative = input.bounds().relative_offset_of(input.current_position().reduce());
-
-				//logger()->log(LOG_DEBUG, LogBuffer() << "Motion: " << d);
-
-				// If mouse button is in lower half of view:
-				if (relative[Y] <= 0.5)
-					k *= -1.0;
-
-				_azimuth += (k * d[X] * _multiplier[X] * (R90 / 90));
-				_incidence += (d[Y] * _multiplier[Y] * (R90 / 90));
-
-				_invalid = true;
-				
-				return true;
-			} else if (input.key().button() == MouseScroll) {
-				_distance += (d[Y] * _multiplier[Z]);
-
-				_invalid = true;
-				
-				return true;
-			} else {
-				return false;
-			}
-		}
-
 		void BirdsEyeCamera::set_multiplier (const Vec3 &m) {
 			_multiplier = m;
 			

@@ -9,7 +9,7 @@
 #import <AppKit/AppKit.h>
 #include "Context.h"
 
-#include "../../../Events/MultiFingerInput.h"
+#include "../MultiFingerInput.h"
 
 @interface DOpenGLView : NSOpenGLView {
 	Dream::Client::Display::Cocoa::ViewContext * _display_context;

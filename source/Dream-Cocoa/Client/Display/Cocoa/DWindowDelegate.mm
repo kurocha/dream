@@ -20,7 +20,7 @@
 	if (_window_context) {
 		EventInput ipt(EventInput::EXIT);
 		
-		_window_context->process(ipt);				
+		_window_context->process(ipt);
 	}
 	
 	return NSTerminateCancel;

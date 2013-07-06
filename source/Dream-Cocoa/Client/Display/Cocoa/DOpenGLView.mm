@@ -175,7 +175,7 @@ static AlignedBox2 bounds_from_frame(NSRect frame)
 	return [event buttonNumber];
 }
 
-- (BOOL) handleMouseEvent:(NSEvent *)event withButton:(Dream::Events::ButtonT)button
+- (BOOL) handleMouseEvent:(NSEvent *)event withButton:(Dream::Client::Display::ButtonT)button
 {
 	NSEventMask mouse_motion_mask = NSMouseMovedMask | NSLeftMouseDraggedMask | NSRightMouseDraggedMask | NSOtherMouseDraggedMask;
 	//NSLog(@"Handling mouse event: %@", event);
