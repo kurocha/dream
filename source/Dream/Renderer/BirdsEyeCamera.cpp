@@ -21,7 +21,7 @@ namespace Dream {
 			_distance = 100;
 			_azimuth = R45;
 			_incidence = R45;
-			_twist = 0;
+			_twist = R0;
 
 			regenerate();
 		}
@@ -104,7 +104,7 @@ namespace Dream {
 			_invalid = true;
 		}
 
-		void BirdsEyeCamera::set_twist (const RealT& amount, bool relative) {
+		void BirdsEyeCamera::set_twist (const Radians<>& amount, bool relative) {
 			if (relative)
 				_twist += amount;
 			else
@@ -113,7 +113,7 @@ namespace Dream {
 			_invalid = true;
 		}
 
-		void BirdsEyeCamera::set_azimuth (const RealT& amount, bool relative) {
+		void BirdsEyeCamera::set_azimuth (const Radians<>& amount, bool relative) {
 			if (relative)
 				_azimuth += amount;
 			else
@@ -122,7 +122,7 @@ namespace Dream {
 			_invalid = true;
 		}
 
-		void BirdsEyeCamera::set_incidence (const RealT &amount, bool relative) {
+		void BirdsEyeCamera::set_incidence (const Radians<> &amount, bool relative) {
 			if (relative)
 				_incidence += amount;
 			else

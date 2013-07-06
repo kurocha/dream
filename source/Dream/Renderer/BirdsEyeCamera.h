@@ -58,16 +58,16 @@ namespace Dream
 			void set_distance (const RealT& amnt, bool relative = false);
 			const RealT & distance () const { return _distance; }
 
-			void set_twist (const RealT& amnt, bool relative = false);
+			void set_twist (const Radians<> &amount, bool relative = false);
 			const Radians<> & twist () const { return _twist; }
 
-			void set_azimuth (const RealT& amnt, bool relative = false);
+			void set_azimuth (const Radians<> &amount, bool relative = false);
 			const Radians<> & azimuth () const { return _azimuth; }
 
 			void set_multiplier (const Vec3 &m);
 			const Vec3 &multiplier ();
 
-			void set_incidence (const RealT &amnt, bool relative = false);
+			void set_incidence (const Radians<> &amount, bool relative = false);
 			const Radians<> & incidence () const { return _incidence; }
 
 			void set_up (const Vec3 &up);
