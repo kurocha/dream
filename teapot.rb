@@ -5,6 +5,13 @@
 
 teapot_version "0.8.0"
 
+define_project "Dream" do |project|
+	project.add_author "Samuel Williams"
+	project.license = "MIT License"
+	
+	project.version = "0.1.0"
+end
+
 define_target "dream" do |target|
 	target.build do |environment|
 		build_directory(package.path, 'source', environment)
