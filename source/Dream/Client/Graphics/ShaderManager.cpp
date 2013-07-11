@@ -135,12 +135,12 @@ namespace Dream {
 				}
 			}
 
-			GLenum ShaderManager::compile(GLenum type, const Buffer * buffer)
+			GLenum ShaderManager::compile(GLenum type, const Buffer & buffer)
 			{
 				GLuint shader = glCreateShader(type);
 
-				const GLchar * source = (GLchar*)buffer->begin();
-				GLint length = (GLint)buffer->size();
+				const GLchar * source = (GLchar*)buffer.begin();
+				GLint length = (GLint)buffer.size();
 				glShaderSource(shader, 1, &source, &length);
 				check_graphics_error();
 

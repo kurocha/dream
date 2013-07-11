@@ -69,7 +69,6 @@ namespace Dream {
 			if (c != _data_cache.end())
 				return c->second;
 
-
 			if (path.exists()) {
 				Ref<IData> data = new LocalFileData(path);
 

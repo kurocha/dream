@@ -188,7 +188,8 @@ namespace Dream {
 			/*
 			 Once the ShaderManager is deallocated, associated Program objects that are not linked will become invalid.
 			 */
-			class ShaderManager : public Object {
+			class ShaderManager : public Object
+			{
 			protected:
 				std::vector<GLenum> _shaders;
 
@@ -196,14 +197,18 @@ namespace Dream {
 				ShaderManager();
 				~ShaderManager();
 
-				GLenum compile(GLenum type, const Buffer * buffer);
+				GLenum compile(GLenum type, const Buffer & buffer);
+				
+				// Deprecated
+				GLenum compile(GLenum type, const Buffer * buffer) { return compile(type, *buffer); }
 			};
 
 			// MARK: -
 			// MARK: Uniform Specialisations
 
 			template <>
-			class GLUniformTraits<1>{
+			class GLUniformTraits<1>
+			{
 			public:
 #ifndef DREAM_OPENGLES2
 				static void set(GLint location, const GLsizei count, const GLuint * value) {

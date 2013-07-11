@@ -15,6 +15,7 @@
 #include "../../Text/Font.h"
 #include "../Audio/Sound.h"
 #include "../Audio/OggResource.h"
+#include "../Graphics/ShaderFactory.h"
 
 #include <numeric>
 #include <algorithm>
@@ -44,6 +45,7 @@ namespace Dream
 				loader->add_loader(new Client::Audio::Sound::Loader);
 				loader->add_loader(new Client::Audio::OggResource::Loader);
 				loader->add_loader(new Text::Font::Loader);
+				loader->add_loader(new Graphics::ShaderFactory::Loader);
 
 				return loader;
 			}

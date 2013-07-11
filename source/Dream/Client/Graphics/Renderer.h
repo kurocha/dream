@@ -11,6 +11,8 @@
 
 #include "TextureManager.h"
 #include "ShaderManager.h"
+#include "ShaderParser.h"
+
 #include "../Display/Scene.h"
 #include "../../Renderer/Viewport.h"
 
@@ -61,8 +63,7 @@ namespace Dream {
 				Ref<Renderer::IViewport> viewport;
 
 				// These are essentially helper methods to load shader programs:
-				GLuint compile_shader_of_type (GLenum type, const Path & path);
-				Ref<Program> load_program(const Path & path);
+				Ref<Program> load_program(const Path & path, const ShaderParser::DefinesMapT * defines = nullptr);
 				Ref<Texture> load_texture(const TextureParameters & parameters, const Path & path);
 			};
 		}

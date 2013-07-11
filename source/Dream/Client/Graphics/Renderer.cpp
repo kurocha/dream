@@ -7,6 +7,7 @@
 //
 
 #include "Renderer.h"
+#include "ShaderFactory.h"
 
 namespace Dream {
 	namespace Client {
@@ -43,41 +44,13 @@ namespace Dream {
 			RendererState::~RendererState() {
 			}
 
-			GLuint RendererState::compile_shader_of_type (GLenum type, const Path & name) {
-				Ref<IData> data = resource_loader->data_for_resource(name);
-
-				if (data) {
-					logger()->log(LOG_DEBUG, LogBuffer() << "Loading " << name);
-					return shader_manager->compile(type, data->buffer().get());
-				} else {
-					return 0;
-				}
-			}
-
-			Ref<Program> RendererState::load_program(const Path & name) {
-				GLuint vertex_shader = compile_shader_of_type(GL_VERTEX_SHADER, name.with_extension("vertex-shader"));
-#ifndef DREAM_OPENGLES2
-				GLuint geometry_shader = compile_shader_of_type(GL_GEOMETRY_SHADER, name.with_extension("geometry-shader"));
-#endif
-				GLuint fragment_shader = compile_shader_of_type(GL_FRAGMENT_SHADER, name.with_extension("fragment-shader"));
+			Ref<Program> RendererState::load_program(const Path & name, const ShaderParser::DefinesMapT * defines) {
+				Ref<ShaderFactory> factory = resource_loader->load<ShaderFactory>(name);
 
 				Ref<Program> program = new Program;
-
-				// We must have at least one shader for the program to do anything:
-				DREAM_ASSERT(vertex_shader || fragment_shader);
-
-				if (vertex_shader)
-					program->attach(vertex_shader);
-
-#ifndef DREAM_OPENGLES2
-				if (geometry_shader)
-					program->attach(geometry_shader);
-#endif
-				
-				if (fragment_shader)
-					program->attach(fragment_shader);
-
+				factory->attach(shader_manager, program, defines);
 				program->link();
+
 				program->bind_fragment_location("fragment_color");
 
 				return program;
