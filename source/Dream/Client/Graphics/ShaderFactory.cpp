@@ -28,7 +28,7 @@ namespace Dream
 				{
 					if (pair.first == ShaderParser::SourceType::HEADER) continue;
 					
-					auto source_buffer = _shader_parser.full_buffer(pair.first);
+					auto source_buffer = _shader_parser.full_buffer(pair.first, defines);
 					BufferedData data(source_buffer);
 					
 					GLuint shader = shader_manager->compile((GLenum)pair.first, *data.buffer());
