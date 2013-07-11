@@ -22,13 +22,7 @@ namespace Dream
 
 		class BirdsEyeCamera : public Object, implements ICamera {
 		protected:
-			Vec3 _up;
-			Vec3 _right;
-
-			/* Cached _up.cross(_right) */
-			Vec3 _forward;
-
-			Vec3 _center;
+			Vec3 _up, _right, _forward, _center;
 
 			RealT _distance;
 			Radians<> _twist, _azimuth, _incidence;
