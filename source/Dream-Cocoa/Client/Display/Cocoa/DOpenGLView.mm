@@ -42,7 +42,7 @@ static AlignedBox2 bounds_from_frame(NSRect frame)
 }
 
 - (void)touchesBeganWithEvent:(NSEvent *)event {
-	NSSet * touches = [event touchesMatchingPhase:NSTouchPhaseTouching inView:self];
+	NSSet * touches = [event touchesMatchingPhase:NSTouchPhaseBegan inView:self];
 	
 	for (NSTouch * touch in touches) {
 		AlignedBox2 bounds = bounds_from_frame(self.frame);
@@ -93,7 +93,21 @@ static AlignedBox2 bounds_from_frame(NSRect frame)
 }
 
 - (void)touchesCancelledWithEvent:(NSEvent *)event {
-	[self touchesEndedWithEvent:event];
+	// This doesn't always seem to work as expected - sometimes finger tracking state is lost? This function should technically reset the tracking state.
+	NSSet * touches = [event touchesMatchingPhase:NSTouchPhaseTouching inView:self];
+	
+	for (NSTouch * touch in touches) {
+		AlignedBox2 bounds = bounds_from_frame(self.frame);
+		NSPoint point = touch.normalizedPosition;
+		Vec3 position = bounds.absolute_position_of(vector(point.x, point.y)) << 0.0;
+		
+		const FingerTracking & ft = _multi_finger_input->finish_motion((FingerID)touch.identity, position);
+		
+		Key touch_key(DefaultTouchPad, ft.button);
+		
+		MotionInput motion_input(touch_key, Released, ft.position, ft.motion, bounds);
+		_display_context->process(motion_input);
+	}
 }
 
 - (BOOL)becomeFirstResponder {
