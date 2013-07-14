@@ -45,6 +45,34 @@ namespace Dream
 				pos = next + 1;
 			} while (next != StringT::npos);
 		}
+		
+		template <typename BufferT, typename IteratorT, typename SeparatorT>
+		void join(BufferT & buffer, IteratorT begin, const IteratorT & end, const SeparatorT & separator)
+		{
+			if (begin == end) return;
+			
+			buffer << *begin;
+			
+			while (++begin != end) {
+				buffer << separator << *begin;
+			}
+		}
+
+		template <typename IteratorT, typename SeparatorT>
+		StringT join(IteratorT begin, const IteratorT & end, const SeparatorT & separator)
+		{
+			StringStreamT buffer;
+
+			join(buffer, begin, end, separator);
+
+			return buffer.str();
+		}
+
+		template <typename CollectionT, typename SeparatorT>
+		StringT join(const CollectionT collection, const SeparatorT & separator)
+		{
+			return join(std::begin(collection), std::end(collection), separator);
+		}
 
 		StringT unescape_string (const StringT &);
 		StringT escape_string (const StringT &);

@@ -14,7 +14,7 @@
 
 #include "Input.h"
 
-#include <map>
+#include <unordered_map>
 #include <vector>
 
 #include <Euclid/Numerics/Vector.h>
@@ -27,7 +27,7 @@ namespace Dream
 		{
 			using Euclid::Numerics::Vec3;
 
-			typedef intptr_t FingerID;
+			typedef std::intptr_t FingerID;
 
 			struct FingerTracking {
 				Vec3 position;
@@ -38,7 +38,7 @@ namespace Dream
 
 			class MultiFingerInput {
 			protected:
-				typedef std::map<FingerID, FingerTracking> FingersMap;
+				typedef std::unordered_map<FingerID, FingerTracking> FingersMap;
 				FingersMap _fingers;
 
 				std::vector<ButtonT> _free_buttons;

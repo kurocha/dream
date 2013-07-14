@@ -29,9 +29,8 @@ namespace Dream
 			using Euclid::Numerics::Vec2u;
 			using Euclid::Geometry::AlignedBox2;
 
-			typedef unsigned DeviceT;
-			typedef unsigned ButtonT;
-			typedef unsigned StateT;
+			typedef std::intptr_t DeviceT;
+			typedef std::intptr_t ButtonT;
 
 			enum Device {
 				NullDevice = 0,
@@ -45,7 +44,12 @@ namespace Dream
 				Released = 0,
 				Pressed = 1,
 				Dragged = 2,
+				
+				// Indicates that the mouse motion was cancelled, and any related action should be abandoned.
+				Cancelled = 8,
 			};
+
+			typedef unsigned StateT;
 
 			// If a mouse button is released after being pressed or dragged, it will
 			// create a motion key with State::Released and MouseButton::Mouse*Button

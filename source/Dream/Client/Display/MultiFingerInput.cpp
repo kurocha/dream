@@ -10,6 +10,7 @@
 #include "MultiFingerInput.h"
 
 #include "../../Events/Logger.h"
+#include "../../Core/Strings.h"
 
 namespace Dream
 {
@@ -52,8 +53,8 @@ namespace Dream
 				ft.button = allocate_button();
 				ft.position = position;
 				ft.motion = 0;
-			
-				if (DEBUG) log_debug("Begin motion for finger:", finger, "button:", ft.button);
+
+				if (DEBUG) log_debug("Begin motion for finger:", finger, "button:", ft.button, "top:", _top);
 
 				return (_fingers[finger] = ft);
 			}
@@ -85,6 +86,8 @@ namespace Dream
 
 				release_button(ft.button);
 				_fingers.erase(it);
+
+				if (DEBUG) log_debug("Free buttons:", join(_free_buttons, ", "), "Used count:", _fingers.size());
 
 				return ft;
 			}
