@@ -1,0 +1,34 @@
+---
+local:
+  :branch: master
+  :commit: 26e3a2d59a5c12d71fc2f3f13c205fc4b725159a
+png:
+  :branch: master
+  :commit: fbb8e7e1e8d68de4d6b533f3941af7739f8939a2
+jpeg:
+  :branch: master
+  :commit: 30e2b40cd316e49d115425c92c82029a7806dd2b
+freetype:
+  :branch: master
+  :commit: 33b8cd9be5e78f94dcb63efae94b1d57ea4ed856
+ogg:
+  :branch: master
+  :commit: 0ef5d5888cc1a9a59b9251fae2fe3e0d87f0995c
+vorbis:
+  :branch: master
+  :commit: 322ca073c1b67d5288bffa88c34c775e8d48c510
+unit-test:
+  :branch: master
+  :commit: e9b8fd07138bd224664c18c9960b55f53814e298
+euclid:
+  :branch: master
+  :commit: c036c2b159968cbec5fac2af4c91de250e599dbd
+platform-darwin-osx:
+  :branch: master
+  :commit: 77c8da4579bbcdd93c8b8ba524ba20ba6b96d10f
+variants:
+  :branch: master
+  :commit: 6f3c1de3c0a6254e1fed58fc68fd8a96218f28e7
+utf8:
+  :branch: master
+  :commit: 299d10bd57a4deda3e7f8ea0744d1be258b51d2b
