@@ -56,6 +56,13 @@ define_target "dream-tests" do |target|
 	target.provides "Test/Dream"
 end
 
+define_target "dream-client" do |target|
+	target.depends "Library/Dream"
+	target.depends "Library/Dream/Display"
+	
+	target.provides "Library/Dream/Client"
+end
+
 define_generator "dream.scene" do |generator|
 	generator.description = <<-EOF
 		Generates a basic scene file in the project.
