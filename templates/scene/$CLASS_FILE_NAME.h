@@ -9,13 +9,13 @@
 #ifndef $GUARD_NAME
 #define $GUARD_NAME
 
-#include <Dream/Client/Display/Scene.h>
+#include <Dream/Display/Scene.h>
 
 <NAMESPACE>
 using namespace Dream::Renderer;
-using namespace Dream::Client::Display;
+using namespace Dream::Display;
 
-class $CLASS_NAME : public Dream::Client::Scene
+class $CLASS_NAME : public Dream::Scene
 {
 public:
 	$CLASS_NAME();
