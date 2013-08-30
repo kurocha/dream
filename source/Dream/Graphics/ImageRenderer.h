@@ -12,7 +12,7 @@
 #include "MeshBuffer.h"
 #include "TextureManager.h"
 
-#include "../../Imaging/Image.h"
+#include "../Imaging/Image.h"
 
 namespace Dream
 {

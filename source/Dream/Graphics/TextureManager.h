@@ -9,7 +9,7 @@
 #ifndef _DREAM_CLIENT_GRAPHICS_TEXTUREMANAGER_H
 #define _DREAM_CLIENT_GRAPHICS_TEXTUREMANAGER_H
 
-#include "../../Imaging/PixelBuffer.h"
+#include "../Imaging/PixelBuffer.h"
 #include "Graphics.h"
 
 #include <Euclid/Numerics/Vector.h>

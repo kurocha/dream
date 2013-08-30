@@ -10,8 +10,8 @@
 #ifndef _DREAM_CLIENT_DISPLAY_INPUT_H
 #define _DREAM_CLIENT_DISPLAY_INPUT_H
 
-#include "../../Core/Timer.h"
-#include "../../Events/Thread.h"
+#include "../Core/Timer.h"
+#include "../Events/Thread.h"
 
 #include <map>
 #include <Euclid/Numerics/Vector.h>

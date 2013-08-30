@@ -14,7 +14,7 @@
 #include "ShaderParser.h"
 
 #include "../Display/Scene.h"
-#include "../../Renderer/Viewport.h"
+#include "../Renderer/Viewport.h"
 
 namespace Dream
 {

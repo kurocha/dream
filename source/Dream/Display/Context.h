@@ -12,9 +12,9 @@
 
 #include "../Framework.h"
 
-#include "../../Core/Dictionary.h"
-#include "../../Core/Strings.h"
-#include "../../Events/Loop.h"
+#include "../Core/Dictionary.h"
+#include "../Core/Strings.h"
+#include "../Events/Loop.h"
 #include "Input.h"
 
 #include <vector>

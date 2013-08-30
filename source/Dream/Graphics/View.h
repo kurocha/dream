@@ -10,12 +10,12 @@
 #define _DREAM_CLIENT_GRAPHICS_VIEW_H
 
 #include "Graphics.h"
-#include "../../Text/Font.h"
-#include "../../Text/TextBuffer.h"
+#include "../Text/Font.h"
+#include "../Text/TextBuffer.h"
 
 #include "Renderer.h"
 #include "ImageRenderer.h"
-#include "../../Imaging/Image.h"
+#include "../Imaging/Image.h"
 
 #include <Euclid/Geometry/AlignedBox.h>
 

@@ -7,7 +7,7 @@
 //
 
 #include "Application.h"
-#include "../../Events/Thread.h"
+#include "../Events/Thread.h"
 
 namespace Dream
 {

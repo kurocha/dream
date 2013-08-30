@@ -8,7 +8,7 @@
 //
 
 #include "Context.h"
-#include "../../Resources/Loader.h"
+#include "../Resources/Loader.h"
 
 namespace Dream
 {

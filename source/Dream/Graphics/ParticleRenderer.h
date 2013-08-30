@@ -13,8 +13,8 @@
 #include "Graphics.h"
 #include "MeshBuffer.h"
 #include "ShaderManager.h"
-#include "../../Core/Timer.h"
-#include "../../Core/Algorithm.h"
+#include "../Core/Timer.h"
+#include "../Core/Algorithm.h"
 
 #include <Euclid/Numerics/Vector.h>
 

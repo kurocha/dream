@@ -11,8 +11,8 @@
 #include "Context.h"
 
 // Resource loader
-#include "../../Imaging/Image.h"
-#include "../../Text/Font.h"
+#include "../Imaging/Image.h"
+#include "../Text/Font.h"
 #include "../Audio/Sound.h"
 #include "../Audio/OggResource.h"
 #include "../Graphics/ShaderFactory.h"

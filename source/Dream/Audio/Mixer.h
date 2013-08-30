@@ -11,8 +11,8 @@
 #define _DREAM_CLIENT_AUDIO_MIXER_H
 
 #include "../Framework.h"
-#include "../../Core/System.h"
-#include "../../Events/Fader.h"
+#include "../Core/System.h"
+#include "../Events/Fader.h"
 
 #include <Euclid/Numerics/Vector.h>
 #include <Euclid/Numerics/Interpolate.h>

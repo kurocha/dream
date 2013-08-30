@@ -10,8 +10,8 @@
 #ifndef _DREAM_CLIENT_DISPLAY_SCENE_H
 #define _DREAM_CLIENT_DISPLAY_SCENE_H
 
-#include "../../Core/Timer.h"
-#include "../../Resources/Loader.h"
+#include "../Core/Timer.h"
+#include "../Resources/Loader.h"
 
 #include "Context.h"
 

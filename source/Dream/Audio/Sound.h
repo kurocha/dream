@@ -12,8 +12,8 @@
 
 #include "Mixer.h"
 
-#include "../../Resources/Loader.h"
-#include "../../Core/Buffer.h"
+#include "../Resources/Loader.h"
+#include "../Core/Buffer.h"
 
 namespace Dream
 {
