@@ -22,7 +22,6 @@ def component(environment)
 			component.add("Dream-UIKit")
 		when /linux/
 			component.add("Dream-Unix")
-			component.add("Dream-X11")
 		end
 			
 		component.prepare!

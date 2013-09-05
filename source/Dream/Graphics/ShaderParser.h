@@ -60,7 +60,7 @@ namespace Dream
 			void parse(std::istream & input_stream);
 
 			// Get a buffer for the corresponding source type with an optional map of defines as per `add_definitions`.
-			std::stringstream full_buffer(SourceType source_type, const DefinesMapT * defines = nullptr) const;
+			void full_buffer(std::stringstream & buffer, SourceType source_type, const DefinesMapT * defines = nullptr) const;
 
 			// To get a full source buffer, you should call `full_buffer(pair.first)`.
 			const std::map<SourceType, std::stringstream> & source_buffers() const { return _source_buffers; }

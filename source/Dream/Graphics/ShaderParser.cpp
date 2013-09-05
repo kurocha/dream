@@ -77,11 +77,8 @@ namespace Dream
 			}
 		}
 
-		std::stringstream ShaderParser::full_buffer(SourceType source_type, const DefinesMapT * defines) const
+		void ShaderParser::full_buffer(std::stringstream & buffer, SourceType source_type, const DefinesMapT * defines) const
 		{
-			// Copy the header, it is prepended:
-			std::stringstream buffer;
-
 			buffer << _header->str();
 
 			if (defines)
@@ -97,10 +94,6 @@ namespace Dream
 				if (source_buffer != _source_buffers.end())
 					buffer << source_buffer->second.str();
 			}
-
-			buffer.seekg(0);
-
-			return buffer;
 		}
 	}
 }
