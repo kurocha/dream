@@ -274,7 +274,7 @@ namespace Dream
 		int PollFileDescriptorMonitor::wait_for_events (TimeT timeout, Loop * loop)
 		{
 			// Number of events which have been processed
-			int count;
+			int count = 0;
 
 			std::vector<FileDescriptorHandlesT::iterator> handles;
 			std::vector<struct pollfd> pollfds;
