@@ -25,9 +25,7 @@ define_target "dream" do |target|
 	target.depends "Library/png"
 	target.depends "Library/jpeg"
 	target.depends "Library/freetype"
-	target.depends "Library/vorbis"
 	
-	target.depends "Library/OpenAL"
 	target.depends "Library/OpenGL"
 	target.depends "Aggregate/Display"
 	
@@ -54,13 +52,6 @@ define_target "dream-tests" do |target|
 	target.depends "Library/Dream"
 
 	target.provides "Test/Dream"
-end
-
-define_target "dream-client" do |target|
-	target.depends "Library/Dream"
-	target.depends "Library/Dream/Display"
-	
-	target.provides "Library/Dream/Client"
 end
 
 define_generator "dream.scene" do |generator|

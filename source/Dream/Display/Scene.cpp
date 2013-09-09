@@ -10,13 +10,6 @@
 #include "Scene.h"
 #include "Context.h"
 
-// Resource loader
-#include "../Imaging/Image.h"
-#include "../Text/Font.h"
-#include "../Audio/Sound.h"
-#include "../Audio/OggResource.h"
-#include "../Graphics/ShaderFactory.h"
-
 #include <numeric>
 #include <algorithm>
 #include <iomanip>
@@ -31,21 +24,6 @@ namespace Dream
 
 			if (s)
 				s->render_frame_for_time(time);
-		}
-
-// MARK: -
-
-		Ref<Resources::ILoader> SceneManager::default_resource_loader ()
-		{
-			Ref<Resources::Loader> loader = new Resources::Loader;
-
-			loader->add_loader(new Imaging::Image::Loader);
-			loader->add_loader(new Audio::Sound::Loader);
-			loader->add_loader(new Audio::OggResource::Loader);
-			loader->add_loader(new Text::Font::Loader);
-			loader->add_loader(new Graphics::ShaderFactory::Loader);
-
-			return loader;
 		}
 
 		SceneManager::SceneManager (Ref<IContext> display_context, Ref<Loop> event_loop, Ref<ILoader> resource_loader) : _display_context(display_context), _event_loop(event_loop), _resource_loader(resource_loader), _current_scene_is_finished(true)

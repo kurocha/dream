@@ -182,8 +182,6 @@ namespace Dream
 			InputQueue _input_queue;
 
 		public:
-			static Ref<Resources::ILoader> default_resource_loader ();
-
 			SceneManager (Ref<IContext> display_context, Ref<Loop> event_loop, Ref<ILoader> resource_loader);
 			virtual ~SceneManager ();
 
