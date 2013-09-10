@@ -537,6 +537,8 @@ namespace Dream
 				_notifications.swap();
 			}
 
+			if (DEBUG) log_debug("Processing", _notifications.processing.size(), "notifications");
+
 			unsigned rate = _rate_limit;
 
 			while (!_notifications.processing.empty() && (rate-- || _rate_limit == 0)) {
