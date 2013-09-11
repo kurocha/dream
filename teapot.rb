@@ -95,4 +95,6 @@ define_configuration "dream" do |configuration|
 	
 	configuration.require "utf8"
 	configuration.require "euclid"
+	
+	configuration.require "unit-test"
 end
