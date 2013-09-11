@@ -14,6 +14,14 @@
 
 namespace Dream {
 	namespace Core {
+		TimeT system_time ()
+		{
+			struct timeval t;
+			gettimeofday (&t, (struct timezone*)0);
+			
+			return ((TimeT)t.tv_sec) + ((TimeT)t.tv_usec / 1000000.0);
+		}
+		
 		void sleep (const TimeT & s)
 		{
 			struct timespec ts;

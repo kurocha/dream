@@ -14,11 +14,9 @@ def component(environment)
 		case environment[:platform_name]
 		when /darwin-osx/
 			component.add("Dream-NSFileManager")
-			component.add("Dream-CoreVideo")
 			component.add("Dream-Cocoa")
 		when /darwin-ios/
 			component.add("Dream-NSFileManager")
-			component.add("Dream-CoreVideo")
 			component.add("Dream-UIKit")
 		when /linux/
 			component.add("Dream-Unix")
