@@ -90,11 +90,7 @@ define_generator "dream.scene" do |generator|
 	end
 end
 
-define_configuration "dream-local" do |configuration|
-	configuration[:source] = "../"
-	configuration.import! "local"
-	
+define_configuration "dream" do |configuration|
 	configuration.require "utf8"
-	
 	configuration.require "euclid"
 end
