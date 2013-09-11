@@ -41,10 +41,7 @@ namespace Dream {
 		}
 
 		Loader::Loader (Path in) {
-			if (in.is_absolute())
-				_current_path = in;
-			else
-				_current_path = application_working_path() + in;
+			_current_path = in;
 
 			// Check that the path is actually a directory that exists.
 			DREAM_ASSERT(_current_path.file_status() == Path::DIRECTORY);
