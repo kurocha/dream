@@ -91,6 +91,8 @@ define_generator "dream.scene" do |generator|
 end
 
 define_configuration "dream" do |configuration|
+	configuration.public!
+	
 	configuration.require "utf8"
 	configuration.require "euclid"
 end
