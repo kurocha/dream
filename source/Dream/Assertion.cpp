@@ -47,39 +47,9 @@ namespace Dream
 
 			AssertionError assertion_error(expression, file, line);
 
-			std::cerr << assertion_error.what();
+			//std::cerr << assertion_error.what();
 
 			throw assertion_error;
 		}
 	}
-
-// MARK: -
-// MARK: Unit Tests
-
-#ifdef ENABLE_TESTING
-	UNIT_TEST(Assertion)
-	{
-		bool exception_thrown;
-
-		testing("Ensure");
-
-		exception_thrown = false;
-		try {
-			DREAM_ASSERT(1 == 0);
-		} catch (AssertionError & err)   {
-			exception_thrown = true;
-		}
-
-		check(exception_thrown) << "Ensure threw exception";
-
-		exception_thrown = false;
-		try {
-			DREAM_ASSERT(1 == 1);
-		} catch (AssertionError & err)   {
-			exception_thrown = true;
-		}
-
-		check(!exception_thrown) << "Ensure didn't throw exception";
-	}
-#endif
 }

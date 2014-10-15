@@ -105,22 +105,5 @@ namespace Dream
 			
 			return output.str();
 		}
-
-// MARK: -
-// MARK: Unit Tests
-
-#ifdef ENABLE_TESTING
-		UNIT_TEST(Data)
-		{
-			const char * data = "First things first -- but not necessarily in that order.";
-
-			testing("Construction");
-
-			Shared<StaticBuffer> sb = new StaticBuffer(StaticBuffer::for_cstring(data, false));
-			Ref<IData> a = new BufferedData(sb);
-
-			check(a->buffer()->size() == strlen(data)) << "Data length is correct";
-		}
-#endif
 	}
 }

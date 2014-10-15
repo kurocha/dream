@@ -164,42 +164,5 @@ namespace Dream
 		std::ostream & operator<<(std::ostream & output, const Path & path) {
 			return (output << path.to_local_path());
 		}
-
-// MARK: -
-// MARK: Unit Tests
-
-#ifdef ENABLE_TESTING
-		UNIT_TEST(Path)
-		{
-			testing("Absolute & Directory");
-
-			Path p1("/apples/oranges"), p2("grapefruit/"), p3("bananna/peach");
-
-			check(p1.is_absolute()) << p1 << " is absolute";
-			check(!p2.is_absolute()) << p2 << " is relative";
-			check(p2.is_directory()) << p2 << " is a directory";
-			check(!p3.is_directory()) << p3 << " is not a directory";
-
-			testing("Local Paths");
-
-			check(p1.to_local_path() == "/apples/oranges") << p1 << " was correctly converted";
-			check(p2.to_local_path() == "grapefruit/") << p2 << " was correctly converted";
-			check(p3.to_local_path() == "bananna/peach") << p3 << " was correctly converted";
-
-			testing("Path Manipulation");
-
-			Path p4("files/image.jpeg"), p5("bob"), p6("/dole");
-
-			Path::NameComponents name_components = p4.last_name_components();
-
-			check(name_components.basename == "image") << p4 << " has correct basename; got " << name_components.basename;
-			check(name_components.extension == "jpeg") << p4 << " has correct extension; got " << name_components.extension;
-			check((p5 + p4) == "bob/files/image.jpeg") << p5 << " + " << p4 << " gave correct result";
-
-			Path p7 = p1 + "../john.png";
-
-			check(p7.simplify() == "/apples/john.png") << p7 << " was simplified correctly";
-		}
-#endif
 	}
 }

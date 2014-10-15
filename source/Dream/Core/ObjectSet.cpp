@@ -196,37 +196,5 @@ namespace Dream
 				_index -= 1;
 			} while (!_object_context->_objects[_index]);
 		}
-
-// MARK: -
-// MARK: Unit Tests
-
-#ifdef ENABLE_TESTING
-		namespace {
-			class TestResource : public Object {
-			public:
-			};
-
-			UNIT_TEST(ObjectSet)
-			{
-				Ref<ObjectSet> objects(new ObjectSet);
-
-				ObjectSet::ObjectID oid1 = objects->insert(new TestResource);
-				ObjectSet::ObjectID oid2 = objects->insert(new TestResource);
-				ObjectSet::ObjectID oid3 = objects->insert(new TestResource);
-				ObjectSet::ObjectID oid4 = objects->insert(new TestResource);
-
-				check(objects->size() == 4) << "Object set contains 4 objects";
-
-				objects->erase(oid3);
-
-				check(objects->size() == 3) << "Object set contains 3 objects";
-
-				ObjectSet::ObjectID oid5 = objects->insert(new TestResource);
-
-				check(objects->size() == 4) << "Object set contains 4 objects";
-				check(oid3.identity() == oid5.identity()) << "Object was placed into previous slot";
-			}
-		}
-#endif
 	}
 }

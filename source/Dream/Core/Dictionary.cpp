@@ -88,42 +88,5 @@ namespace Dream
 				out << key << ": " << value << std::endl;
 			}
 		}
-
-// MARK: -
-// MARK: Unit Tests
-
-#ifdef ENABLE_TESTING
-		namespace {
-			UNIT_TEST(Dictionary)
-			{
-				testing("Serialization");
-
-				Ref<Dictionary> dict1(new Dictionary);
-
-				dict1->set("Key1", 5);
-				dict1->set("Key2", "Apples");
-
-				int key1 = dict1->get<int>("Key1");
-
-				check(key1 == 5) << "Value is equal";
-
-				Ref<IData> data = dict1->serialize();
-
-				Ref<Dictionary> dict2(new Dictionary);
-
-				dict2->deserialize(data);
-
-				check(dict1->get<int>("Key1") == dict2->get<int>("Key1")) << "Values are equal";
-
-				dict1->set("Dictionary Name", "dict1");
-
-				std::cout << "Dict 1" << std::endl;
-				dict1->debug(std::cout);
-
-				std::cout << "Dict 2" << std::endl;
-				dict2->debug(std::cout);
-			}
-		}
-#endif
 	}
 }

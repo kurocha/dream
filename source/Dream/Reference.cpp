@@ -49,49 +49,4 @@ namespace Dream {
 	SharedObject::NumberT SharedObject::reference_count () const {
 		return _count.load();
 	}
-
-// MARK: -
-// MARK: Unit Tests
-
-#ifdef ENABLE_TESTING
-
-	UNIT_TEST(Ref)
-	{
-		testing("Shared Object");
-
-		Ref<SharedObject> s1, s2, s3;
-
-		check(s1 == s2) << "Null objects are equal";
-
-		s1 = new SharedObject;
-
-		check(s1 != s2) << "Null and non-null objects are not equal";
-
-		s2 = new SharedObject;
-		s3 = new SharedObject;
-
-		check(s1 == s1) << "Objects are equal";
-		check(s1 != s2) << "Objects are not equal";
-
-		std::set<Ref<SharedObject>> objects;
-		objects.insert(s1);
-		objects.insert(s2);
-		objects.insert(s3);
-
-		check(objects.size() == 3) << "Set contains correct number of objects";
-	}
-
-	UNIT_TEST(Shared)
-	{
-		testing("Shared Integers");
-
-		Shared<int> s1(new int), s2, s3;
-
-		s2 = s1;
-
-		*s1 = 10;
-
-		check(*s2 == 10) << "Value was not the same!";
-	}
-#endif
 }

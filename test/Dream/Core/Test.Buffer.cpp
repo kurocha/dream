@@ -6,9 +6,10 @@
 
 namespace Dream
 {
-	namespace Core {
+	namespace Core
+	{
 		UnitTest::Suite BufferTestSuite {
-			"Dream::Buffer",
+			"Dream::Core::Buffer",
 
 			{"StaticBuffer",
 				[](UnitTest::Examiner & examiner) {

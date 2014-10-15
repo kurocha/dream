@@ -147,19 +147,5 @@ namespace Dream
 			buffer << '"';
 			return buffer.str();
 		}
-
-// MARK: -
-// MARK: Unit Tests
-
-#ifdef ENABLE_TESTING
-		UNIT_TEST(Strings)
-		{
-			testing("Formatting");
-
-			check(center("Apple", 10, ' ') == "   Apple  ") << "String is centered";
-			check(center("Apple", 11, ' ') == "   Apple   ") << "String is centered";
-			check(center("Apple", 11, '-') == "---Apple---") << "String is centered";
-		}
-#endif
 	}
 }

@@ -533,49 +533,5 @@ namespace Dream
 		{
 			return scheme() == "file";
 		}
-
-// MARK: -
-// MARK: Unit Tests
-
-#ifdef ENABLE_TESTING
-		UNIT_TEST(URI)
-		{
-			testing("HTTP URI");
-			URI a("http://user12:abc@www.google.com:80/blah?bob=2");
-			check(a.scheme() == "http") << "Scheme is correct";
-
-			check(a.username() == "user12") << "User is correct";
-			check(a.password() == "abc") << "Password is correct";
-
-			check(a.hostname() == "www.google.com") << "Hostname is correct";
-			check(a.port() == 80) << "Port is correct";
-			check(a.path() == "/blah") << "Path is correct";
-			check(a.query() == "?bob=2") << "Query is correct";
-
-			URI a2("http://localhost");
-			check(a2.scheme() == "http") << "scheme " << a2.scheme() << " should be 'http'";
-			check(a2.hostname() == "localhost") << "hostname " << a2.hostname() << " should be 'localhost'";
-
-			testing("Mailto URI");
-			URI b("mailto:blah@blah.com");
-			check(b.scheme() == "mailto") << "Scheme is correct";
-			check(b.path() == "blah@blah.com") << "Path is correct";
-
-			testing("File URI");
-			URI c("file:/etc/fstab");
-			check(c.scheme() == "file") << "Scheme is correct";
-			check(c.path() == "/etc/fstab") << "Path is correct";
-
-			testing("Simple File URI");
-			URI d("/etc/fstab");
-			check(d.scheme() == "") << "Scheme is correct";
-			check(d.path() == "/etc/fstab") << "Path is correct";
-
-			testing("Path Constructed URI");
-			URI e("file", "/Apples/and/oranges");
-			check(e.scheme() == "file") << "Scheme is correct";
-			check(e.path() == "/Apples/and/oranges") << "Path is correct";
-		}
-#endif
 	}
 }
