@@ -31,7 +31,7 @@ namespace Dream
 
 		Shared<Buffer> LocalFileData::buffer () const
 		{
-			if (!_buffer && _path.exists()) {
+			if (!_buffer) {
 				_buffer = new FileBuffer(_path);
 			}
 
@@ -47,7 +47,7 @@ namespace Dream
 
 		std::size_t LocalFileData::size () const
 		{
-			return _path.file_size();
+			return buffer()->size();
 		}
 
 

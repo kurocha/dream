@@ -20,21 +20,6 @@ namespace Dream
 	namespace Core
 	{
 		/**
-		 A list of useful mime-type constants.
-
-		 We are only interested in a subset of possible types. Therefore, we only check for these particular types.
-		 */
-		enum Mimetype {
-			UNKNOWN = 0,
-			IMAGE_JPEG = 10,
-			IMAGE_PNG = 11,
-			IMAGE_DDS = 12,
-			AUDIO_XWAV = 40,
-			AUDIO_BASIC = 41,
-			APPLICATION_OGG = 80
-		};
-
-		/**
 		 Abstract buffer providing read-only access to data.
 		 */
 		class Buffer {
@@ -90,9 +75,6 @@ namespace Dream
 
 			/// Tests whether the data in the buffers is different.
 			bool operator!= (const Buffer & other) const;
-
-			/// Check the mime-type of the data contained within the buffer.
-			Mimetype mimetype ();
 
 			/// Dump the buffer as hex to the given stream.
 			void hexdump (std::ostream &);

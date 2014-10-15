@@ -12,16 +12,12 @@
 #include <sstream>
 #include <iostream>
 
-#include "Events/Logger.h"
-
 static void assertion_failure() {
 	return;
 }
 
 namespace Dream
 {
-	using namespace Events::Logging;
-	
 	AssertionError::AssertionError (const char * expression, const char * file, unsigned line) throw () : _expression (expression), _file (file), _line (line)
 	{
 		using namespace std;
@@ -51,7 +47,7 @@ namespace Dream
 
 			AssertionError assertion_error(expression, file, line);
 
-			logger()->log(LOG_ERROR, assertion_error.what());
+			std::cerr << assertion_error.what();
 
 			throw assertion_error;
 		}

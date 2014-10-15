@@ -3,39 +3,42 @@
 #  This file is part of the "Teapot" project, and is released under the MIT license.
 #
 
-teapot_version "0.8.0"
+teapot_version "1.0.0"
 
 define_project "Dream" do |project|
 	project.add_author "Samuel Williams"
 	project.license = "MIT License"
 	
-	project.version = "0.1.0"
+	project.version = "1.0.0"
 end
 
 define_target "dream" do |target|
-	target.build do |environment|
-		build_directory(package.path, 'source', environment)
+	target.build do
+		source_root = target.package.path + 'source'
+		
+		copy headers: source_root.glob('Dream/**/*.{h,hpp}')
+		
+		build static_library: "Dream", source_files: source_root.glob('Dream/**/*.cpp')
 	end
 	
 	target.depends :platform
+	target.depends "Build/Files"
+	target.depends "Build/Clang"
 	target.depends "Language/C++11"
 	
 	target.depends "Library/utf8"
-	
 	target.depends "Library/Euclid"
-	
+
 	target.provides "Library/Dream" do
 		append linkflags "-lDream"
 	end
 end
 
 define_target "dream-tests" do |target|
-	target.build do |environment|
-		build_directory(package.path, 'test', environment)
-	end
-	
-	target.run do |environment|
-		run_executable("bin/dream-test-runner", environment)
+	target.build do
+		test_root = target.package.path + 'test'
+		
+		run tests: "Dream", source_files: test_root.glob('Dream/**/*.cpp')
 	end
 	
 	target.depends "Library/UnitTest"
@@ -98,3 +101,12 @@ define_configuration "dream" do |configuration|
 	
 	configuration.require "unit-test"
 end
+
+define_configuration "travis" do |configuration|
+	configuration[:source] = "https://github.com/dream-framework"
+	
+	configuration.require "platforms"
+	configuration.require "build-files"
+	configuration.import "dream"
+end
+

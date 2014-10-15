@@ -1,5 +1,5 @@
 
-#include <UnitTest/UnitTest.h>
+#include <UnitTest/UnitTest.hpp>
 
 #include <Dream/Association.h>
 

@@ -9,6 +9,8 @@
 
 #include "Value.h"
 
+#include <typeinfo>
+
 namespace Dream
 {
 	namespace Core

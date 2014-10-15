@@ -74,40 +74,6 @@ namespace Dream
 			bool operator<(const Path & other) const;
 			bool operator==(const Path & other) const;
 
-			enum FileType {
-				UNKNOWN = 0,
-
-				// Include directories:
-				DIRECTORY = 1 << 0,
-
-				// Regular readable files:
-				STORAGE = 1 << 2,
-
-				// Include entries that start with dots:
-				HIDDEN = 1 << 8,
-
-				ANY = 0xFFFFFFFF,
-			};
-
-			// ** Local File Operations **
-			FileType file_status() const;
-
-			// Does this exist?
-			bool exists() const { return file_status() != UNKNOWN; }
-
-			FileSizeT file_size() const;
-
-			/// Removes a single file / directory
-			void remove () const;
-
-			/// Rename a file to the new name
-			void move (const Path & new_name) const;
-
-			static Path temporary_file_path ();
-			static Path current_working_directory ();
-
-			DirectoryListingT list (FileType filter) const;
-
 			Path with_extension(const StringT & extension) const;
 		};
 

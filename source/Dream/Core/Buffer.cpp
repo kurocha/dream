@@ -72,53 +72,7 @@ namespace Dream
 		{
 			return !((*this) == other);
 		}
-
-		/* From MacOS X mime.magic:
-		 # JPEG images
-		 0	beshort		0xffd8		image/jpeg
-
-		 #PNG Image Format
-		 0	string		\x89PNG			image/png
-
-		 # PC bitmaps (OS/2, Windoze BMP files)  (Greg Roelofs, newt@uchicago.edu)
-		 0	string		BM		image/bmp
-
-		 # TIFF and friends
-		 #					TIFF file, big-endian
-		 0	string		MM		image/tiff
-		 #					TIFF file, little-endian
-		 0	string		II		image/tiff
-		 */
-
-		Mimetype Buffer::mimetype ()
-		{
-			if (size() < 4) return UNKNOWN;
-
-			const ByteT * buffer = begin();
-			DREAM_ASSERT(buffer != NULL);
-
-			if (buffer[0] == 0xFF && buffer[1] == 0xD8)
-				return IMAGE_JPEG;
-
-			if (strncmp("PNG", (const char *)&buffer[1], 3) == 0)
-				return IMAGE_PNG;
-
-			if (strncmp("DDS ", (const char *)&buffer[0], 4) == 0)
-				return IMAGE_DDS;
-
-			if (strncmp("RIFF", (const char *)&buffer[0], 4) == 0)
-				return AUDIO_XWAV;
-
-			if (strncmp(".snd", (const char *)&buffer[0], 4) == 0)
-				return AUDIO_BASIC;
-
-			if (strncmp("OggS", (const char *)&buffer[0], 4) == 0)
-				return APPLICATION_OGG;
-
-			return UNKNOWN;
-		}
-
-
+		
 		// >04000000 4B657931 84050000 00040000< ....Key1........ 00000000
 		// >004B6579 32200600 00004170 706C6573< .Key2 ....Apples 00000010
 		void Buffer::hexdump (std::ostream & out)
