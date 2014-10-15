@@ -1,10 +1,6 @@
-# Dream #
+# Dream
 
-* Author: Samuel G. D. Williams (<http://www.oriontransfer.co.nz>)
-* Copyright (C) 2006, 2012 Samuel G. D. Williams.
-* Released under the MIT license.
-
-Dream is a cross-platform game development framework. It is currently under heavy development. It has the following features:
+Dream is a cross-platform game development framework built from the ground up to modern and portable. It has the following features:
 
 * Reference counted pointers for resource/memory management.
 * Event driven networking and rendering engine.
@@ -16,21 +12,13 @@ Dream is a cross-platform game development framework. It is currently under heav
 * Positional audio using using OpenAL and Ogg Vorbis.
 * High performance graphics using OpenGL (Support for OpenGL3.2+ and OpenGL2.0ES+)
 
-A [selection of examples][1] and a complete [cross-platform build environment][2] are available. For more details, please see the main [project page][3].
+[![Build Status](https://travis-ci.org/dream-framework/dream.svg?branch=master)](https://travis-ci.org/dream-framework/dream)
 
-[1]: https://github.com/ioquatix/dream-examples
-[2]: https://github.com/ioquatix/dream-framework
-[3]: http://www.oriontransfer.co.nz/research/dream
+## Installation
 
-## Documentation ##
+The dream framework is assembled using [teapot](http://www.kyusu.org) which simplifies cross-platform development and deployment.
 
-To generate documentation, make sure you have `doxygen` installed and run:
-
-	rake dream:documentation:generate
-	
-The documentation can be found in `docs/html/index.html`.
-
-## Compatibility ##
+## Compatibility
 
 This library has been designed for cross-platform compilation. It currently has support for the following targets:
 
@@ -40,38 +28,25 @@ This library has been designed for cross-platform compilation. It currently has 
 * Android NDK [Partial]
 * Windows [Unsupported at this time]
 
-Dream uses features from C++11, and therefore requires a C++11 compiler such as [clang][1] or [gcc][2].
+## Contributing
 
-[1]: http://clang.llvm.org/
-[2]: http://gcc.gnu.org/gcc-4.6/
+1. Fork it
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new Pull Request
 
-## Coding Guidelines ##
+### Desired Features
 
-### File Variants ###
+* Best possible out of the box support for major platforms including iOS, Android, Windows, Mac OS X and Linux.
+* More unit tests for existing functionality.
+* Support latest OpenGL functionality.
 
-Depending on the platform, there may be different files available to build the required functionality. These will typically only be implementation files. For example:
+## License
 
-* `Core/Timer.h`
-* `Core/Timer-CoreVideo.cpp`
-* `Core/Timer-Unix.cpp`
+Released under the MIT license.
 
-Only one of these implementations need to be compiled for a specific platform. Generally, there will be specific implementations (`Core/Timer-CoreVideo.cpp`) and generic implementations (`Core/Timer-Unix.cpp`). You should generally compile the most specific implementation for a platform, rather than the generic implementation.
-
-### Resource Management ###
-
-One feature of the Dream framework is automatic resource/memory management. This is done by using Ref counted pointers. It is important to understand a few things about the semantics of these "values" in order to get the best performance.
-
-When an object has ownership of a resource, it should use a `Dream::Ref<Object>`. Ownership is typically referred to as a <em>has-a</em> or <em>has-many</em> relationship.
-
-When passing objects to a function, you don't need to incur the performance cost of memory management. Therefore, you should use `Dream::Ptr<Object>`. Return values should still be `Dream::Ref<Object>`. Return value optimization ensures that reference counting overhead is minimized.
-
-## Related Links ##
-
-* [Perspective Correct Texturing][http://chrishecker.com/Miscellaneous_Technical_Articles]
-
-## License ##
-
-Copyright (c) 2006, 2012 Samuel G. D. Williams. <http://www.oriontransfer.co.nz>
+Copyright, 2006, 2012, 2014, by [Samuel G. D. Williams](http://www.codeotaku.com/samuel-williams).
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
