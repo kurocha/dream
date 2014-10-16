@@ -1,6 +1,6 @@
 
 #include <UnitTest/UnitTest.hpp>
-#include <Dream/Core/Buffer.h>
+#include <Dream/Core/Buffer.hpp>
 
 #include <string.h>
 

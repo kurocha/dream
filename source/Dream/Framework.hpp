@@ -44,7 +44,7 @@ namespace Dream
 	typedef int FileDescriptorT;
 }
 
-#include "Assertion.h"
-#include "Class.h"
+#include "Assertion.hpp"
+#include "Class.hpp"
 
 #endif

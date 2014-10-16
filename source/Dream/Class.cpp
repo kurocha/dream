@@ -7,10 +7,10 @@
 //
 //
 
-#include "Class.h"
+#include "Class.hpp"
 
-#include "Core/Strings.h"
-#include "Core/Timer.h"
+#include "Core/Strings.hpp"
+#include "Core/Timer.hpp"
 
 #include <map>
 

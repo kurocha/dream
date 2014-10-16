@@ -1,6 +1,6 @@
 
 #include <UnitTest/UnitTest.hpp>
-#include <Dream/Assertion.h>
+#include <Dream/Assertion.hpp>
 
 namespace Dream
 {

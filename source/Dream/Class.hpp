@@ -10,8 +10,8 @@
 #ifndef _DREAM_CLASS_H
 #define _DREAM_CLASS_H
 
-#include "Framework.h"
-#include "Reference.h"
+#include "Framework.hpp"
+#include "Reference.hpp"
 
 #include <map>
 

@@ -7,7 +7,7 @@
 //
 //
 
-#include "Strings.h"
+#include "Strings.hpp"
 
 #include <cmath>
 

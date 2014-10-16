@@ -10,9 +10,9 @@
 #ifndef _DREAM_CORE_SERIALIZATION_H
 #define _DREAM_CORE_SERIALIZATION_H
 
-#include "Endian.h"
-#include "Buffer.h"
-#include "Strings.h"
+#include "Endian.hpp"
+#include "Buffer.hpp"
+#include "Strings.hpp"
 
 namespace Dream
 {

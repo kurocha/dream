@@ -10,9 +10,9 @@
 #ifndef _DREAM_CORE_DATA_H
 #define _DREAM_CORE_DATA_H
 
-#include "../Class.h"
-#include "Buffer.h"
-#include "URI.h"
+#include "../Class.hpp"
+#include "Buffer.hpp"
+#include "URI.hpp"
 #include <fstream>
 
 namespace Dream

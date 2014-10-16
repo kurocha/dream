@@ -1,6 +1,6 @@
 
 #include <UnitTest/UnitTest.hpp>
-#include <Dream/Association.h>
+#include <Dream/Association.hpp>
 
 namespace Dream
 {

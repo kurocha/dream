@@ -10,7 +10,7 @@
 #ifndef _DREAM_REFERENCE_H
 #define _DREAM_REFERENCE_H
 
-#include "Assertion.h"
+#include "Assertion.hpp"
 
 #include <cstddef>
 #include <algorithm>

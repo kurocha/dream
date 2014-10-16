@@ -1,6 +1,6 @@
 
 #include <UnitTest/UnitTest.hpp>
-#include <Dream/Core/Dictionary.h>
+#include <Dream/Core/Dictionary.hpp>
 
 namespace Dream
 {

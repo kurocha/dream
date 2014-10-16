@@ -1,6 +1,6 @@
 
 #include <UnitTest/UnitTest.hpp>
-#include <Dream/Reference.h>
+#include <Dream/Reference.hpp>
 
 #include <set>
 

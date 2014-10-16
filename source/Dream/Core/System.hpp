@@ -10,8 +10,8 @@
 #ifndef _DREAM_CORE_SYSTEM_H
 #define _DREAM_CORE_SYSTEM_H
 
-#include "../Framework.h"
-#include "Strings.h"
+#include "../Framework.hpp"
+#include "Strings.hpp"
 
 namespace Dream
 {

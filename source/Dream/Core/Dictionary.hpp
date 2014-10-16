@@ -10,9 +10,9 @@
 #ifndef _DREAM_CORE_DICTIONARY_H
 #define _DREAM_CORE_DICTIONARY_H
 
-#include "../Class.h"
-#include "Value.h"
-#include "Data.h"
+#include "../Class.hpp"
+#include "Value.hpp"
+#include "Data.hpp"
 
 #include <map>
 

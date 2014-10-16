@@ -10,9 +10,9 @@
 #ifndef _DREAM_CORE_VALUE_H
 #define _DREAM_CORE_VALUE_H
 
-#include "Strings.h"
-#include "Data.h"
-#include "Serialization.h"
+#include "Strings.hpp"
+#include "Data.hpp"
+#include "Serialization.hpp"
 
 namespace Dream
 {

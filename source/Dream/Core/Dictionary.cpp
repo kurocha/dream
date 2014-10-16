@@ -7,7 +7,7 @@
 //
 //
 
-#include "Dictionary.h"
+#include "Dictionary.hpp"
 
 namespace Dream
 {

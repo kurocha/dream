@@ -10,7 +10,7 @@
 #ifndef _DREAM_CORE_STRINGS_H
 #define _DREAM_CORE_STRINGS_H
 
-#include "Core.h"
+#include "Core.hpp"
 
 #include <string>
 #include <iostream>

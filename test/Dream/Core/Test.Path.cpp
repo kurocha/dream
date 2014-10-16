@@ -1,7 +1,7 @@
 
 #include <UnitTest/UnitTest.hpp>
 #include <UnitTest/Expectation.hpp>
-#include <Dream/Core/Path.h>
+#include <Dream/Core/Path.hpp>
 
 namespace Dream
 {

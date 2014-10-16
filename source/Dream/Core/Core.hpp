@@ -10,7 +10,7 @@
 #ifndef _DREAM_CORE_CORE_H
 #define _DREAM_CORE_CORE_H
 
-#include "../Framework.h"
+#include "../Framework.hpp"
 
 namespace Dream
 {

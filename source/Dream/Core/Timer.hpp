@@ -10,7 +10,7 @@
 #ifndef _DREAM_CORE_TIMER_H
 #define _DREAM_CORE_TIMER_H
 
-#include "Core.h"
+#include "Core.hpp"
 
 namespace Dream {
 	namespace Core {

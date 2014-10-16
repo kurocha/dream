@@ -10,7 +10,7 @@
 #ifndef _DREAM_CORE_PATH_H
 #define _DREAM_CORE_PATH_H
 
-#include "Strings.h"
+#include "Strings.hpp"
 #include <vector>
 
 namespace Dream

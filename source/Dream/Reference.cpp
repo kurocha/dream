@@ -7,7 +7,7 @@
 //
 //
 
-#include "Reference.h"
+#include "Reference.hpp"
 
 namespace Dream {
 	SharedObject::SharedObject () : _count(0) 

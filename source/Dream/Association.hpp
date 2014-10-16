@@ -9,7 +9,7 @@
 #ifndef _DREAM_ASSOCIATION_H
 #define _DREAM_ASSOCIATION_H
 
-#include "Class.h"
+#include "Class.hpp"
 
 namespace Dream
 {

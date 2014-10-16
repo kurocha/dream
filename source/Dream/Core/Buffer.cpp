@@ -7,7 +7,7 @@
 //
 //
 
-#include "Buffer.h"
+#include "Buffer.hpp"
 
 // File and memory manipulation
 #include <sys/mman.h>

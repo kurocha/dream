@@ -1,6 +1,6 @@
 
 #include <UnitTest/UnitTest.hpp>
-#include <Dream/Core/Endian.h>
+#include <Dream/Core/Endian.hpp>
 
 namespace Dream
 {

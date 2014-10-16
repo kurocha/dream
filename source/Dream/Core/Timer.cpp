@@ -7,7 +7,7 @@
 //
 //
 
-#include "Timer.h"
+#include "Timer.hpp"
 
 #include <ctime>
 #include <sys/time.h>

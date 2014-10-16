@@ -1,6 +1,6 @@
 
 #include <UnitTest/UnitTest.hpp>
-#include <Dream/Core/URI.h>
+#include <Dream/Core/URI.hpp>
 
 namespace Dream
 {

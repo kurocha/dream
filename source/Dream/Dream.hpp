@@ -26,6 +26,6 @@
 #define _DREAM_DREAM_H
 
 // Framework is a private header
-#include "Framework.h"
+#include "Framework.hpp"
 
 #endif

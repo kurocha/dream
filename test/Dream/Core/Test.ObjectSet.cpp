@@ -1,6 +1,6 @@
 
 #include <UnitTest/UnitTest.hpp>
-#include <Dream/Core/ObjectSet.h>
+#include <Dream/Core/ObjectSet.hpp>
 
 namespace Dream
 {

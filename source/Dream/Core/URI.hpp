@@ -10,8 +10,8 @@
 #ifndef _DREAM_CORE_URI_H
 #define _DREAM_CORE_URI_H
 
-#include "Strings.h"
-#include "Path.h"
+#include "Strings.hpp"
+#include "Path.hpp"
 
 #include <vector>
 

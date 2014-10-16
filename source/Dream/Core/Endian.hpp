@@ -10,7 +10,7 @@
 #ifndef _DREAM_CORE_ENDIAN_H
 #define _DREAM_CORE_ENDIAN_H
 
-#include "Core.h"
+#include "Core.hpp"
 
 namespace Dream
 {

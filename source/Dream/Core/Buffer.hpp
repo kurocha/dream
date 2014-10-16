@@ -10,8 +10,8 @@
 #ifndef _DREAM_CORE_BUFFER_H
 #define _DREAM_CORE_BUFFER_H
 
-#include "URI.h"
-#include "Endian.h"
+#include "URI.hpp"
+#include "Endian.hpp"
 
 #include <sstream>
 
