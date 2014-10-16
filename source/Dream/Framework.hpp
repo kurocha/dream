@@ -25,9 +25,6 @@
 #define TARGET_OS_WIN32 1
 #endif
 
-#define abstract = 0
-#define implements virtual public
-
 /**
     Dream is a framework for creating and enhancing C++ applications.
 

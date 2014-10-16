@@ -78,14 +78,14 @@ namespace Dream
 				return equal(&other);
 			}
 
-			virtual const std::type_info & value_type () const abstract;
+			virtual const std::type_info & value_type () const = 0;
 
 			/// Compares two values
 			/// @returns True if the TypedValue objects are of the same type and contained value.
-			virtual bool equal (const ITypedValue *) const abstract;
+			virtual bool equal (const ITypedValue *) const = 0;
 
-			virtual void write_to_stream (std::ostream &) const abstract;
-			virtual void read_from_stream (std::istream &) abstract;
+			virtual void write_to_stream (std::ostream &) const = 0;
+			virtual void read_from_stream (std::istream &) = 0;
 
 			/// Attempts to extract the contained value as the given type.
 			/// @returns true if the value was extracted
@@ -103,13 +103,13 @@ namespace Dream
 			void set (const ValueT &);
 
 			/// A bit like typeinfo, but only works for specific primitive types and returns well-defined values.
-			virtual TypeIdentifierT type_index () const abstract;
+			virtual TypeIdentifierT type_index () const = 0;
 
 			/// Returns a pointer to the value storage.
-			virtual const ByteT * value_data () const abstract;
+			virtual const ByteT * value_data () const = 0;
 
 			/// Append the value to a buffer.
-			virtual void append_to_buffer (ResizableBuffer & buf) const abstract;
+			virtual void append_to_buffer (ResizableBuffer & buf) const = 0;
 		};
 
 		/// Stream helper for printing and converting types to strings
@@ -156,7 +156,7 @@ namespace Dream
 		 @endcode
 		 */
 		template <typename ValueT>
-		class TypedValue : implements ITypedValue, protected TypedValueSerializer<TypeIdentifierTypeTraits<ValueT>::TypeIdentifierValue>{
+		class TypedValue : virtual public ITypedValue, protected TypedValueSerializer<TypeIdentifierTypeTraits<ValueT>::TypeIdentifierValue>{
 		protected:
 			ValueT _value;
 			typedef TypedValueSerializer<TypeIdentifierTypeTraits<ValueT>::TypeIdentifierValue> TypedValueSerializerT;

@@ -35,7 +35,7 @@ namespace Dream
 		return reinterpret_cast<std::ptrdiff_t>(&(reinterpret_cast<T const volatile*>(NULL)->*member));
 	}
 
-	class IObject : implements SharedObject {
+	class IObject : virtual public SharedObject {
 	public:
 		virtual ~IObject ();
 	};
@@ -43,14 +43,14 @@ namespace Dream
 	class IClassType {
 	public:
 		virtual ~IClassType();
-		virtual bool is_class_of(const Ptr<IObject> other) abstract;
+		virtual bool is_class_of(const Ptr<IObject> other) = 0;
 	};
 
 	/**
 	    Check whether a particular object implements a given class type.
 	*/
 	template <typename ClassT>
-	class ClassType : implements IClassType {
+	class ClassType : virtual public IClassType {
 	public:
 		virtual ~ClassType() {}
 
@@ -67,7 +67,7 @@ namespace Dream
 
 	 Provides a basic implementation of Ref counting functionality and
 	 */
-	class Object : implements IObject {
+	class Object : virtual public IObject {
 	private:
 		struct FinalizerReference {
 			FinalizerReference * next;

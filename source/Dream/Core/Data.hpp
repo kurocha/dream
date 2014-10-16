@@ -22,19 +22,19 @@ namespace Dream
 		/**
 		 An abstract class representing a data store, such as an on-disk local file.
 		 */
-		class IData : implements IObject {
+		class IData : virtual public IObject {
 		public:
 			/// Access the data as a buffer. This buffer is shared (same buffer returned every time).
-			virtual Shared<Buffer> buffer () const abstract;
+			virtual Shared<Buffer> buffer () const = 0;
 
 			/// Access the data as an input stream. The stream is unique (new stream returned each time).
-			virtual Shared<std::istream> input_stream () const abstract;
+			virtual Shared<std::istream> input_stream () const = 0;
 
 			/// Return the size of the input data if it is known.
-			virtual std::size_t size () const abstract;
+			virtual std::size_t size () const = 0;
 		};
 
-		class LocalFileData : public Object, implements IData {
+		class LocalFileData : public Object, virtual public IData {
 		protected:
 			Path _path;
 			mutable Shared<Buffer> _buffer;
@@ -49,7 +49,7 @@ namespace Dream
 			virtual std::size_t size () const;
 		};
 
-		class BufferedData : public Object, implements IData {
+		class BufferedData : public Object, virtual public IData {
 		protected:
 			Shared<Buffer> _buffer;
 

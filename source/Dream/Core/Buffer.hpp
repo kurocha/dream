@@ -62,10 +62,10 @@ namespace Dream
 			bool empty () const;
 
 			/// Returns the length of data stored in the buffer.
-			virtual std::size_t size () const abstract;
+			virtual std::size_t size () const = 0;
 
 			/// Returns the address of the first byte in the buffer.
-			virtual const ByteT * begin () const abstract;
+			virtual const ByteT * begin () const = 0;
 
 			/// Returns the address of the last byte + 1 in the buffer.
 			const ByteT * end () const;
@@ -97,7 +97,7 @@ namespace Dream
 			using Buffer::begin;
 
 			/// Returns the address of the first byte in the buffer.
-			virtual ByteT * begin () abstract;
+			virtual ByteT * begin () = 0;
 			/// Returns the address of the last byte + 1 in the buffer.
 			ByteT * end ();
 
@@ -135,13 +135,13 @@ namespace Dream
 			virtual ~ResizableBuffer ();
 
 			/// The currently allocated capacity of the buffer. Can be changed by calling reserve().
-			virtual std::size_t capacity () const abstract;
+			virtual std::size_t capacity () const = 0;
 
 			/// Reserve/allocate more capacity if required. Will release capacity if size is smaller than current capacity.
-			virtual void reserve (std::size_t size) abstract;
+			virtual void reserve (std::size_t size) = 0;
 
 			/// Change the size of the buffer. Will allocate more capacity if required.
-			virtual void resize (std::size_t size) abstract;
+			virtual void resize (std::size_t size) = 0;
 
 			/// Increase the size of the buffer by the given size.
 			void expand (std::size_t amount);

@@ -24,12 +24,12 @@ namespace Dream
 	{
 		typedef uint32_t IdentT;
 /*
-        class IStateful : implements IObject
+        class IStateful : virtual public IObject
         {
         public:
             // Returns an identical shallow copy of this stateful object.
-            virtual Ref<IStateful> duplicate_state () abstract;
-            virtual Ref<IData> serialize_state () abstract;
+            virtual Ref<IStateful> duplicate_state () = 0;
+            virtual Ref<IData> serialize_state () = 0;
 
         };
 */

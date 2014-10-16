@@ -19,7 +19,16 @@ namespace Dream
 {
 	namespace Core
 	{
-		const unsigned int ERROR_DESCRIPTION_LENGTH = 1024;
+		static std::string system_error_description(int error_number)
+		{
+			const std::size_t MAX_LENGTH = 1024;
+			char buffer[MAX_LENGTH];
+
+			if (strerror_r(error_number, buffer, MAX_LENGTH) == 0)
+				return buffer;
+			else
+				return "Unknown failure";
+		}
 
 		SystemError::SystemError(StringT message) : _error_number(-1), _message(message) {
 		}
@@ -41,8 +50,7 @@ namespace Dream
 		{
 			if (errno != 0) {
 				// Get the system error message.
-				char error_description[ERROR_DESCRIPTION_LENGTH];
-				strerror_r(errno, error_description, ERROR_DESCRIPTION_LENGTH);
+				auto error_description = system_error_description(errno);
 
 				throw SystemError("System", errno, error_description, what);
 			}
