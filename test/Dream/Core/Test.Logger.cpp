@@ -1,6 +1,6 @@
 
 #include <UnitTest/UnitTest.hpp>
-#include <Dream/Logger.hpp>
+#include <Dream/Core/Logger.hpp>
 
 namespace Dream
 {
