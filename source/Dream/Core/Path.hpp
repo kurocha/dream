@@ -22,9 +22,6 @@ namespace Dream
 		 */
 		class Path {
 		public:
-			typedef uint64_t FileSizeT;
-
-			typedef std::vector<StringT> DirectoryListingT;
 			typedef std::vector<StringT> ComponentsT;
 			struct NameComponents {
 				StringT basename;
