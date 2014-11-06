@@ -36,9 +36,7 @@ end
 
 define_target "dream-tests" do |target|
 	target.build do
-		test_root = target.package.path + 'test'
-		
-		run tests: "Dream", source_files: test_root.glob('Dream/**/*.cpp')
+		run tests: "Dream", source_files: target.package.path.glob('test/Dream/**/*.cpp')
 	end
 	
 	target.depends "Library/UnitTest"
