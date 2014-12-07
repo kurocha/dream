@@ -63,7 +63,7 @@ namespace Dream {
 		ObjectT * _object;
 
 	public:
-		Pointer () : _object(NULL) {
+		Pointer () : _object(nullptr) {
 		}
 
 		Pointer (ObjectT * object) : _object(object) {
@@ -78,12 +78,12 @@ namespace Dream {
 		}
 
 		ObjectT * operator-> () const {
-			DREAM_ASSERT(_object != NULL);
+			DREAM_ASSERT(_object != nullptr);
 			return _object;
 		}
 
 		ObjectT & operator* () const {
-			DREAM_ASSERT(_object != NULL);
+			DREAM_ASSERT(_object != nullptr);
 			return *_object;
 		}
 
