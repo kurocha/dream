@@ -18,7 +18,7 @@ namespace Dream
 	namespace Core
 	{
 		/**
-		    A simple class for accessing the local filesystem.
+		    A simple class for managing abstract paths.
 		 */
 		class Path {
 		public:
