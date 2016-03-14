@@ -10,21 +10,21 @@ Dream is a cross-platform game development framework built from the ground up to
 * Loading and saving images (PNG, JPEG) of various channels and bit depths.
 * Flexible text rendering using FreeType2.
 * Positional audio using using OpenAL and Ogg Vorbis.
-* High performance graphics using OpenGL (Support for OpenGL3.2+ and OpenGL2.0ES+)
+* High performance graphics using Vulkan.
 
-[![Build Status](https://travis-ci.org/dream-framework/dream.svg?branch=master)](https://travis-ci.org/dream-framework/dream)
+[![Build Status](https://travis-ci.org/kurocha/dream.svg)](https://travis-ci.org/kurocha/dream)
 
 ## Installation
 
-The dream framework is assembled using [teapot](http://www.kyusu.org) which simplifies cross-platform development and deployment.
+The Dream framework is assembled using [teapot](http://www.teapot.nz) which simplifies cross-platform development and deployment.
 
 ## Compatibility
 
 This library has been designed for cross-platform compilation. It currently has support for the following targets:
 
-* Mac OS X [Full]
-* iPhone [Full]
-* Linux [Partial]
+* Mac OS X [Partial]
+* iPhone [Partial]
+* Linux [Good]
 * Android NDK [Partial]
 * Windows [Unsupported at this time]
 
