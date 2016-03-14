@@ -101,7 +101,7 @@ define_configuration "dream" do |configuration|
 end
 
 define_configuration "test" do |configuration|
-	configuration[:source] = "https://github.com/dream-framework"
+	configuration[:source] = "https://github.com/kurocha"
 	
 	configuration.require "platforms"
 	configuration.require "build-files"
