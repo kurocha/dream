@@ -93,14 +93,14 @@ end
 
 define_configuration "dream" do |configuration|
 	configuration.public!
-	
+
 	configuration.require "utf8"
 	configuration.require "euclid"
 	
 	configuration.require "unit-test"
 end
 
-define_configuration "travis" do |configuration|
+define_configuration "test" do |configuration|
 	configuration[:source] = "https://github.com/dream-framework"
 	
 	configuration.require "platforms"
