@@ -44,7 +44,10 @@ namespace Dream
 		}
 
 		bool Path::is_absolute() const {
-			return _components.front() == "";
+			if (_components.size() > 0)
+				return _components.front() == "";
+			else
+				return false;
 		}
 
 		Path Path::to_absolute() {
