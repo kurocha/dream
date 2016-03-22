@@ -8,6 +8,7 @@
 //
 
 #include "Buffer.hpp"
+#include "Logger.hpp"
 
 // File and memory manipulation
 #include <sys/mman.h>
@@ -28,6 +29,8 @@ namespace Dream
 	{
 // MARK: -
 // MARK: class Buffer
+
+		using namespace Logging;
 
 		Buffer::~Buffer ()
 		{
@@ -285,9 +288,11 @@ namespace Dream
 		{
 			FileDescriptorT input = open(file_path.to_local_path().c_str(), O_RDONLY);
 
-			if (input == -1)
+			if (input == -1) {
+				log("Error loading path", file_path);
 				perror(__PRETTY_FUNCTION__);
-
+			}
+			
 			DREAM_ASSERT(input != -1);
 
 			_size = lseek(input, 0, SEEK_END);
