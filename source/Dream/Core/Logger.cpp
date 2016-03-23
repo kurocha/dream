@@ -36,7 +36,7 @@ namespace Dream
 				return "DEBUG";
 
 			default:
-				return "UNKNOWN";
+				return "LOG";
 			}
 		}
 
@@ -77,10 +77,10 @@ namespace Dream
 
 		void Logger::header(LogLevel level) {
 			LogBuffer buffer;
-			buffer << "["
-			       << std::setfill(' ') << std::setw(8) << _log_time.time() << "; "
-			    /* << std::setw(18) */ << thread_name() << " "
-			    /* << std::setw(5) */ << level_name(level) << "] ";
+			buffer << "[T+" << std::fixed << std::left
+				<< std::setfill(' ') << std::setw(5) << std::setprecision(3) << _log_time.time() << " "
+				<< std::setw(6) << thread_name() << " "
+				<< std::setw(5) << std::right << level_name(level) << "] ";
 
 			const std::string & value = buffer.str();
 			::write(_output, value.data(), value.size());
@@ -138,22 +138,21 @@ namespace Dream
 
 		void Logger::set_thread_name(std::string name)
 		{
-			{
-				std::lock_guard<std::mutex> lock(_lock);
-				
-				_thread_names[std::this_thread::get_id()] = name;
-			}
+			std::lock_guard<std::mutex> lock(_lock);
+			
+			_thread_names[std::this_thread::get_id()] = name;
 		}
 
 		// The logger state must be locked before calling this function:
 		std::string Logger::thread_name() const
 		{
-			auto i = _thread_names.find(std::this_thread::get_id());
+			auto thread_id = std::this_thread::get_id();
+			auto i = _thread_names.find(thread_id);
 
 			if (i != _thread_names.end()) {
 				return i->second;
 			} else {
-				return "";
+				return "?";
 			}
 		}
 
