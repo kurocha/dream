@@ -28,7 +28,7 @@ namespace Dream
 	};
 
 	/// This function returns the offset of a member of a class.
-	///		member_offset(VertexData::color)
+	///		member_offset(&VertexData::color)
 	template <class T, typename U>
 	inline constexpr std::ptrdiff_t member_offset(U T::* member)
 	{
