@@ -35,10 +35,10 @@ namespace Dream
 {
 // MARK: -
 // MARK: Types
-	typedef unsigned char ByteT;
+	typedef unsigned char Byte;
 
 	/// Represents a open file.
-	typedef int FileDescriptorT;
+	typedef int FileDescriptor;
 }
 
 #include "Assertion.hpp"

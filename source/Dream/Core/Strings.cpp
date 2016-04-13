@@ -76,7 +76,7 @@ namespace Dream
 		}
 
 		StringT unescape_string (const StringT & value) {
-			StringStreamT buffer;
+			StringStream buffer;
 
 			StringT::const_iterator i = value.begin(), end = value.end();
 
@@ -131,7 +131,7 @@ namespace Dream
 		}
 
 		StringT escape_string (const StringT & value) {
-			StringStreamT buffer;
+			StringStream buffer;
 
 			StringT::const_iterator i = value.begin(), end = value.end();
 			buffer << '"';

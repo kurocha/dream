@@ -106,7 +106,7 @@ namespace Dream
 			virtual TypeIdentifierT type_index () const = 0;
 
 			/// Returns a pointer to the value storage.
-			virtual const ByteT * value_data () const = 0;
+			virtual const Byte * value_data () const = 0;
 
 			/// Append the value to a buffer.
 			virtual void append_to_buffer (ResizableBuffer & buf) const = 0;
@@ -191,9 +191,9 @@ namespace Dream
 				return sizeof(ValueT);
 			}
 
-			const ByteT * value_data () const
+			const Byte * value_data () const
 			{
-				return (const ByteT *)&_value;
+				return (const Byte *)&_value;
 			}
 
 			/// Retrieve non-const value Ref.

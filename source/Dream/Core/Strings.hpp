@@ -23,7 +23,7 @@ namespace Dream
 	namespace Core
 	{
 		typedef std::string StringT;
-		typedef std::stringstream StringStreamT;
+		typedef std::stringstream StringStream;
 
 		typedef uint32_t CodePointT;
 
@@ -61,7 +61,7 @@ namespace Dream
 		template <typename IteratorT, typename SeparatorT>
 		StringT join(IteratorT begin, const IteratorT & end, const SeparatorT & separator)
 		{
-			StringStreamT buffer;
+			StringStream buffer;
 
 			join(buffer, begin, end, separator);
 
@@ -79,7 +79,7 @@ namespace Dream
 
 		template <typename AnyT>
 		StringT to_string(const AnyT & value) {
-			StringStreamT buffer;
+			StringStream buffer;
 
 			buffer << value;
 
@@ -88,7 +88,7 @@ namespace Dream
 
 		template <typename AnyT>
 		AnyT to(const StringT & string) {
-			StringStreamT buffer(string);
+			StringStream buffer(string);
 
 			AnyT value;
 			if (!(buffer >> value)) {

@@ -54,7 +54,7 @@ namespace Dream
 			std::mutex _lock;
 
 			LogLevel _log_level;
-			FileDescriptorT _output;
+			FileDescriptor _output;
 
 			typedef std::unordered_map<std::thread::id, std::string> ThreadNamesT;
 			ThreadNamesT _thread_names;

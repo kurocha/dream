@@ -72,7 +72,7 @@ namespace Dream
 			static void append_to_buffer (ResizableBuffer & buf, const TypeT & value)
 			{
 				TypeT converted_value = order_read(value, host_endian(), library_endian());
-				buf.append(sizeof(TypeT), (const ByteT *)&converted_value);
+				buf.append(sizeof(TypeT), (const Byte *)&converted_value);
 			}
 
 			//static void write_to_buffer (const ResizableBuffer & buf, std::size_t & offset, const TypeT & value)
@@ -108,7 +108,7 @@ namespace Dream
 			static void append_to_buffer (ResizableBuffer & buf, const TypeT & value)
 			{
 				buf.append((uint32_t)value.length());
-				buf.append(value.length(), (const ByteT *)value.data());
+				buf.append(value.length(), (const Byte *)value.data());
 			}
 		};
 

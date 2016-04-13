@@ -32,7 +32,7 @@ namespace Dream
 		}
 
 		StringT Path::to_local_path() const {
-			StringStreamT buffer;
+			StringStream buffer;
 
 			for (std::size_t i = 0; i < _components.size(); i++) {
 				if (i > 0) buffer << Path::SEPARATOR;

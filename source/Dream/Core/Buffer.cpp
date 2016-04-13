@@ -41,23 +41,23 @@ namespace Dream
 			return size() == 0;
 		}
 
-		const ByteT * Buffer::at (std::size_t loc) const
+		const Byte * Buffer::at (std::size_t loc) const
 		{
 			DREAM_ASSERT(loc <= size());
 			return begin() + loc;
 		}
 
-		void Buffer::read (std::size_t offset, std::size_t size, ByteT * value) const
+		void Buffer::read (std::size_t offset, std::size_t size, Byte * value) const
 		{
 			memcpy(value, at(offset), size);
 		}
 
-		const ByteT * Buffer::end () const
+		const Byte * Buffer::end () const
 		{
 			return begin() + size();
 		}
 
-		const ByteT & Buffer::operator[] (std::size_t idx) const
+		const Byte & Buffer::operator[] (std::size_t idx) const
 		{
 			return begin()[idx];
 		}
@@ -81,11 +81,11 @@ namespace Dream
 		void Buffer::hexdump (std::ostream & out)
 		{
 			// http://stahlforce.com/dev/index.php?tool=csc01
-			const ByteT * current = begin();
+			const Byte * current = begin();
 			std::size_t remaining = size();
 
 			while (true) {
-				StringStreamT buffer;
+				StringStream buffer;
 
 				buffer << "0x";
 
@@ -113,7 +113,7 @@ namespace Dream
 				out << buffer.str();
 
 				for (std::size_t i = 0; i < count; i += 1) {
-					ByteT character = *(current + i);
+					Byte character = *(current + i);
 					if (character >= 32 && character <= 128)
 						out << character;
 					else
@@ -139,10 +139,10 @@ namespace Dream
 			const uint32_t C2 = 22719;
 
 			std::size_t s = size();
-			const ByteT * b = begin();
+			const Byte * b = begin();
 
 			for (unsigned i = 0; i < s; i += 1) {
-				ByteT cipher = (b[i] ^ (r >> 8));
+				Byte cipher = (b[i] ^ (r >> 8));
 				r = (cipher + r) * C1 + C2;
 				sum += cipher;
 			}
@@ -152,7 +152,7 @@ namespace Dream
 
 		void Buffer::write_to_file (const Path & p)
 		{
-			FileDescriptorT fd;
+			FileDescriptor fd;
 			int result;
 
 			// Open and create the output file
@@ -170,8 +170,8 @@ namespace Dream
 			DREAM_ASSERT(result != -1);
 
 			// mmap the file
-			ByteT * dst = (ByteT *)mmap(0, size(), PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
-			DREAM_ASSERT(dst != (ByteT *)-1);
+			Byte * dst = (Byte *)mmap(0, size(), PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+			DREAM_ASSERT(dst != (Byte *)-1);
 
 			madvise(dst, size(), MADV_SEQUENTIAL);
 
@@ -190,30 +190,30 @@ namespace Dream
 		{
 		}
 
-		ByteT * MutableBuffer::at (std::size_t loc)
+		Byte * MutableBuffer::at (std::size_t loc)
 		{
 			DREAM_ASSERT(loc < size());
 			return begin() + loc;
 		}
 
-		ByteT * MutableBuffer::end ()
+		Byte * MutableBuffer::end ()
 		{
 			return begin() + size();
 		}
 
-		ByteT & MutableBuffer::operator[] (std::size_t idx)
+		Byte & MutableBuffer::operator[] (std::size_t idx)
 		{
 			return begin()[idx];
 		}
 
-		void MutableBuffer::assign (std::size_t count, const ByteT & value, std::size_t offset)
+		void MutableBuffer::assign (std::size_t count, const Byte & value, std::size_t offset)
 		{
 			DREAM_ASSERT((count + offset) <= size());
 
 			memset(begin() + offset, value, count);
 		}
 
-		void MutableBuffer::assign (const ByteT * other_begin, const ByteT * other_end, std::size_t offset)
+		void MutableBuffer::assign (const Byte * other_begin, const Byte * other_end, std::size_t offset)
 		{
 			DREAM_ASSERT((other_end - other_begin) + offset <= size());
 
@@ -233,7 +233,7 @@ namespace Dream
 		void MutableBuffer::assign (const char * string, std::size_t offset)
 		{
 			std::size_t len = strlen(string);
-			assign((const ByteT *)string, (const ByteT *)string + len, offset);
+			assign((const Byte *)string, (const Byte *)string + len, offset);
 		}
 
 // MARK: -
@@ -248,7 +248,7 @@ namespace Dream
 			resize(size() + amount);
 		}
 
-		void ResizableBuffer::append (std::size_t size, const ByteT * data)
+		void ResizableBuffer::append (std::size_t size, const Byte * data)
 		{
 			expand(size);
 
@@ -260,10 +260,10 @@ namespace Dream
 
 		StaticBuffer StaticBuffer::for_cstring (const char * str, bool include_null_byte)
 		{
-			return StaticBuffer((const ByteT*)str, strlen(str) + (int)include_null_byte);
+			return StaticBuffer((const Byte*)str, strlen(str) + (int)include_null_byte);
 		}
 
-		StaticBuffer::StaticBuffer (const ByteT * buf, const std::size_t & size) : _size(size), _buf(buf)
+		StaticBuffer::StaticBuffer (const Byte * buf, const std::size_t & size) : _size(size), _buf(buf)
 		{
 		}
 
@@ -276,7 +276,7 @@ namespace Dream
 			return _size;
 		}
 
-		const ByteT * StaticBuffer::begin () const
+		const Byte * StaticBuffer::begin () const
 		{
 			return _buf;
 		}
@@ -286,7 +286,7 @@ namespace Dream
 
 		FileBuffer::FileBuffer (const Path & file_path)
 		{
-			FileDescriptorT input = open(file_path.to_local_path().c_str(), O_RDONLY);
+			FileDescriptor input = open(file_path.to_local_path().c_str(), O_RDONLY);
 
 			if (input == -1) {
 				log("Error loading path", file_path);
@@ -298,7 +298,7 @@ namespace Dream
 			_size = lseek(input, 0, SEEK_END);
 
 			_buf = mmap(0, _size, PROT_READ, MAP_SHARED, input, 0);
-			DREAM_ASSERT(_buf != (ByteT *)-1);
+			DREAM_ASSERT(_buf != (Byte *)-1);
 		}
 
 		FileBuffer::~FileBuffer ()
@@ -311,9 +311,9 @@ namespace Dream
 			return _size;
 		}
 
-		const ByteT * FileBuffer::begin () const
+		const Byte * FileBuffer::begin () const
 		{
-			return (const ByteT *)_buf;
+			return (const Byte *)_buf;
 		}
 
 // MARK: -
@@ -322,7 +322,7 @@ namespace Dream
 		void DynamicBuffer::allocate (std::size_t size)
 		{
 			if (size != _capacity) {
-				_buf = (ByteT*)realloc(_buf, size);
+				_buf = (Byte*)realloc(_buf, size);
 				DREAM_ASSERT(_buf != NULL);
 
 				_capacity = size;
@@ -387,12 +387,12 @@ namespace Dream
 			_size = size;
 		}
 
-		ByteT * DynamicBuffer::begin ()
+		Byte * DynamicBuffer::begin ()
 		{
 			return _buf;
 		}
 
-		const ByteT * DynamicBuffer::begin () const
+		const Byte * DynamicBuffer::begin () const
 		{
 			return _buf;
 		}
@@ -409,20 +409,20 @@ namespace Dream
 		}
 
 		// Data is packed at the end of the class.
-		ByteT * PackedBuffer::data ()
+		Byte * PackedBuffer::data ()
 		{
-			return (ByteT*)this + sizeof(*this);
+			return (Byte*)this + sizeof(*this);
 		}
 
-		const ByteT * PackedBuffer::data () const
+		const Byte * PackedBuffer::data () const
 		{
-			return (const ByteT*)this + sizeof(*this);
+			return (const Byte*)this + sizeof(*this);
 		}
 
 		PackedBuffer * PackedBuffer::new_buffer (std::size_t size)
 		{
-			std::size_t total = sizeof(PackedBuffer) + size;
-			void * data = malloc(total);
+			std::size_t total_size = sizeof(PackedBuffer) + size;
+			void * data = ::operator new (total_size);
 			PackedBuffer * buffer = new(data) PackedBuffer(size);
 
 			return buffer;
@@ -433,12 +433,12 @@ namespace Dream
 			return _size;
 		}
 
-		ByteT * PackedBuffer::begin ()
+		Byte * PackedBuffer::begin ()
 		{
 			return data();
 		}
 
-		const ByteT * PackedBuffer::begin () const
+		const Byte * PackedBuffer::begin () const
 		{
 			return data();
 		}

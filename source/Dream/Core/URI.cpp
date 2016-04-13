@@ -392,7 +392,7 @@ namespace Dream
 
 		URI::InvalidFormatError::InvalidFormatError(const StringT & url, std::size_t offset) : _url(url), _offset(offset)
 		{
-			StringStreamT buffer;
+			StringStream buffer;
 
 			buffer << "Invalid URI(offset=" << _offset << "): " << _url;
 
@@ -515,7 +515,7 @@ namespace Dream
 		StringT URI::service () const
 		{
 			if (_port) {
-				StringStreamT buffer;
+				StringStream buffer;
 				buffer << _port;
 
 				return buffer.str();

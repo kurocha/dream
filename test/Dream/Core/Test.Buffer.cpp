@@ -51,14 +51,14 @@ namespace Dream
 
 					std::size_t prev_capacity = a.capacity();
 					a.resize(data_length);
-					a.assign((const ByteT*)data, (const ByteT*)data + data_length);
+					a.assign((const Byte*)data, (const Byte*)data + data_length);
 
 					// Performance check
 					examiner << "Don't realloc if size is within capacity";
 					examiner.check(a.capacity() == prev_capacity);
 
 					b.resize(data_length);
-					b.assign((const ByteT*)data, (const ByteT*)data + data_length);
+					b.assign((const Byte*)data, (const Byte*)data + data_length);
 
 					examiner << "Data and size is the same";
 					examiner.check(a == b);
@@ -102,8 +102,8 @@ namespace Dream
 					//testing("Appending");
 
 					a.resize(0);
-					a.append(5, (const ByteT *)"abcde");
-					a.append(5, (const ByteT *)"abcde");
+					a.append(5, (const Byte *)"abcde");
+					a.append(5, (const Byte *)"abcde");
 
 					examiner << "Size is correct after appending 10 characters";
 					examiner.check(a.size() == 10);
@@ -127,7 +127,7 @@ namespace Dream
 
 					//testing("Assigning Data");
 
-					buffer->assign((const ByteT*)data, (const ByteT*)data + data_length, 0);
+					buffer->assign((const Byte*)data, (const Byte*)data + data_length, 0);
 					examiner << "Data size is consistent";
 					examiner.check(buffer->size() == data_length);
 					
@@ -149,7 +149,7 @@ namespace Dream
 					PackedBuffer * write_buffer;
 					write_buffer = PackedBuffer::new_buffer(data_length);
 
-					write_buffer->assign((const ByteT*)data, (const ByteT*)data + data_length, 0);
+					write_buffer->assign((const Byte*)data, (const Byte*)data + data_length, 0);
 
 					write_buffer->write_to_file(tmp_path);
 

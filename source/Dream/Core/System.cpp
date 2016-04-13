@@ -34,7 +34,7 @@ namespace Dream
 		}
 
 		SystemError::SystemError(StringT domain, ErrorNumberT error_number, StringT error_description, StringT error_target) : _error_number(error_number) {
-			StringStreamT f;
+			StringStream f;
 
 			f << domain << " Error #" << error_number << ": " << error_description << "(" << error_target << ")";
 

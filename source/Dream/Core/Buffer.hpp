@@ -27,16 +27,16 @@ namespace Dream
 			virtual ~Buffer ();
 
 			/// Access data at a particular location. Range checked.
-			const ByteT * at (std::size_t loc) const;
+			const Byte * at (std::size_t loc) const;
 
 			/// Read a variable out of the buffer
-			void read (std::size_t offset, std::size_t size, ByteT * value) const;
+			void read (std::size_t offset, std::size_t size, Byte * value) const;
 
 			/// Helper to read values of specific type
 			template <typename t>
 			std::size_t read (std::size_t offset, t & value) const
 			{
-				read(offset, sizeof(t), (ByteT *)&value);
+				read(offset, sizeof(t), (Byte *)&value);
 
 				return sizeof(t);
 			}
@@ -56,7 +56,7 @@ namespace Dream
 			}
 
 			/// Access data at a particular location. Not range checked.
-			const ByteT & operator[] (std::size_t idx) const;
+			const Byte & operator[] (std::size_t idx) const;
 
 			/// Returns true if size() == 0, otherwise false.
 			bool empty () const;
@@ -65,10 +65,10 @@ namespace Dream
 			virtual std::size_t size () const = 0;
 
 			/// Returns the address of the first byte in the buffer.
-			virtual const ByteT * begin () const = 0;
+			virtual const Byte * begin () const = 0;
 
 			/// Returns the address of the last byte + 1 in the buffer.
-			const ByteT * end () const;
+			const Byte * end () const;
 
 			/// Tests whether the data in the buffers is equivalent.
 			bool operator== (const Buffer & other) const;
@@ -97,19 +97,19 @@ namespace Dream
 			using Buffer::begin;
 
 			/// Returns the address of the first byte in the buffer.
-			virtual ByteT * begin () = 0;
+			virtual Byte * begin () = 0;
 			/// Returns the address of the last byte + 1 in the buffer.
-			ByteT * end ();
+			Byte * end ();
 
 			/// Access data at a particular location. Range checked.
-			ByteT * at (std::size_t loc);
+			Byte * at (std::size_t loc);
 			/// Access data at a particular location. Not range checked.
-			ByteT & operator[] (std::size_t idx);
+			Byte & operator[] (std::size_t idx);
 
 			/// Copy count copies of value into the buffer at the specified offset.
-			void assign (std::size_t count, const ByteT & value, std::size_t offset = 0);
+			void assign (std::size_t count, const Byte & value, std::size_t offset = 0);
 			/// Copy data from another range of bytes at the specified offset.
-			void assign (const ByteT * other_begin, const ByteT * other_end, std::size_t offset = 0);
+			void assign (const Byte * other_begin, const Byte * other_end, std::size_t offset = 0);
 			/// Assign data from another buffer
 			void assign (const Buffer & other, std::size_t offset = 0);
 			/// Copy a slice of data from another buffer
@@ -121,7 +121,7 @@ namespace Dream
 			template <typename AnyT>
 			std::size_t write (const AnyT & value, std::size_t offset)
 			{
-				assign((const ByteT *)value, (const ByteT *)value + sizeof(AnyT), offset);
+				assign((const Byte *)value, (const Byte *)value + sizeof(AnyT), offset);
 
 				return offset + sizeof(AnyT);
 			}
@@ -147,13 +147,13 @@ namespace Dream
 			void expand (std::size_t amount);
 
 			/// Appends a set number of bytes to the end of the buffer
-			void append (std::size_t size, const ByteT * data);
+			void append (std::size_t size, const Byte * data);
 
 			// Helper for appending primitive types.
 			template <typename t>
 			void append (const t & value)
 			{
-				append(sizeof(t), (const ByteT *)&value);
+				append(sizeof(t), (const Byte *)&value);
 			}
 
 			/// Append data from an incremental iterator
@@ -176,7 +176,7 @@ namespace Dream
 		 A useful case might be if you have some data, and want to manipulate it or pass it to another function as a buffer:
 
 		 @code
-		 ByteT * data = read_data();
+		 Byte * data = read_data();
 
 		 // Data is not copied, therefore performance is not lost:
 		 StaticBuffer buf(data);
@@ -188,7 +188,7 @@ namespace Dream
 		 */
 		class StaticBuffer : public Buffer {
 			std::size_t _size;
-			const ByteT * _buf;
+			const Byte * _buf;
 
 		public:
 			/// Allocate the data with a c-style string. Uses strlen to determine the length of the buffer. Includes the
@@ -196,14 +196,14 @@ namespace Dream
 			static StaticBuffer for_cstring (const char * str, bool include_null_byte = true);
 
 			/// Allocate the data with a sequence of bytes, buf, of specified size.
-			StaticBuffer (const ByteT * buf, const std::size_t & size);
+			StaticBuffer (const Byte * buf, const std::size_t & size);
 
 			// Standard copy constructer is fine.
 
 			virtual ~StaticBuffer ();
 
 			virtual std::size_t size () const;
-			virtual const ByteT * begin () const;
+			virtual const Byte * begin () const;
 		};
 
 		/**
@@ -224,7 +224,7 @@ namespace Dream
 			virtual ~FileBuffer ();
 
 			virtual std::size_t size () const;
-			virtual const ByteT * begin () const;
+			virtual const Byte * begin () const;
 		};
 
 		/**
@@ -234,7 +234,7 @@ namespace Dream
 		 */
 		class DynamicBuffer : public ResizableBuffer, private NonCopyable {
 			std::size_t _capacity, _size;
-			ByteT * _buf;
+			Byte * _buf;
 
 			void allocate (std::size_t size);
 			void deallocate ();
@@ -258,8 +258,8 @@ namespace Dream
 			virtual void reserve (std::size_t size);
 			virtual void resize (std::size_t size);
 
-			virtual ByteT * begin ();
-			virtual const ByteT * begin () const;
+			virtual Byte * begin ();
+			virtual const Byte * begin () const;
 		};
 
 		/**
@@ -290,8 +290,8 @@ namespace Dream
 
 			PackedBuffer (std::size_t size);
 
-			ByteT * data ();
-			const ByteT * data () const;
+			Byte * data ();
+			const Byte * data () const;
 
 		public:
 			virtual ~PackedBuffer ();
@@ -301,11 +301,11 @@ namespace Dream
 
 			virtual std::size_t size () const;
 
-			virtual ByteT * begin ();
-			virtual const ByteT * begin () const;
+			virtual Byte * begin ();
+			virtual const Byte * begin () const;
 		};
 
-		/// This class is about 30% faster than using std::vector<ByteT>
+		/// This class is about 30% faster than using std::vector<Byte>
 		typedef DynamicBuffer BufferT;
 
 		/** Provides an istream interface to reading data from a buffer.
