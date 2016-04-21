@@ -8,6 +8,7 @@
 //
 
 #include "Buffer.hpp"
+#include "System.hpp"
 #include "Logger.hpp"
 
 // File and memory manipulation
@@ -152,35 +153,40 @@ namespace Dream
 
 		void Buffer::write_to_file (const Path & p)
 		{
-			FileDescriptor fd;
-			int result;
-
+			SystemError::reset();
+			
 			// Open and create the output file
 			mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
 
-			fd = open(p.to_local_path().c_str(), O_RDWR | O_CREAT | O_TRUNC, mode);
-			DREAM_ASSERT(fd >= 0);
+			FileDescriptor fd = open(p.to_local_path().c_str(), O_RDWR | O_CREAT | O_TRUNC, mode);
+			SystemError::check(__PRETTY_FUNCTION__);
 
 			// Seek to the end
-			result = lseek(fd, size() - 1, SEEK_SET);
-			DREAM_ASSERT(result != -1);
+			//result = lseek(fd, size() - 1, SEEK_SET);
+			//DREAM_ASSERT(result != -1);
 
 			// Write a byte to give the file appropriate size
-			result = write(fd, "", 1);
-			DREAM_ASSERT(result != -1);
-
+			//result = write(fd, "", 1);
+			//DREAM_ASSERT(result != -1);
+			
+			int result = posix_fallocate(fd, 0, size());
+			SystemError::check(__PRETTY_FUNCTION__, result);
+			
 			// mmap the file
 			Byte * dst = (Byte *)mmap(0, size(), PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
-			DREAM_ASSERT(dst != (Byte *)-1);
+			SystemError::check(__PRETTY_FUNCTION__);
 
 			madvise(dst, size(), MADV_SEQUENTIAL);
+			SystemError::check(__PRETTY_FUNCTION__);
 
 			// Copy the data
 			memcpy(dst, begin(), size());
+			SystemError::check(__PRETTY_FUNCTION__);
 
 			// Clean up
 			munmap(dst, size());
 			close(fd);
+			SystemError::check(__PRETTY_FUNCTION__);
 		}
 
 // MARK: -
