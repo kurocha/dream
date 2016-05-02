@@ -56,7 +56,10 @@ namespace Dream
 		public:
 			BufferedData (Shared<Buffer> buffer);
 
-			/// Create a buffer from a given input stream
+			/// Create a buffer from a given data pointer and size.
+			BufferedData (const Byte * data, std::size_t size);
+
+			/// Create a buffer from a given input stream.
 			BufferedData (std::istream & stream);
 
 			virtual ~BufferedData ();

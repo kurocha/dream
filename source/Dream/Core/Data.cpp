@@ -58,6 +58,15 @@ namespace Dream
 		{
 		}
 
+		BufferedData::BufferedData(const Byte * data, std::size_t size)
+		{
+			Shared<PackedBuffer> buffer = PackedBuffer::new_buffer(size);
+			
+			buffer->assign(data, data+size);
+			
+			_buffer = buffer;
+		}
+
 		/// Create a buffer from a given input stream
 		BufferedData::BufferedData (std::istream & stream)
 		{
