@@ -83,7 +83,10 @@ namespace Dream
 			uint32_t checksum () const;
 
 			/// Write the contents of the buffer to the specified file path.
-			void write_to_file (const Path &);
+			void write_to_file (const Path &) const;
+			
+			/// Write the contents of the buffer to the specified file descriptor.
+			void write_to_stream (FileDescriptor output) const;
 		};
 
 		/**

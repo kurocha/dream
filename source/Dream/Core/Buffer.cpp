@@ -150,8 +150,27 @@ namespace Dream
 
 			return sum;
 		}
-
-		void Buffer::write_to_file (const Path & p)
+		
+		void Buffer::write_to_stream (FileDescriptor file_descriptor) const
+		{
+			SystemError::reset();
+			
+			int result;
+			int sent = 0;
+			
+			while(sent < size()) {
+				result = write(file_descriptor, begin() + sent, size() - sent);
+				
+				if (result < 0) {
+					SystemError::check(__PRETTY_FUNCTION__);
+					break;
+				}
+				
+				sent += result;
+			}
+		}
+		
+		void Buffer::write_to_file (const Path & p) const
 		{
 			SystemError::reset();
 			
