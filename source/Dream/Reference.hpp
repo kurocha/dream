@@ -134,7 +134,7 @@ namespace Dream {
 		
 		template <typename OtherObjectT>
 		Pointer<OtherObjectT> as () const {
-			return Pointer<OtherObjectT>(dynamic_cast<OtherObjectT*>(_object));
+			return dynamic_cast<OtherObjectT*>(_object);
 		}
 	};
 
@@ -188,7 +188,11 @@ namespace Dream {
 		Reference (const Pointer<OtherObjectT> & other) : Pointer<ObjectT>(other.get()) {
 			retain();
 		}
-
+		
+		~Reference () {
+			clear();
+		}
+		
 		Reference& operator= (const Reference & other) {
 			return set(other.get());
 		}
@@ -206,9 +210,10 @@ namespace Dream {
 		Reference& operator= (OtherObjectT * object) {
 			return set(dynamic_cast<ObjectT *>(object));
 		}
-
-		~Reference () {
-			clear();
+		
+		template <typename OtherObjectT>
+		Reference<OtherObjectT> as () const {
+			return dynamic_cast<OtherObjectT*>(this->_object);
 		}
 	};
 
