@@ -170,6 +170,27 @@ namespace Dream
 			}
 		}
 		
+#ifdef TARGET_OS_MAC
+		static int posix_fallocate(int fd, off_t offset, off_t length)
+		{
+			fstore_t store = {F_ALLOCATECONTIG, F_PEOFPOSMODE, offset, length, 0};
+			
+			// Try to get a continous chunk of disk space
+			int result = fcntl(fd, F_PREALLOCATE, &store);
+			
+			if (result != -1) {
+				// OK, perhaps we are too fragmented, allocate non-continuous
+				store.fst_flags = F_ALLOCATEALL;
+				result = fcntl(fd, F_PREALLOCATE, &store);
+				
+				if (result == -1)
+					return -1;
+			}
+		
+			return ftruncate(fd, length);
+		}
+#endif
+		
 		void Buffer::write_to_file (const Path & p) const
 		{
 			SystemError::reset();
