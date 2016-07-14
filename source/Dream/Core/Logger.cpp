@@ -152,7 +152,7 @@ namespace Dream
 			if (i != _thread_names.end()) {
 				return i->second;
 			} else {
-				return "?";
+				return "";
 			}
 		}
 
