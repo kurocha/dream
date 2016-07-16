@@ -41,9 +41,9 @@ namespace Dream
 			_message = f.str();
 		}
 
-		StringT SystemError::what () const
+		const char * SystemError::what () const noexcept
 		{
-			return _message;
+			return _message.c_str();
 		}
 
 		void SystemError::check (StringT what, ErrorNumber error_number)

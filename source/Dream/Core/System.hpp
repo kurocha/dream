@@ -18,7 +18,7 @@ namespace Dream
 	{
 		typedef int ErrorNumber;
 
-		class SystemError {
+		class SystemError : public std::exception {
 		protected:
 			ErrorNumber _error_number;
 			StringT _message;
@@ -28,7 +28,7 @@ namespace Dream
 			SystemError(StringT domain, ErrorNumber error_number, StringT error_description, StringT error_target);
 			SystemError(StringT message);
 
-			StringT what () const;
+			const char * what () const noexcept;
 
 			static void check (StringT what);
 			static void check (StringT what, ErrorNumber error_number);
