@@ -63,8 +63,6 @@ namespace Dream
 				value.append_to_buffer(*buffer);
 			}
 
-			buffer->hexdump(std::cout);
-
 			return new BufferedData(buffer);
 		}
 

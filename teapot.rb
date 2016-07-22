@@ -28,6 +28,7 @@ define_target "dream" do |target|
 	
 	target.depends "Library/utf8"
 	target.depends "Library/Euclid"
+	target.depends "Library/Buffers"
 
 	target.provides "Library/Dream" do
 		append linkflags {install_prefix + "lib/libDream.a"}
@@ -96,6 +97,7 @@ define_configuration "dream" do |configuration|
 
 	configuration.require "utf8"
 	configuration.require "euclid"
+	configuration.require "buffers"
 	
 	configuration.require "unit-test"
 end

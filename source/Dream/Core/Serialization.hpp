@@ -98,7 +98,7 @@ namespace Dream
 
 				offset += buf.read(offset, length);
 
-				StringT value(buf.at(offset), buf.at(offset + length));
+				StringT value(buf+offset, buf + (offset + length));
 
 				offset += length;
 

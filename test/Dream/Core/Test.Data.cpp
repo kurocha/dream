@@ -15,9 +15,7 @@ namespace Dream
 				[](UnitTest::Examiner & examiner) {
 					const char * data = "First things first -- but not necessarily in that order.";
 
-					//testing("Construction");
-
-					Shared<StaticBuffer> sb = new StaticBuffer(StaticBuffer::for_cstring(data, false));
+					Shared<StaticBuffer> sb = new StaticBuffer(data, false);
 					Ref<IData> a = new BufferedData(sb);
 
 					examiner << "Data length is correct";

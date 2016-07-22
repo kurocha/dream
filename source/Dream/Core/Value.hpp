@@ -30,7 +30,7 @@ namespace Dream
 			virtual const char * what () const throw ();
 		};
 
-		/** Thrown when a value is deRefd and is undefined.
+		/** Thrown when a value is dereferenced and is undefined.
 		 */
 		class ValueUndefinedError : public std::exception {
 		public:

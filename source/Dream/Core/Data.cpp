@@ -14,6 +14,9 @@
 #include <stdexcept>
 #include <iomanip>
 
+#include <Buffers/MappedBuffer.hpp>
+#include <Buffers/BufferStream.hpp>
+
 namespace Dream
 {
 	namespace Core
@@ -31,8 +34,10 @@ namespace Dream
 
 		Shared<Buffer> LocalFileData::buffer () const
 		{
+			File local_file(_path.to_local_path());
+			
 			if (!_buffer) {
-				_buffer = new FileBuffer(_path);
+				_buffer = new MappedBuffer(local_file, local_file.size());
 			}
 
 			return _buffer;
@@ -60,7 +65,7 @@ namespace Dream
 
 		BufferedData::BufferedData(const Byte * data, std::size_t size)
 		{
-			Shared<PackedBuffer> buffer = PackedBuffer::new_buffer(size);
+			Shared<PackedBuffer> buffer = PackedBuffer::allocate(size);
 			
 			buffer->assign(data, data+size);
 			
