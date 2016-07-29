@@ -42,6 +42,7 @@ namespace Dream
 			Path(const StringT & string_rep, const char separator);
 
 			bool empty () const { return _components.size() == 0; }
+			explicit operator bool() const { return !empty(); }
 
 			StringT to_local_path() const;
 
