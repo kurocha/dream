@@ -121,6 +121,17 @@ namespace Dream {
 		{
 		}
 
+		TimerStatistics & TimerStatistics::operator+=(const TimerStatistics & other)
+		{
+			_min = std::min(_min, other._min);
+			_max = std::max(_max, other._max);
+			
+			_count += other._count;
+			_duration += other._duration;
+			
+			return *this;
+		}
+
 		TimeT TimerStatistics::average_duration () const
 		{
 			if (_count == 0) return 0;

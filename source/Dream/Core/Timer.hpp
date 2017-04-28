@@ -77,7 +77,7 @@ namespace Dream {
 
 		class TimerStatistics {
 		private:
-			bool _perform_reset;
+			bool _perform_reset = false;
 			TimeT _last_time;
 
 			TimeT _duration;
@@ -88,6 +88,10 @@ namespace Dream {
 
 		public:
 			TimerStatistics ();
+
+			TimerStatistics & operator+=(const TimerStatistics & other);
+
+			unsigned long count() const { return _count; }
 
 			TimeT average_duration () const;
 			TimeT updates_per_second () const;
