@@ -3,7 +3,7 @@
 #  This file is part of the "Teapot" project, and is released under the MIT license.
 #
 
-teapot_version "1.0.0"
+teapot_version "1.3"
 
 define_project "Dream" do |project|
 	project.add_author "Samuel Williams"
@@ -24,7 +24,7 @@ define_target "dream" do |target|
 	target.depends :platform
 	target.depends "Build/Files"
 	target.depends "Build/Clang"
-	target.depends "Language/C++11"
+	target.depends "Language/C++11", private: true
 	
 	target.depends "Library/utf8"
 	target.depends "Library/Euclid"
@@ -39,6 +39,8 @@ define_target "dream-tests" do |target|
 	target.build do
 		run tests: "Dream", source_files: target.package.path.glob('test/Dream/**/*.cpp')
 	end
+	
+	target.depends "Language/C++11", private: true
 	
 	target.depends "Library/UnitTest"
 	target.depends "Library/Dream"

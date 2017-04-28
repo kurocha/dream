@@ -1,3 +1,3 @@
 source "https://rubygems.org"
 
-gem "teapot", "~> 1.0.3"
+gem "teapot", "~> 1.3"
