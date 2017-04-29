@@ -21,13 +21,7 @@ namespace Dream
 	{
 		static std::string system_error_description(ErrorNumber error_number)
 		{
-			const std::size_t MAX_LENGTH = 1024;
-			char buffer[MAX_LENGTH];
-
-			if (strerror_r(error_number, buffer, MAX_LENGTH) == 0)
-				return buffer;
-			else
-				return "Unknown failure";
+			return strerror(error_number);
 		}
 
 		SystemError::SystemError(StringT message) : _error_number(-1), _message(message) {
@@ -52,7 +46,7 @@ namespace Dream
 				// Get the system error message.
 				auto error_description = system_error_description(error_number);
 
-				throw SystemError("System", errno, error_description, what);
+				throw SystemError("System", error_number, error_description, what);
 			}
 		}
 		
