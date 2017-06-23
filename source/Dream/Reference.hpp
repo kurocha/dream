@@ -232,6 +232,12 @@ namespace Dream {
 		ValueT * _value;
 
 	public:
+		template <typename ...Arguments>
+		inline static Shared<ValueT> make(Arguments&& ...arguments)
+		{
+			return Shared<ValueT>(new ValueT(arguments...));
+		}
+		
 		Ref<SharedObject> controller () const
 		{
 			return _controller;
