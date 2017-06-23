@@ -23,7 +23,7 @@ namespace Dream
 	{
 // MARK: -
 // MARK: LocalFileData
-
+		
 		LocalFileData::LocalFileData (const Path & path) : _path(path)
 		{
 		}

@@ -9,6 +9,7 @@
 #pragma once
 
 #include "Timer.hpp"
+#include "Buffer.hpp"
 
 #include <thread>
 #include <mutex>

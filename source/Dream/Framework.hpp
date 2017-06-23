@@ -25,20 +25,10 @@
 #define TARGET_OS_WIN32 1
 #endif
 
-/**
-    Dream is a framework for creating and enhancing C++ applications.
-
-    The Dream framework provides several high level components which assist with the design and development of C++ appications. It is specifically targeted at real
-    time simulations such as games and scientific visualizations.
- */
+/// Dream is a framework for creating and enhancing C++ applications.
+/// The Dream framework provides several high level components which assist with the design and development of C++ appications.
 namespace Dream
 {
-// MARK: -
-// MARK: Types
-	typedef unsigned char Byte;
-
-	/// Represents a open file.
-	typedef int FileDescriptor;
 }
 
 #include "Assertion.hpp"
