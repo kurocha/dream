@@ -15,7 +15,7 @@
 #include <iomanip>
 
 #include <Buffers/MappedBuffer.hpp>
-#include <Buffers/BufferStream.hpp>
+#include <Buffers/InputStream.hpp>
 
 namespace Dream
 {
@@ -93,7 +93,7 @@ namespace Dream
 
 		Shared<std::istream> BufferedData::input_stream () const
 		{
-			return new BufferStream(*_buffer);
+			return new InputStream(*_buffer);
 		}
 
 		std::size_t BufferedData::size () const
